@@ -2,3 +2,4 @@ node_modules
 npm-debug.log*
 /notes.txt
 data.json
+app/build
