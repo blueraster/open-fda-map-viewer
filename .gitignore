@@ -2,4 +2,7 @@ node_modules
 npm-debug.log*
 /notes.txt
 data.json
-app/build
+app/server/build
+app/client/dist
+app/client/build
+app/client/src/app/vendor
