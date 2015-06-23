@@ -34,3 +34,12 @@ function test_api_access(url,path){
 	});
 
 }
+
+function search_food(key,value){
+	return http.get({
+		host:url,
+		path:path,
+	},function(response){
+		console.log(response);
+	});
+}
