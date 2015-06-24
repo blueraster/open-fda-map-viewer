@@ -17,8 +17,8 @@ let server = app.listen(3000, function () {
 
 app.get('/init', function (req, res) {
   for(let index in config.foodCategories){
-    let category = config.foodCategories[index];
-    recallsByTerm(cat)
+    let category = config.foodCategories[index]
+    recallsByTerm(category)
       .then((response) =>{
         geocoder(response)
           .then((response)=>{
