@@ -6,7 +6,7 @@ export const config = {
   map: {
     id: 'map',
     options: {
-      basemap: 'topo',
+      basemap: 'dar-gray',
       zoom: 5,
       center: [-100, 34.5]
     },
