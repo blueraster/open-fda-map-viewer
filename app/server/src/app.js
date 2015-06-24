@@ -14,9 +14,13 @@ let server = app.listen(3000, function () {
   let port = server.address().port;
 });
 
-app.get('/rungeocode', function (req, res) {
-  geocoder();
-  res.send('hello');
+app.get('/init', function (req, res) {
+
+  recallsByTerm(config.foodCategories[1])
+    .then((response) =>{
+      geocoder(response)
+        .then(res.json)
+    })
 });
 
 app.get('/fetch-api-data', function (req, res) {

@@ -25,7 +25,7 @@ export function recallsByTerm (recallTerm) {
         Promise.all(allRequests)
           .then((results) => {
             [for (r of results) apiResults.push(JSON.parse(r).results)]
-            resolve(JSON.stringify({meta: meta, results: Array.prototype.concat.apply([], apiResults)}))
+            resolve({meta: meta, results: Array.prototype.concat.apply([], apiResults)})
           })
           // TODO: catch errors
       })
