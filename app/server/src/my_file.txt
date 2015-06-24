@@ -1,0 +1,1 @@
+{"spatialReference":{"wkid":102100,"latestWkid":3857},"locations":[{"name":"Grand Rapids, Kent County, Michigan, United States","extent":{"xmin":-9545656.1316383984,"ymin":5293930.724579107,"xmax":-9527399.7351483032,"ymax":5318878.3473495971},"feature":{"geometry":{"x":-9536527.8603677284,"y":5306396.2176025361},"attributes":{"Score":100,"Addr_Type":"POI"}}}]}
