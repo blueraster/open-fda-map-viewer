@@ -15,7 +15,6 @@ export default function(data) {
     let requestGeocode = function(index){
       let id = data[index]['@id'];
       let location = encodeURIComponent(data[index].city+' '+data[index].state +' ' + data[index].country);
-      // console.log(`https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?maxLocations=${maxLocations}&outSR=${outSR}&f=json&text=${location}`)
       request.get(`https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?maxLocations=${maxLocations}&outSR=${outSR}&f=json&text=${location}`)
         .then(callback)
     }
@@ -27,7 +26,6 @@ export default function(data) {
       outPutGeocodeObject.push({'@id':id,'x':geometry.x,'y':geometry.y});
       //TODO data.length
       if (geocodesProcessed === 5){
-        // console.log(outPutGeocodeObject)
         resolve(outPutGeocodeObject);
       }else{
         index++;

@@ -27,11 +27,16 @@ app.get('/init', function (req, res) {
       .then((result) =>{
         geocoder(result)
           .then((result)=>{
-            geoStore[category] = {category:response};
+            geoStore[category] = {category:result};
           })
       })
   }
 });
+
+app.get('/food',function(req,res){
+
+});
+
 
 // function init(callback){
 //   let geocodes = [];
