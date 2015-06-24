@@ -5,7 +5,7 @@ export const actions = dispatcher.createActions(class {
   mapInit () {
     this.dispatch()
   }
-  queryFda (term) {
-    this.dispatch(term)
+  queryFda (food) {
+    this.dispatch(food)
   }
 })

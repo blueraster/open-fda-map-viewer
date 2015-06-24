@@ -29,6 +29,10 @@ export const config = {
         locate: 'locate-button',
         search: 'search'
       }
+    },
+    requests: {
+      openFda: (recallReason) => `https://api.fda.gov/food/enforcement.json?search=reason_for_recall:"${recallReason}"`,
+      geocodes: 'temp'
     }
   }
 }
