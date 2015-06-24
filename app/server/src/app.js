@@ -4,6 +4,7 @@ import geocoder from './geocoder'
 import express from 'express'
 
 let app = express();
+let geoStore = [];
 
 app.get('/', function (req, res) {
   res.send('Hello World!');
@@ -15,21 +16,16 @@ let server = app.listen(3000, function () {
 });
 
 app.get('/init', function (req, res) {
-
-  recallsByTerm(config.foodCategories[1])
-    .then((response) =>{
-      geocoder(response)
-        .then((response)=>{
-          res.json(response)
-        })
-    })
+  for(let index in config.foodCategories){
+    let category = config.foodCategories[index];
+    recallsByTerm(cat)
+      .then((response) =>{
+        geocoder(response)
+          .then((response)=>{
+            geoStore.push({category:response});
+          })
+      })
+  }
 });
-
-// app.get('/fetch-api-data', function (req, res) {
-//   recallsByTerm(config.foodCategories[1])
-//     .then((response) => {res.send(response)})
-//     // TODO: catch error
-// })
-
 
 
