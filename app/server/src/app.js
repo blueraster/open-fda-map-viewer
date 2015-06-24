@@ -19,12 +19,17 @@ app.get('/init', function (req, res) {
   recallsByTerm(config.foodCategories[1])
     .then((response) =>{
       geocoder(response)
-        .then(res.json)
+        .then((response)=>{
+          res.json(response)
+        })
     })
 });
 
-app.get('/fetch-api-data', function (req, res) {
-  recallsByTerm(config.foodCategories[1])
-    .then((response) => {res.send(response)})
-    // TODO: catch error
-})
+// app.get('/fetch-api-data', function (req, res) {
+//   recallsByTerm(config.foodCategories[1])
+//     .then((response) => {res.send(response)})
+//     // TODO: catch error
+// })
+
+
+

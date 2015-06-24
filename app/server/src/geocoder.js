@@ -27,6 +27,7 @@ export default function(data) {
       outPutGeocodeObject.push({'id':id,'x':geometry.x,'y':geometry.y});
       //TODO data.length
       if (geocodesProcessed == 5){
+        console.log(outPutGeocodeObject)
         resolve(outPutGeocodeObject);
       }else{
         index++;
