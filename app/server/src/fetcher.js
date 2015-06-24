@@ -11,8 +11,8 @@ export function recallsByTerm (recallTerm) {
 
   promise = new Promise(function (resolve, reject) {
     request.get(`http://api.fda.gov/food/enforcement.json?limit=${limit}&skip=${limit}&search=reason_for_recall:${recallTerm}`)
-      .then((result) => {
-        let json = JSON.parse(result),
+      .then((response) => {
+        let json = JSON.parse(response),
             meta = json.meta,
             apiResults = [json.results],
             remainingPageSkips = Math.floor(((meta.results.total - limit) / limit) + 1),

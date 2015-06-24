@@ -19,10 +19,10 @@ export default function(data) {
       request.get(`https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?maxLocations=${maxLocations}&outSR=${outSR}&f=json&text=${location}`)
         .then(callback)
     }
-    let callback = function(results){
+    let callback = function(response){
       geocodesProcessed++;
       let id = data[index]['@id'];
-      let obj = JSON.parse(results);
+      let obj = JSON.parse(response);
       let geometry = obj.locations[0].feature.geometry
       outPutGeocodeObject.push({'@id':id,'x':geometry.x,'y':geometry.y});
       //TODO data.length

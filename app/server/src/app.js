@@ -24,9 +24,9 @@ app.get('/init', function (req, res) {
   for(let index in config.foodCategories){
     let category = config.foodCategories[index];
     recallsByTerm(category)
-      .then((response) =>{
-        geocoder(response)
-          .then((response)=>{
+      .then((result) =>{
+        geocoder(result)
+          .then((result)=>{
             geoStore[category] = {category:response};
           })
       })
