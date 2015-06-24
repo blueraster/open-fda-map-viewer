@@ -26,20 +26,19 @@ export class Map extends React.Component {
         infoWindow = map === undefined ? undefined : map.infoWindow.isShowing === false ? undefined : <InfoWindow {...this.state}/>
     return (
       <div className='map-container absolute fill'>
-
-        <div className='absolute margin--small padding--small z-index-map back-white'>
-          <div>
-            <div>Bacteria</div>
+        <div className='absolute margin padding--small z-index-map back-white'>
+          <div className='padding--small__bottom'>
+            <button className='margin__right'>Bacteria</button>
             <select>
               <option>Chloramphenicol</option>
               <option>Salmonella</option>
               <option>Listeria</option>
             </select>
           </div>
-          <div><button>Ice Cream</button></div>
-          <div><button>Wheat</button></div>
-          <div><button>Peanuts</button></div>
-          <div><button>Salads</button></div>
+          <div className='padding--small__bottom'><button onClick={() => {actions.queryFda(config.queryTerms.iceCream)}}>{config.queryTerms.iceCream}</button></div>
+          <div className='padding--small__bottom'><button>Wheat</button></div>
+          <div className='padding--small__bottom'><button>Peanuts</button></div>
+          <div className='padding--small__bottom'><button>Salads</button></div>
         </div>
 
         <div id={config.id} className='fill'></div>
