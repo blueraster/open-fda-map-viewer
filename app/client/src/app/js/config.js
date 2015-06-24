@@ -6,12 +6,22 @@ export const config = {
   map: {
     id: 'map',
     options: {
-      basemap: 'dar-gray',
+      basemap: 'dark-gray',
       zoom: 5,
       center: [-100, 34.5]
     },
-    queryTerms: {
-      iceCream: 'Ice Cream',
+    foods: {
+      individual: {
+        iceCream: 'Ice Cream',
+        wheat: 'Wheat',
+        peanuts: 'Peanuts',
+        salads: 'Salads'
+      },
+      bacteria: [
+        'Chloramphenicol',
+        'Salmonella',
+        'Listeria'
+      ]
     },
     controls: {
       ids: {

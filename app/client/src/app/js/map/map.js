@@ -23,7 +23,14 @@ export class Map extends React.Component {
   render () {
     let map = this.state.map,
         controls = map === undefined ? undefined : <Controls {...this.state} />,
-        infoWindow = map === undefined ? undefined : map.infoWindow.isShowing === false ? undefined : <InfoWindow {...this.state}/>
+        infoWindow = map === undefined ? undefined : map.infoWindow.isShowing === false ? undefined : <InfoWindow {...this.state}/>,
+        foodControls = []
+
+    for (let key in config.foods.individual) {
+      let food = config.foods.individual[key]
+      foodControls.push(<div className='padding--small__bottom'><button onClick={() => {actions.queryFda(food)}}>{food}</button></div>)
+    }
+
     return (
       <div className='map-container absolute fill'>
         <div className='absolute margin padding--small z-index-map back-white'>
@@ -35,12 +42,8 @@ export class Map extends React.Component {
               <option>Listeria</option>
             </select>
           </div>
-          <div className='padding--small__bottom'><button onClick={() => {actions.queryFda(config.queryTerms.iceCream)}}>{config.queryTerms.iceCream}</button></div>
-          <div className='padding--small__bottom'><button>Wheat</button></div>
-          <div className='padding--small__bottom'><button>Peanuts</button></div>
-          <div className='padding--small__bottom'><button>Salads</button></div>
+          {foodControls}
         </div>
-
         <div id={config.id} className='fill'></div>
         {controls}
       </div>
