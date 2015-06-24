@@ -1,13 +1,12 @@
 import config from './config'
-import express from 'express'
 import {recallsByTerm} from './fetcher'
+import geocoder from './geocoder'
+import express from 'express'
 
 let app = express();
 
 app.get('/', function (req, res) {
   res.send('Hello World!');
-  //var urlTest = test_api_access('https://api.fda.gov','/drug/enforcement.json')
-  //res.send(urlTest);
 });
 
 let server = app.listen(3000, function () {
@@ -16,9 +15,8 @@ let server = app.listen(3000, function () {
 });
 
 app.get('/rungeocode', function (req, res) {
-  res.send('Hello World!');
-  //var urlTest = test_api_access('https://api.fda.gov','/drug/enforcement.json')
-  //res.send(urlTest);
+  geocoder();
+  res.send('hello');
 });
 
 app.get('/fetch-api-data', function (req, res) {
