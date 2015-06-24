@@ -6,6 +6,7 @@ import {recallsByTerm} from 'map/fetcher'
 // lib/vendor/esri/dojo
 import ClusterFeatureLayer from 'ClusterFeatureLayer'
 import esriMap from 'esri/map'
+import on from 'dojo/on'
 
 export const store = dispatcher.createStore(class {
   constructor () {
@@ -17,8 +18,7 @@ export const store = dispatcher.createStore(class {
   }
   mapInit () {
     this.map = new esriMap(config.id, config.options)
-    // TODO: add cluster layer
-    setTimeout(() => {
+    on.once(this.map, 'extent-change', (event) => {
       let clusterLayer = new ClusterFeatureLayer({
           "url": "http://services.arcgis.com/oKgs2tbjK6zwTdvi/arcgis/rest/services/Major_World_Cities/FeatureServer/0",
           "distance": 75,
@@ -32,8 +32,12 @@ export const store = dispatcher.createStore(class {
           "objectIdField": "FID",
           outFields: ["NAME", "COUNTRY", "POPULATION", "CAPITAL"]
       });
+      window.temp = clusterLayer
       this.map.addLayer(clusterLayer);
-    }, 3000)
+      this.map.on('extent-change', (event) => {
+        clusterLayer._reCluster()
+      })
+    })
   }
   queryFda (food) {
     recallsByTerm(food)

@@ -8,6 +8,7 @@ export const config = {
     options: {
       basemap: 'dark-gray',
       zoom: 5,
+      minZoom: 3,
       center: [-100, 34.5]
     },
     foods: {

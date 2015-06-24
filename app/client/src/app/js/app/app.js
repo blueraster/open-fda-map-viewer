@@ -14,7 +14,7 @@ export class App extends React.Component {
           <h4>{messages.header}</h4>
           <div className='padding--small__bottom'>{messages.subheader}</div>
         </header>
-        <div className='app-body'>
+        <div className='app-body back-gray--dark'>
           <Map />
         </div>
       </div>
