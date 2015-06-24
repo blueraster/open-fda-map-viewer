@@ -22,6 +22,7 @@
         aliases: [
           ['alt', 'vendor/alt/dist/alt'],
           ['react', 'vendor/react/react.min'],
+          ['ClusterFeatureLayer', 'vendor/cluster-layer-js/src/clusterfeaturelayer'],
           ['babel-polyfill', 'shim/babel-polyfill/browser-polyfill'],
           ['fetch', 'shim/fetch/fetch']
         ],
