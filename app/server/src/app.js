@@ -1,35 +1,42 @@
 import config from './config'
-import {recallsByTerm} from './fetcher'
+import {allRecallsByTerm, recallByTerm} from './fetcher'
 import geocoder from './geocoder'
 import express from 'express'
 
 let app = express();
-let geoStore = {};
+let geoStore;
+let init;
 
-// TODO: finish init function w/ callback on geoStore population completion
-// init(() => {
-//   console.log('hey')
-// })
+init = function (callback) {
+  Promise.all([for (i of config.foodCategories) recallByTerm(i)])
+    .then((results) => {
+      Promise.all([for (r of results) geocoder(r)])
+        .then((results) => {
+          callback(results)
+        })
+    })
+}
 
 app.get('/', function (req, res) {
   res.send('Open FDA Map Viewer');
 });
 
+// TODO: config port
 let server = app.listen(3000, function () {
   let host = server.address().address;
   let port = server.address().port;
 });
 
+// TODO: setup route counditional on dev environment
 app.get('/init', function (req, res) {
-  for(let index in config.foodCategories){
-    let category = config.foodCategories[index];
-    recallsByTerm(category)
-      .then((result) =>{
-        geocoder(result)
-          .then((result)=>{
-            geoStore[category] = {category:result};
-          })
-      })
+  if (geoStore === undefined) {
+    geoStore = {}
+    init((results) => {
+      [for (r of results) geoStore[config.foodCategories[results.indexOf(r)]] = r]
+      res.send(`Newly generated geoStore:\n\n${JSON.stringify(geoStore)}`)
+    })
+  } else {
+    res.send(`Previously generated geoStore:\n\n${JSON.stringify(geoStore)}`)
   }
 });
 
@@ -37,24 +44,3 @@ app.get('/food',function(req,res){
 
 });
 
-
-// function init(callback){
-//   let geocodes = [];
-
-//   for(let index in config.foodCategories){
-//     let category = config.foodCategories[index];
-//     recallsByTerm(category)
-//       .then((response) =>{
-//         geocodes.push({category:category, promise:geocoder(response)});
-//       })
-//   }
-
-//   Promise.all([for (g of geocodes) g.promise])
-//     .then((results)=>{
-//       console.log('#### inside all')
-//       console.log(results);
-//       console.log(geocodes);
-//       // geoStore[category] = {category:results}
-//       callback();
-//     })
-// }

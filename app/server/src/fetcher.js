@@ -3,7 +3,15 @@ import request from 'request-promise'
 import util from 'util'
 import fs from 'fs'
 
-export function recallsByTerm (recallTerm) {
+export function recallByTerm (recallTerm) {
+  let limit = 5
+  return new Promise((resolve, reject) => {
+    request.get(`http://api.fda.gov/food/enforcement.json?limit=${limit}&search=reason_for_recall:${recallTerm}`)
+      .then((result) => resolve(JSON.parse(result)))
+  })
+}
+
+export function allRecallsByTerm (recallTerm) {
   // TDDO: require recallTerm, throw error if missing
   recallTerm = encodeURIComponent(`"${recallTerm}"`)
   let limit = 100,

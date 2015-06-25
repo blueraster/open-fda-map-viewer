@@ -10,7 +10,7 @@ export default function(data) {
   let promise;
   let geocodesProcessed = 0;
   let index = 0;
-  let outPutGeocodeObject = [];
+  let outPutGeocodeObject = {};
   promise = new Promise(function (resolve, reject) {
     let requestGeocode = function(index){
       let id = data[index]['@id'];
@@ -21,9 +21,8 @@ export default function(data) {
     let callback = function(response){
       geocodesProcessed++;
       let id = data[index]['@id'];
-      let obj = JSON.parse(response);
-      let geometry = obj.locations[0].feature.geometry
-      outPutGeocodeObject.push({'@id':id,'x':geometry.x,'y':geometry.y});
+      let geometry = JSON.parse(response).locations[0].feature.geometry;
+      outPutGeocodeObject[id] = {geometry:geometry};
       //TODO data.length
       if (geocodesProcessed === 5){
         resolve(outPutGeocodeObject);
