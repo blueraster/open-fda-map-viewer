@@ -73,7 +73,10 @@ export const store = dispatcher.createStore(class {
   queryFda (food) {
     // TODO cache queries by food to just apply previously processed cluster layer data
     getFoodData(food)
-      .then(actions.createClusterLayer)
+      // .then(actions.createClusterLayer)
+      .then((foodData) => {
+        console.debug(foodData)
+      })
   }
   createClusterLayer (foodData) {
     let map = this.map

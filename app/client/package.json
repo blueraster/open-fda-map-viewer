@@ -10,7 +10,7 @@
     "dist": "npm run build && npm run copy-dist && r.js -o build.js",
     "jade": "jade src -o build",
     "jade:watch": "npm run jade -- -w",
-    "babel": "babel src --ignore 'vendor, *.es5.js' --modules amd --source-maps --out-dir build",
+    "babel": "babel src --ignore 'vendor, *.es5.js' --modules amd --source-maps --out-dir build --optional es7.comprehensions",
     "babel:watch": "npm run babel -- -w",
     "stylus": "gulp stylus",
     "stylus:watch": "gulp stylus:watch",
