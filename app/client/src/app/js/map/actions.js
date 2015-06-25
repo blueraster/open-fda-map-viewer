@@ -8,4 +8,7 @@ export const actions = dispatcher.createActions(class {
   queryFda (food) {
     this.dispatch(food)
   }
+  createClusterLayer (foodData) {
+    this.dispatch(foodData)
+  }
 })

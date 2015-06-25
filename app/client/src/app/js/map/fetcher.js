@@ -1,34 +1,31 @@
 import {map as config} from 'js/config'
 
-export function recallsByTerm (recallTerm) {
-  let limit = 100,
-      skip
+let _recallsByTerm = function (recallTerm) {
+  // let limit = 100,
+  //     skip
 
+  return fetch(config.requests.openFda(recallTerm))
+}
+
+let _geoDataByFood = function (food) {
+  return fetch(config.requests.geoData(food))
+}
+
+export function getFoodData (food) {
   return new Promise((resolve, reject) => {
-    fetch(config.requests.openFda(recallTerm))
-      .then((response) => {
-
-        // let json = JSON.parse(response),
-        //     meta = json.meta,
-        //     apiResults = [json.results],
-        //     remainingPageSkips = Math.floor(((meta.results.total - limit) / limit) + 1),
-        //     allRequests = []
-
-        // for (let i = 0; i !== remainingPageSkips; i++) {
-        //   allRequests.push(request.get(`http://api.fda.gov/food/enforcement.json?limit=${limit}&skip=${limit * (i + 1)}&search=reason_for_recall:${recallTerm}`))
-        // }
-
-        // Promise.all(allRequests)
-        //   .then((results) => {
-        //     [for (r of results) apiResults.push(JSON.parse(r).results)]
-        //     resolve({meta: meta, results: Array.prototype.concat.apply([], apiResults)})
-        //   })
-
-        resolve(response)
-      })
+     Promise.all([_recallsByTerm(food), _geoDataByFood(food)])
+        .then((results) => Promise.all([results[0].json(), results[1].json()]))
+        .then(resolve)
   })
 }
 
-export function geoDataByFood (food) {
-  return fetch(config.requests.geoData(food))
-}
+export {_recallsByTerm as recallsByTerm}
+export {_geoDataByFood as geoDataByFood}
+
+    // fetch(config.requests.openFda(food))
+    //   .then((response) => response.json())
+    //   .then((json) => console.debug(json))
+    //   // TODO: catch errors
+    // fetch(config.requests.geoData(food))
+    //   .then((response) => response.json())
+    //   .then((json) => console.debug(json))
