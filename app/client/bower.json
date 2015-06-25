@@ -2,7 +2,8 @@
   "name": "open-fda-map-viewer",
   "version": "0.1.0",
   "authors": [
-    "Albert Marquez <amarquez@blueraster.com>"
+    "Albert Marquez <amarquez@blueraster.com>",
+    "Jon Nordling <jnordling@blueraster.com>"
   ],
   "license": "MIT",
   "private": true,

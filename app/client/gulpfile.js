@@ -13,8 +13,8 @@ var gulp = require('gulp'),
       stylusSrc: 'src/app/css/app.styl',
       stylusWatchSrc: 'src/app/css/**/*.styl',
       stylusDest: 'build/app/css',
-      copyBuildSrc: ['src/app/vendor/**/*.js', 'src/app/**/*.es5.*'],
-      copyDistSrc: ['build/app/bootloader.es5.js', 'build/**/*.css', 'build/**/*.html'],
+      copyBuildSrc: ['src/app/vendor/**/*.js', 'src/app/**/*.es5.*','src/app/images/**/*'],
+      copyDistSrc: ['build/app/bootloader.es5.js', 'build/**/*.css', 'build/**/*.html', 'build/app/images/**/*'],
       lintSrc: ['src/app/js/**/*.js', 'src/app/lib/**/*.js'],
       browserSyncSrc: ['build/**/*.html', 'build/**/*.js', 'build/**/*.css']
     }
