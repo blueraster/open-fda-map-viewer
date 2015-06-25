@@ -21,11 +21,3 @@ export function getFoodData (food) {
 
 export {_recallsByTerm as recallsByTerm}
 export {_geoDataByFood as geoDataByFood}
-
-    // fetch(config.requests.openFda(food))
-    //   .then((response) => response.json())
-    //   .then((json) => console.debug(json))
-    //   // TODO: catch errors
-    // fetch(config.requests.geoData(food))
-    //   .then((response) => response.json())
-    //   .then((json) => console.debug(json))

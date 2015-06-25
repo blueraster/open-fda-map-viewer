@@ -18,11 +18,13 @@ export const config = {
         peanuts: 'Peanuts',
         salads: 'Salads'
       },
-      bacteria: [
-        'Chloramphenicol',
-        'Salmonella',
-        'Listeria'
-      ]
+      nested: {
+        bacteria: [
+          'Chloramphenicol',
+          'Salmonella',
+          'Listeria'
+        ]
+      }
     },
     controls: {
       ids: {
@@ -32,7 +34,7 @@ export const config = {
       }
     },
     requests: {
-      openFda: (recallReason) => `https://api.fda.gov/food/enforcement.json?search=reason_for_recall:"${recallReason}"`,
+      openFda: (recallReason) => `http://api.fda.gov/food/enforcement.json?limit=100&skip=100&search=reason_for_recall:${recallReason}`,
       geoData: (food) => `http://localhost:3000/getGeoData?food=${food}`
     }
   }
