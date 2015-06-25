@@ -9,6 +9,7 @@ let init
 
 init = function (callback) {
   Promise.all([for (i of config.foodCategories) recallByTerm(i)])
+  // Promise.all([for (i of config.foodCategories) allRecallsByTerm(i)])
     .then((results) => {
       Promise.all([for (r of results) geocoder(r)])
         .then((results) => {
@@ -17,28 +18,37 @@ init = function (callback) {
     })
 }
 
+if (config.env === 'production') {
+  console.log('init live data store')
+  // init() ...
+} else {
+  console.log('init data store from cached json')
+  geoStore = require('../data/geoStore-ice-cream.json')
+}
+
 app.get('/', function (req, res) {
   res.send('Open FDA Map Viewer')
 })
 
 // TODO: config port
-let server = app.listen(3000, function () {
+let server = app.listen(config.server.port, function () {
   let host = server.address().address
   let port = server.address().port
+  console.log(`Server running on ${host}:${port}`)
 })
 
 // TODO: setup route counditional on dev environment
-app.get('/init', function (req, res) {
-  if (geoStore === undefined) {
-    geoStore = {}
-    init((results) => {
-      [for (r of results) geoStore[config.foodCategories[results.indexOf(r)]] = r]
-      res.send(`Newly generated geoStore:\n\n${JSON.stringify(geoStore)}`)
-    })
-  } else {
-    res.send(`Previously generated geoStore:\n\n${JSON.stringify(geoStore)}`)
-  }
-})
+// app.get('/init', function (req, res) {
+//   if (geoStore === undefined) {
+//     geoStore = {}
+//     init((results) => {
+//       [for (r of results) geoStore[config.foodCategories[results.indexOf(r)]] = r]
+//       res.send(`Newly generated geoStore:\n\n${JSON.stringify(geoStore)}`)
+//     })
+//   } else {
+//     res.send(`Previously generated geoStore:\n\n${JSON.stringify(geoStore)}`)
+//   }
+// })
 
 app.get('/getGeoData',function(req,res){
   let food

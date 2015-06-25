@@ -23,8 +23,7 @@ export default function(data) {
       let id = data[index]['@id'];
       let geometry = JSON.parse(response).locations[0].feature.geometry;
       outPutGeocodeObject[id] = {geometry:geometry};
-      //TODO data.length
-      if (geocodesProcessed === 5){
+      if (geocodesProcessed === data.length){
         resolve(outPutGeocodeObject);
       }else{
         index++;

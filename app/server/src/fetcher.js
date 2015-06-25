@@ -1,4 +1,4 @@
-// https://api.fda.gov/food/enforcement.json?limit=100&skip=100&search=reason_for_recall:%22ice%20cream%22
+// SAMPLE: https://api.fda.gov/food/enforcement.json?limit=100&skip=100&search=reason_for_recall:%22ice%20cream%22
 import request from 'request-promise'
 import util from 'util'
 import fs from 'fs'
@@ -12,7 +12,7 @@ export function recallByTerm (recallTerm) {
 }
 
 export function allRecallsByTerm (recallTerm) {
-  // TDDO: require recallTerm, throw error if missing
+  // TDDO: require recallTerm param, throw error if missing
   recallTerm = encodeURIComponent(`"${recallTerm}"`)
   let limit = 100,
       promise
