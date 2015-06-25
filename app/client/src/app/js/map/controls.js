@@ -8,8 +8,8 @@ import Search from 'esri/dijit/Search'
 
 export class Controls extends React.Component {
   componentDidMount() {
-    new HomeButton({map: this.props.map}, 'home-button').startup()
-    new LocateButton({map: this.props.map}, 'locate-button').startup()
+    // new HomeButton({map: this.props.map}, 'home-button').startup()
+    // new LocateButton({map: this.props.map}, 'locate-button').startup()
   }
   render() {
     return (

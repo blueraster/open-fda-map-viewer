@@ -37,9 +37,10 @@ export const store = dispatcher.createStore(class {
           'showSingles': true,
           'objectIdField': 'FID',
           // outFields: ['NAME', 'COUNTRY', 'POPULATION', 'CAPITAL']
+          opacity: 0,
           outFields: []
       });
-      window.temp = clusterLayer
+      // window.temp = clusterLayer
       this.map.addLayer(clusterLayer);
       this.map.on('extent-change', (event) => {
         clusterLayer._reCluster()
@@ -74,5 +75,6 @@ export const store = dispatcher.createStore(class {
 
     clusterLayer._clusterData = clusterData
     clusterLayer._reCluster()
+    clusterLayer.setOpacity(1)
   }
 }, 'mapStore')

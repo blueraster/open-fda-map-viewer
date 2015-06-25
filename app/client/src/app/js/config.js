@@ -33,6 +33,9 @@ export const config = {
         search: 'search'
       }
     },
+    eventsByFood: {
+
+    },
     requests: {
       openFda: (recallReason) => `http://api.fda.gov/food/enforcement.json?limit=100&skip=100&search=reason_for_recall:${recallReason}`,
       geoData: (food) => `http://localhost:3000/getGeoData?food=${food}`
