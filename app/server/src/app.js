@@ -2,6 +2,7 @@ import config from './config'
 import {allRecallsByTerm, recallByTerm} from './fetcher'
 import geocoder from './geocoder'
 import express from 'express'
+import cors from 'cors'
 
 let app = express()
 let geoStore
@@ -23,8 +24,12 @@ if (config.env === 'production') {
   // init() ...
 } else {
   console.log('init data store from cached json')
+  // TODO: load a whole complete store
   geoStore = require('../data/geoStore-ice-cream.json')
+  // TODO: refactor out cors when client is integrated into server static serving
+  app.use(cors())
 }
+
 
 app.get('/', function (req, res) {
   res.send('Open FDA Map Viewer')

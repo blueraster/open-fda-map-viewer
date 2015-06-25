@@ -2,7 +2,6 @@ import {dispatcher} from 'js/dispatcher'
 import {actions} from 'map/actions'
 import {actions as appActions} from 'app/actions'
 import {map as config} from 'js/config'
-import {recallsByTerm} from 'map/fetcher'
 // lib/vendor/esri/dojo
 import ClusterFeatureLayer from 'ClusterFeatureLayer'
 import esriMap from 'esri/map'
@@ -40,7 +39,13 @@ export const store = dispatcher.createStore(class {
     })
   }
   queryFda (food) {
-    recallsByTerm(food)
-      .then((results) => {console.debug(results)})
+    fetch(config.requests.openFda(food))
+      .then((response) => response.json())
+      .then((json) => console.debug(json))
+      // TODO: catch errors
+    fetch(config.requests.geoData(food))
+      .then((response) => response.json())
+      .then((json) => console.debug(json))
+      // TODO: catch errors
   }
 }, 'mapStore')

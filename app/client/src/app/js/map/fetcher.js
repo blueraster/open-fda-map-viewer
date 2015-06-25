@@ -4,7 +4,6 @@ export function recallsByTerm (recallTerm) {
   let limit = 100,
       skip
 
-
   return new Promise((resolve, reject) => {
     fetch(config.requests.openFda(recallTerm))
       .then((response) => {
@@ -28,4 +27,8 @@ export function recallsByTerm (recallTerm) {
         resolve(response)
       })
   })
+}
+
+export function geoDataByFood (food) {
+  return fetch(config.requests.geoData(food))
 }

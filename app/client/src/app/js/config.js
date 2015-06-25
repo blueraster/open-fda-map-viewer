@@ -33,7 +33,7 @@ export const config = {
     },
     requests: {
       openFda: (recallReason) => `https://api.fda.gov/food/enforcement.json?search=reason_for_recall:"${recallReason}"`,
-      geocodes: 'temp'
+      geoData: (food) => `http://localhost:3000/getGeoData?food=${food}`
     }
   }
 }
