@@ -35,7 +35,7 @@ export const store = dispatcher.createStore(class {
         }
       })
 
-      let clusterLayer = new ClusterFeatureLayer({
+      let clustersLayer = new ClusterFeatureLayer({
           'id': 'clusters',
           'url': 'http://services.arcgis.com/oKgs2tbjK6zwTdvi/arcgis/rest/services/Major_World_Cities/FeatureServer/0',
           // 'distance': 75,
@@ -52,16 +52,18 @@ export const store = dispatcher.createStore(class {
           opacity: 0,
           outFields: []
       });
-      map.addLayer(clusterLayer)
+      map.addLayer(clustersLayer)
       map.on('extent-change', (event) => {
-        clusterLayer._reCluster()
+        clustersLayer._reCluster()
       })
 
-      let citiesLayer = new FeatureLayer('http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Major_Cities/FeatureServer/0', {
-        'id': 'cities',
-        'visible': false
-      })
-      map.addLayer(citiesLayer)
+      // let citiesLayer = new FeatureLayer('http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Major_Cities/FeatureServer/0', {
+      //   id: 'cities',
+      //   // MODE: FeatureLayer.MODE_SNAPSHOT,
+      //   outFields: ['NAME','ST'],
+      //   visible: false
+      // })
+      // map.addLayer(citiesLayer)
 
     })
 
@@ -69,54 +71,54 @@ export const store = dispatcher.createStore(class {
     this.map = map
   }
   handleQueryFdaSuccess (foodData) {
-    console.debug(foodData.length)
+    let map = this.map,
+        clustersLayer = map.getLayer('clusters'),
+        clusterData = [],
+        citiesToQuery = Array.from(new Set([for (d of foodData) `'${d.city}'`])),
+        cityFeatures = {},
+        matchedCityFoodData,
+        matchedStateFoodData,
+        unmatchedCityFoodData,
+        unmatchedStateFoodData
+
+    let chunkSize = 20,
+        chunksLength = Math.floor(citiesToQuery.length/chunkSize) + 1,
+        chunkIndex = 0,
+        chunks = []
+
+    while (chunkIndex !== chunksLength) {
+      chunks.push(citiesToQuery.slice(chunkSize*chunkIndex, (chunkSize*chunkIndex)+chunkSize))
+      chunkIndex++
+    }
+
+    chunks = [for (c of chunks) `NAME IN (${c.join(',')})`]
+
+    Promise.all([for (c of chunks) fetch(config.requests.cities(c))])
+      .then((responses) => Promise.all([for (r of responses) r.json()]))
+      .then((jsons) => {
+        ;[for (j of jsons) [for (f of j.features) cityFeatures[f.attributes.NAME] = {}]]
+        ;[for (j of jsons) [for (f of j.features) cityFeatures[f.attributes.NAME][f.attributes.ST] = f]]
+        unmatchedCityFoodData = [for (d of foodData) if (cityFeatures[d.city] === undefined) d]
+        matchedCityFoodData = [for (d of foodData) if (cityFeatures[d.city] !== undefined) d]
+        unmatchedStateFoodData = [for (d of matchedCityFoodData) if (cityFeatures[d.city][d.state] === undefined) d]
+        matchedStateFoodData = [for (d of matchedCityFoodData) if (cityFeatures[d.city][d.state] !== undefined) d]
+
+        for (let key in matchedStateFoodData) {
+          let data = matchedStateFoodData[key],
+              graphic = new Graphic(clustersLayer._clusterData[0].toJson()),
+              geometry = new Point(graphic.geometry.toJson()),
+              cityGeometry = cityFeatures[data.city][data.state].geometry
+
+          geometry = geometry.setX(cityGeometry.x)
+          geometry = geometry.setY(cityGeometry.y)
+          graphic = graphic.setGeometry(geometry)
+          clusterData.push(graphic)
+        }
+        clustersLayer._clusterData = clusterData
+        clustersLayer._reCluster()
+        clustersLayer.setOpacity(1)
+      })
   }
-  // createClusterLayer (foodData) {
-  //   let map = this.map
-  //   let apiData = foodData[0],
-  //       geoData = foodData[1],
-  //       clusterData = apiData.results.filter((data) => geoData[data['@id']] === undefined),
-  //       clusterLayer = map.getLayer('clusters')
-
-  //   // console.debug(apiData)
-  //   // debugger
-
-  //   // TODO: fix server-client data to be complete, just render entire geostore for now
-  //   clusterData = []
-  //   for (let key in geoData) {
-  //     let graphic = new Graphic(clusterLayer._clusterData[0].toJson()),
-  //         geometry = new Point(graphic.geometry.toJson())
-
-  //     geometry = geometry.setX(geoData[key].geometry.x)
-  //     geometry = geometry.setY(geoData[key].geometry.y)
-  //     graphic = graphic.setGeometry(geometry)
-  //     clusterData.push(graphic)
-  //   }
-
-  //   clusterLayer._clusterData = clusterData
-  //   clusterLayer._reCluster()
-  //   clusterLayer.setOpacity(1)
-
-  //   // map event point
-  //   let fdaEvent = foodData[2].results[0],
-  //       citiesLayer = map.getLayer('cities'),
-  //       statesLayer = map.getLayer('states')
-
-  //   console.log(fdaEvent)
-
-  //   citiesLayer.setDefinitionExpression(`ST = '${fdaEvent.state}' AND NAME = '${fdaEvent.city}'`)
-  //   citiesLayer.setVisibility(true)
-  //   citiesLayer.on('click', (event) => {
-  //     let content = Object.keys(fdaEvent).map((key) => `<div>${key}: ${fdaEvent[key]}</div>`).join('')
-  //     map.infoWindow.setFeatures([event.graphic])
-  //     map.infoWindow.setContent(`<div>${content}</div>`)
-  //     map.infoWindow.show(event.screenPoint)
-
-  //     let fdaStates = fdaEvent.distribution_pattern.split(', ').map((state) => `'${state}'`)
-  //     statesLayer.setDefinitionExpression(`STATE_ABBR IN (${fdaStates})`)
-  //     statesLayer.setVisibility(true)
-  //   })
-  // }
 }, 'mapStore')
 
 

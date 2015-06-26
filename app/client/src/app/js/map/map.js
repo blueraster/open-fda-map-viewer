@@ -52,7 +52,7 @@ export class Map extends React.Component {
     return (
       <div className='map-container absolute fill'>
         <div className='absolute text-center no-left no-right margin z-index-map'>
-          <div className='inline-block padding--small back-white'>
+          <div className='inline-block padding--small back-white--translucent border-radius'>
             {foodControls}
           </div>
         </div>

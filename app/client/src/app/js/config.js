@@ -41,10 +41,7 @@ export const config = {
 
     },
     requests: {
-      // openFdaEvent: () => 'https://api.fda.gov/food/enforcement.json?search=event_id:62644',
-      // openFda: (recallReason) => `http://api.fda.gov/food/enforcement.json?limit=100&skip=100&search=reason_for_recall:${recallReason}`,
-      ofdaRecalls: (recallTerm, limit, skip) => `http://api.fda.gov/food/enforcement.json?limit=${limit}&skip=${skip}&search=reason_for_recall:${recallTerm}`,
-      geoData: (food) => `http://localhost:3000/getGeoData?food=${food}`
+      cities: (whereClause) => `http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Major_Cities/FeatureServer/0/query?where=${whereClause}&outFields=ST,NAME&outSR=102100&returnGeometry=true&f=json`
     }
   }
 }
