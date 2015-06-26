@@ -28,7 +28,7 @@ export class Panel extends React.Component {
       )
 
       let firmRecalls = this.state.currentFirm ===undefined ? undefined :(
-        [for(r of this.state.firmData[this.state.currentFirm].allRecalls ) <li>{r.product_description}</li>]
+        [for(r of this.state.firmData[this.state.currentFirm].uniqueEventIds) <li>{r}</li>]
       )
       return (
         <div>
@@ -36,7 +36,7 @@ export class Panel extends React.Component {
           <select className='fill__wide' value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value)}}>
             {firmOptions}
           </select>
-          <div>All Recalls</div>
+          <div>Reported Recall Events </div>
           <ul>
             {firmRecalls}
           </ul>
@@ -51,7 +51,7 @@ export class Panel extends React.Component {
     }()
 
     return (
-        <div className='padding'>
+        <div className='padding back-white'>
           <div>Open FDA Enforcement MAPPER</div>
           {firmUI}
         </div>

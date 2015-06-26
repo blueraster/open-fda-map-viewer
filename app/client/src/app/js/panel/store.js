@@ -30,6 +30,7 @@ export const store = dispatcher.createStore(class {
         logField = (field) => [for (f of temp) console.debug(f.allRecalls)]
     this.firmData = uniqueFirms
     this.currentFirm = uniqueFirmNames[0]
+    console.log(uniqueFirms)
 
   }
 }, 'panelStore')

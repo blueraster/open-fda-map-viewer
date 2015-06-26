@@ -52,7 +52,7 @@ export class Chart extends React.Component {
   render () {
     let data = this.state.timeseries === undefined ? undefined : JSON.stringify(this.state.timeseries)
     return (
-      <div className='app-chart border-box absolute padding back-white overflow-auto'>
+      <div className='app-chart border-box absolute padding back-transparent overflow-auto'>
         <canvas id='chart' className='fill'></canvas>
       </div>
     )
