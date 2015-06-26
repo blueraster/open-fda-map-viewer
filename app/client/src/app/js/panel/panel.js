@@ -22,9 +22,7 @@ export class Panel extends React.Component {
     this.setState(state)
   }
   render () {
-    let firmUi
-
-    if (this.state.firmData === undefined) {
+    let firmUI = this.state.firmData === undefined ? <div>nofirms</div> : () => {
       let firmOptions = this.state.firmData === undefined ? undefined : (
         [for (d of Object.keys(this.state.firmData)) <option  value={d}>{d}</option>]
       )
@@ -32,15 +30,15 @@ export class Panel extends React.Component {
       let firmRecalls = this.state.currentFirm ===undefined ? undefined :(
         [for(r of this.state.firmData[this.state.currentFirm].allRecalls ) <li>{r.product_description}</li>]
       )
-      let firmUI = (
+      return (
         <div>
-          <label>Unique Firms ({this.state.firmDataLength})</label>
+          <label>Firms (total: {Object.keys(this.state.firmData).length}):</label>
           <select className='fill__wide' value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value)}}>
             {firmOptions}
           </select>
           <div>All Recalls</div>
           <ul>
-          {firmRecalls}
+            {firmRecalls}
           </ul>
           <div>Event Details</div>
           <div>
@@ -50,16 +48,12 @@ export class Panel extends React.Component {
           </div>
         </div>
       )
-
-    } else {
-      let firmUI = undefined
-    }
-
-
+    }()
 
     return (
         <div className='padding'>
           <div>Open FDA Enforcement MAPPER</div>
+          {firmUI}
         </div>
     )
   }

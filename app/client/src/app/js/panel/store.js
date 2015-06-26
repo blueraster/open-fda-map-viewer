@@ -6,7 +6,6 @@ import {map as config} from 'js/config'
 export const store = dispatcher.createStore(class {
   constructor () {
     this.firmData = undefined;
-    this.firmDataLength = undefined;
     this.currentFirm = undefined;
     this.bindListeners({
       setCurentFirm:actions.SET_CURRENT_FIRM,
@@ -30,7 +29,6 @@ export const store = dispatcher.createStore(class {
     let temp = uniqueFirms['Snoqualmlie Gourmet Ice Cream'],
         logField = (field) => [for (f of temp) console.debug(f.allRecalls)]
     this.firmData = uniqueFirms
-    this.firmDataLength = json.length
     this.currentFirm = uniqueFirmNames[0]
 
   }
