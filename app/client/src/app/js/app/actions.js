@@ -28,7 +28,7 @@ export const actions = dispatcher.createActions(class {
 
   queryFdaSuccess (foodData, food) {
     // TODO: remove
-    geocode(foodData, food)
+    //geocode(foodData, food)
     this.dispatch(foodData)
   }
 
