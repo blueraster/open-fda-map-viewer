@@ -13,7 +13,7 @@ export const config = {
     options: {
       basemap: 'dark-gray',
       zoom: 5,
-      minZoom: 3,
+      // minZoom: 3,
       center: [-100, 34.5]
     },
     foods: {
@@ -39,7 +39,7 @@ export const config = {
       }
     },
     requests: {
-      cities: (whereClause) => `http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Major_Cities/FeatureServer/0/query?where=${whereClause}&outFields=ST,NAME&outSR=102100&returnGeometry=true&f=json`
+      geoData: () => 'http://localhost:3000/getGeoData',
     }
   }
 }

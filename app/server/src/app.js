@@ -25,7 +25,7 @@ if (config.env === 'production') {
 } else {
   console.log('init data store from cached json')
   // TODO: load a whole complete store
-  geoStore = require('../data/geoStore-ice-cream.json')
+  geoStore = require('../data/geoStore.json')
   // TODO: refactor out cors when client is integrated into server static serving
   app.use(cors())
 }
@@ -56,20 +56,24 @@ let server = app.listen(config.server.port, function () {
 // })
 
 app.get('/getGeoData',function(req,res){
-  let food
-
-  if (req.query.food === undefined) {
-    res.status(404).send('404: Bad Request - missing food query')
-  } else {
-    food = req.query.food.trim().toLowerCase()
-  }
-
-  if (geoStore === undefined) {
-    res.status(500).send('500: Server Error - Resources have not been initialized')
-  } else if (geoStore[food] === undefined) {
-    res.status(500).send('500: Server Error - Resource does not exist')
-  } else {
-    res.send(geoStore[food])
-  }
+  res.send(geoStore)
 })
+
+// app.get('/getGeoData',function(req,res){
+//   let food
+
+//   if (req.query.food === undefined) {
+//     res.status(404).send('404: Bad Request - missing food query')
+//   } else {
+//     food = req.query.food.trim().toLowerCase()
+//   }
+
+//   if (geoStore === undefined) {
+//     res.status(500).send('500: Server Error - Resources have not been initialized')
+//   } else if (geoStore[food] === undefined) {
+//     res.status(500).send('500: Server Error - Resource does not exist')
+//   } else {
+//     res.send(geoStore[food])
+//   }
+// })
 

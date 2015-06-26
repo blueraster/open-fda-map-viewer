@@ -80,43 +80,25 @@ export const store = dispatcher.createStore(class {
     let map = this.map,
         clustersLayer = map.getLayer('clusters'),
         clusterData = [],
-        // citiesToQuery = Array.from(new Set([for (d of foodData) `'${d.city}'`])),
-        citiesToQuery = Array.from(new Set([for (d of foodData) d.city])).map((c) => `'${c.replace("'","''")}'`),
-        cityFeatures = {},
         matchedCityFoodData,
         matchedStateFoodData,
         unmatchedCityFoodData,
         unmatchedStateFoodData
 
-    let chunkSize = 20,
-        chunksLength = Math.floor(citiesToQuery.length/chunkSize) + 1,
-        chunkIndex = 0,
-        chunks = []
+    fetch(config.requests.geoData())
+      .then((response) => response.json())
+      .then((json) => {
 
-    while (chunkIndex !== chunksLength) {
-      chunks.push(citiesToQuery.slice(chunkSize*chunkIndex, (chunkSize*chunkIndex)+chunkSize))
-      chunkIndex++
-    }
+        unmatchedStateFoodData = [for (d of foodData) if (json[d.state] === undefined) d]
+        matchedStateFoodData = [for (d of foodData) if (json[d.state] !== undefined) d]
+        unmatchedCityFoodData = [for (d of matchedStateFoodData) if (json[d.state][d.city] === undefined) d]
+        matchedCityFoodData = [for (d of matchedStateFoodData) if (json[d.state][d.city] !== undefined) d]
 
-    chunks = [for (c of chunks) `NAME IN (${c.join(',')})`]
-
-    Promise.all([for (c of chunks) fetch(config.requests.cities(c))])
-      .then((responses) => Promise.all([for (r of responses) r.json()]))
-      .then((jsons) => {
-        ;[for (j of jsons) [for (f of j.features) cityFeatures[f.attributes.NAME] = {}]]
-        ;[for (j of jsons) [for (f of j.features) cityFeatures[f.attributes.NAME][f.attributes.ST] = f]]
-        unmatchedCityFoodData = [for (d of foodData) if (cityFeatures[d.city] === undefined) d]
-        matchedCityFoodData = [for (d of foodData) if (cityFeatures[d.city] !== undefined) d]
-        unmatchedStateFoodData = [for (d of matchedCityFoodData) if (cityFeatures[d.city][d.state] === undefined) d]
-        matchedStateFoodData = [for (d of matchedCityFoodData) if (cityFeatures[d.city][d.state] !== undefined) d]
-
-        console.debug(`foodData: ${foodData.length}, matched: ${matchedStateFoodData.length}, unmatched: ${unmatchedCityFoodData.length + unmatchedStateFoodData.length}, (foodData.length == (matched.length + unmatched.length): ?)`)
-
-        for (let key in matchedStateFoodData) {
-          let data = matchedStateFoodData[key],
+        for (let key in matchedCityFoodData) {
+          let data = matchedCityFoodData[key],
               graphic = new Graphic(clustersLayer._clusterData[0].toJson()),
               geometry = new Point(graphic.geometry.toJson()),
-              cityGeometry = cityFeatures[data.city][data.state].geometry
+              cityGeometry = json[data.state][data.city]
 
           geometry = geometry.setX(cityGeometry.x)
           geometry = geometry.setY(cityGeometry.y)
@@ -126,7 +108,53 @@ export const store = dispatcher.createStore(class {
         clustersLayer._clusterData = clusterData
         clustersLayer._reCluster()
         clustersLayer.setOpacity(1)
+
+        // debugger;
       })
+
+    //     // citiesToQuery = Array.from(new Set([for (d of foodData) `'${d.city}'`])),
+    //     citiesToQuery = Array.from(new Set([for (d of foodData) d.city])).map((c) => `'${c.replace("'","''")}'`),
+    //     cityFeatures = {},
+
+    // let chunkSize = 20,
+    //     chunksLength = Math.floor(citiesToQuery.length/chunkSize) + 1,
+    //     chunkIndex = 0,
+    //     chunks = []
+
+    // while (chunkIndex !== chunksLength) {
+    //   chunks.push(citiesToQuery.slice(chunkSize*chunkIndex, (chunkSize*chunkIndex)+chunkSize))
+    //   chunkIndex++
+    // }
+
+    // chunks = [for (c of chunks) `NAME IN (${c.join(',')})`]
+
+    // Promise.all([for (c of chunks) fetch(config.requests.cities(c))])
+    //   .then((responses) => Promise.all([for (r of responses) r.json()]))
+    //   .then((jsons) => {
+    //     ;[for (j of jsons) [for (f of j.features) cityFeatures[f.attributes.NAME] = {}]]
+    //     ;[for (j of jsons) [for (f of j.features) cityFeatures[f.attributes.NAME][f.attributes.ST] = f]]
+    //     unmatchedCityFoodData = [for (d of foodData) if (cityFeatures[d.city] === undefined) d]
+    //     matchedCityFoodData = [for (d of foodData) if (cityFeatures[d.city] !== undefined) d]
+    //     unmatchedStateFoodData = [for (d of matchedCityFoodData) if (cityFeatures[d.city][d.state] === undefined) d]
+    //     matchedStateFoodData = [for (d of matchedCityFoodData) if (cityFeatures[d.city][d.state] !== undefined) d]
+
+    //     console.debug(`foodData: ${foodData.length}, matched: ${matchedStateFoodData.length}, unmatched: ${unmatchedCityFoodData.length + unmatchedStateFoodData.length}, (foodData.length == (matched.length + unmatched.length): ?)`)
+
+    //     for (let key in matchedStateFoodData) {
+    //       let data = matchedStateFoodData[key],
+    //           graphic = new Graphic(clustersLayer._clusterData[0].toJson()),
+    //           geometry = new Point(graphic.geometry.toJson()),
+    //           cityGeometry = cityFeatures[data.city][data.state].geometry
+
+    //       geometry = geometry.setX(cityGeometry.x)
+    //       geometry = geometry.setY(cityGeometry.y)
+    //       graphic = graphic.setGeometry(geometry)
+    //       clusterData.push(graphic)
+    //     }
+    //     clustersLayer._clusterData = clusterData
+    //     clustersLayer._reCluster()
+    //     clustersLayer.setOpacity(1)
+    //   })
   }
 }, 'mapStore')
 
