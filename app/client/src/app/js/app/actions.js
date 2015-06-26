@@ -21,6 +21,12 @@ export const actions = dispatcher.createActions(class {
     //     html: true
     //   });
 
+    swal({
+        title:messages.title,
+        text:React.renderToStaticMarkup(<Welcome />),
+        html: true
+      });
+
     this.dispatch()
 
   }
