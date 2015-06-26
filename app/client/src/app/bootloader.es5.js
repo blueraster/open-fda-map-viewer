@@ -14,6 +14,7 @@
           {name: 'js', location: URL + '/js'},
           {name: 'app', location: URL + '/js/app'},
           {name: 'map', location: URL + '/js/map'},
+          {name: 'panel', location: URL + '/js/panel'},
           {name: 'util', location: URL + '/js/util'},
           {name: 'lib', location: URL + '/lib'},
           {name: 'shim', location: URL + '/shim'},
