@@ -5,4 +5,8 @@ export const actions = dispatcher.createActions(class {
   panelInit () {
     //something
   }
+  setCurrentFirm(firmName){
+    this.dispatch(firmName)
+
+  }
 })

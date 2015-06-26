@@ -1,6 +1,6 @@
 import {messages} from 'js/messages'
 import {resources} from 'js/resources'
-import {actions} from 'app/actions'
+import {actions} from 'panel/actions'
 import {store} from 'panel/store'
 import {appStore} from 'app/store'
 
@@ -22,25 +22,29 @@ export class Panel extends React.Component {
     this.setState(state)
   }
   render () {
+    let firmOptions = this.state.firmData === undefined ? undefined : (
+      [for (d of Object.keys(this.state.firmData)) <option  value={d}>{d}</option>]
+    )
+
+     let firmRecalls = this.state.currentFirm ===undefined ? undefined :(
+      [for(r of this.state.firmData[this.state.currentFirm].allRecalls ) <li>{r.product_description}</li>]
+     )
+
     return (
         <div className='padding'>
           <div>Open FDA Enforcement MAPPER</div>
           <div>
-            <select>
-              <option>Joe's Sauce</option>
+            <label>Unique Firms ({this.state.firmDataLength})</label>
+            <select value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value)}}>
+              {firmOptions}
             </select>
-            <div>total event count</div>
+            <div>All Recalls</div>
             <ul>
-              <li>event 1</li>
-              <li>event 2</li>
-              <li>event 3</li>
-              <li>event 4</li>
+            {firmRecalls}
             </ul>
             <div>Event Details</div>
             <div>
               <ul>
-                <li>attribute</li>
-                <li>attribute</li>
                 <li>attribute</li>
               </ul>
             </div>
