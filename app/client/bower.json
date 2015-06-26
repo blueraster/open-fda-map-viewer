@@ -14,6 +14,7 @@
     "fetch": "~0.9.0",
     "alt": "~0.16.10",
     "cluster-layer-js": "Esri/cluster-layer-js",
-    "sweetalert": "~1.0.1"
+    "sweetalert": "~1.0.1",
+    "moment": "~2.10.3"
   }
 }

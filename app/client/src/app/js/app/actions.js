@@ -31,4 +31,8 @@ export const actions = dispatcher.createActions(class {
     geocode(foodData, food)
     this.dispatch(foodData)
   }
+
+  queryFdaTimeseriesSuccess (timeseries) {
+    this.dispatch(timeseries)
+  }
 })

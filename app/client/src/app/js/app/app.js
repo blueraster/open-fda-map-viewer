@@ -4,6 +4,7 @@ import {actions} from 'app/actions'
 import {store} from 'app/store'
 import {Map} from 'map/map'
 import {Panel} from 'panel/panel'
+import {Chart} from 'app/chart'
 // lib/vendor/esri/dojo
 import React from 'react'
 
@@ -15,6 +16,7 @@ export class App extends React.Component {
       <div className='app '>
         <div className="app__content back-gray--dark">
           <Map />
+          <Chart />
         </div>
         <div className="app__panel">
           <Panel />

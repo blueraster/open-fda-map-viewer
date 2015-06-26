@@ -25,6 +25,7 @@
           ['react', 'vendor/react/react'],
           ['ClusterFeatureLayer', 'vendor/cluster-layer-js/src/clusterfeaturelayer'],
           ['sweetalert','vendor/sweetalert/dist/sweetalert.min'],
+          ['moment', 'vendor/moment/min/moment.min'],
           ['babel-polyfill', 'shim/babel-polyfill/browser-polyfill'],
           ['fetch', 'shim/fetch/fetch']
         ],
