@@ -13,7 +13,6 @@ export class Panel extends React.Component {
   }
   componentDidMount () {
     store.listen(this.onChange.bind(this))
-    actions.mapInit()
   }
   componentWillUnmount () {
     store.unlisten(this.onChange)
@@ -23,7 +22,7 @@ export class Panel extends React.Component {
   }
   render () {
     return (
-        <div className='app__panel'>
+        <div className='padding'>
           <div>Open FDA Enforcement MAPPER</div>
           <div>
             <select>

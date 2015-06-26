@@ -54,6 +54,9 @@ export function getFoodData (food) {
             ;[for (f of uniqueFirmNames) uniqueFirms[f] = {allRecalls: getRecallsByFirm(f), uniqueEventIds: []}]
             ;[for (f of uniqueFirmNames) uniqueFirms[f].uniqueEventIds = Array.from(new Set([for (r of uniqueFirms[f].allRecalls) r.event_id]))]
             console.debug(uniqueFirms)
+            console.debug(uniqueFirms['Snoqualmie Gourmet Ice Cream'])
+            let temp = uniqueFirms['Snoqualmlie Gourmet Ice Cream'],
+                logField = (field) => [for (f of temp) console.debug(f.allRecalls)]
             debugger;
           })
       })
