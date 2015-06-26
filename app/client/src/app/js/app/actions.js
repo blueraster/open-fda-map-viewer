@@ -2,6 +2,7 @@ import {dispatcher} from 'js/dispatcher'
 import {app as config} from 'js/config'
 import {messages} from 'js/messages'
 import {Welcome} from 'app/welcome'
+import {geocode} from 'util/shame'
 // Lib Vendor
 import React from 'react'
 import sweetAlert from 'sweetalert'
@@ -12,8 +13,9 @@ export const actions = dispatcher.createActions(class {
     document.body.className = config.dojoTheme
 
     swal({
-      title:messages.title,
-      text:React.renderToStaticMarkup(<Welcome />),
+      title: messages.title,
+      text: React.renderToStaticMarkup(<Welcome />),
+      allowEscapeKey: true,
       html: true
     });
 
@@ -24,7 +26,9 @@ export const actions = dispatcher.createActions(class {
     this.dispatch(food)
   }
 
-  queryFdaSuccess (json) {
-    this.dispatch(json)
+  queryFdaSuccess (foodData, food) {
+    // TODO: remove
+    geocode(foodData, food)
+    this.dispatch(foodData)
   }
 })

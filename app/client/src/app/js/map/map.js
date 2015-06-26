@@ -42,8 +42,8 @@ export class Map extends React.Component {
 
       foodControls.push(
         <div className='inline-block margin--small__wide'>
-          <button className='margin__right'>{groupName}</button>
-          <select>{foods}</select>
+          <button onClick={() => {appActions.queryFda(this.state.selectedBacteria)}}>{groupName}</button>
+          <select onChange={(event) => {actions.setSelectedBacteria(event.target.value)}} value={this.state.selectedBacteria}>{foods}</select>
         </div>
       )
     }

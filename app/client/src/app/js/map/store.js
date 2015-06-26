@@ -14,8 +14,11 @@ import on from 'dojo/on'
 export const store = dispatcher.createStore(class {
   constructor () {
     this.map = undefined
+    this.selectedFood = undefined
+    this.selectedBacteria = config.foods.nested.bacteria[0]
     this.bindListeners({
       mapInit: actions.MAP_INIT,
+      setSelectedBacteria: actions.SET_SELECTED_BACTERIA,
       handleQueryFdaSuccess: appActions.QUERY_FDA_SUCCESS
     })
   }
@@ -70,11 +73,15 @@ export const store = dispatcher.createStore(class {
     window.map = map
     this.map = map
   }
+  setSelectedBacteria (Bacteria) {
+    this.selectedBacteria =Bacteria
+  }
   handleQueryFdaSuccess (foodData) {
     let map = this.map,
         clustersLayer = map.getLayer('clusters'),
         clusterData = [],
-        citiesToQuery = Array.from(new Set([for (d of foodData) `'${d.city}'`])),
+        // citiesToQuery = Array.from(new Set([for (d of foodData) `'${d.city}'`])),
+        citiesToQuery = Array.from(new Set([for (d of foodData) d.city])).map((c) => `'${c.replace("'","''")}'`),
         cityFeatures = {},
         matchedCityFoodData,
         matchedStateFoodData,
@@ -102,6 +109,8 @@ export const store = dispatcher.createStore(class {
         matchedCityFoodData = [for (d of foodData) if (cityFeatures[d.city] !== undefined) d]
         unmatchedStateFoodData = [for (d of matchedCityFoodData) if (cityFeatures[d.city][d.state] === undefined) d]
         matchedStateFoodData = [for (d of matchedCityFoodData) if (cityFeatures[d.city][d.state] !== undefined) d]
+
+        console.debug(`foodData: ${foodData.length}, matched: ${matchedStateFoodData.length}, unmatched: ${unmatchedCityFoodData.length + unmatchedStateFoodData.length}, (foodData.length == (matched.length + unmatched.length): ?)`)
 
         for (let key in matchedStateFoodData) {
           let data = matchedStateFoodData[key],
