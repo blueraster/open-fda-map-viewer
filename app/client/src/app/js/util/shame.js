@@ -5,7 +5,7 @@ let foodDatas = {},
 runGeocodes = function (foodDatas) {
   console.log(foodDatas)
   let unique_locations = Array.from(new Set([for (food of Object.keys(foodDatas)) for(loc of foodDatas[food]) loc]))
-  debugger
+
   // TODO:
   //   debugger;
   //   // TODO: get all unique locations
