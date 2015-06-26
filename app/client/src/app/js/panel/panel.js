@@ -22,33 +22,44 @@ export class Panel extends React.Component {
     this.setState(state)
   }
   render () {
-    let firmOptions = this.state.firmData === undefined ? undefined : (
-      [for (d of Object.keys(this.state.firmData)) <option  value={d}>{d}</option>]
-    )
+    let firmUi
 
-     let firmRecalls = this.state.currentFirm ===undefined ? undefined :(
-      [for(r of this.state.firmData[this.state.currentFirm].allRecalls ) <li>{r.product_description}</li>]
-     )
+    if (this.state.firmData === undefined) {
+      let firmOptions = this.state.firmData === undefined ? undefined : (
+        [for (d of Object.keys(this.state.firmData)) <option  value={d}>{d}</option>]
+      )
+
+      let firmRecalls = this.state.currentFirm ===undefined ? undefined :(
+        [for(r of this.state.firmData[this.state.currentFirm].allRecalls ) <li>{r.product_description}</li>]
+      )
+      let firmUI = (
+        <div>
+          <label>Unique Firms ({this.state.firmDataLength})</label>
+          <select className='fill__wide' value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value)}}>
+            {firmOptions}
+          </select>
+          <div>All Recalls</div>
+          <ul>
+          {firmRecalls}
+          </ul>
+          <div>Event Details</div>
+          <div>
+            <ul>
+              <li>attribute</li>
+            </ul>
+          </div>
+        </div>
+      )
+
+    } else {
+      let firmUI = undefined
+    }
+
+
 
     return (
         <div className='padding'>
           <div>Open FDA Enforcement MAPPER</div>
-          <div>
-            <label>Unique Firms ({this.state.firmDataLength})</label>
-            <select value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value)}}>
-              {firmOptions}
-            </select>
-            <div>All Recalls</div>
-            <ul>
-            {firmRecalls}
-            </ul>
-            <div>Event Details</div>
-            <div>
-              <ul>
-                <li>attribute</li>
-              </ul>
-            </div>
-          </div>
         </div>
     )
   }
