@@ -2,6 +2,7 @@ import {messages} from 'js/messages'
 import {resources} from 'js/resources'
 import {actions} from 'app/actions'
 import {store} from 'panel/store'
+import {appStore} from 'app/store'
 
 // lib/vendor/esri/dojo
 import React from 'react'

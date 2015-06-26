@@ -1,7 +1,11 @@
+// Snoqualmie Gourmet Ice Cream
 export const config = {
   app: {
     rootClassName: 'root',
-    dojoTheme: 'claro'
+    dojoTheme: 'claro',
+    requests: {
+      ofdaRecalls: (recallTerm, limit, skip) => `http://api.fda.gov/food/enforcement.json?limit=${limit}&skip=${skip}&search=reason_for_recall:${recallTerm}`
+    }
   },
   map: {
     id: 'map',

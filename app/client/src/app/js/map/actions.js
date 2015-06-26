@@ -5,10 +5,4 @@ export const actions = dispatcher.createActions(class {
   mapInit () {
     this.dispatch()
   }
-  queryFda (food) {
-    this.dispatch(food)
-  }
-  createClusterLayer (foodData) {
-    this.dispatch(foodData)
-  }
 })

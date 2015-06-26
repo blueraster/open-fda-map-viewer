@@ -1,5 +1,6 @@
 import {map as config} from 'js/config'
 import {actions} from 'map/actions'
+import {actions as appActions} from 'app/actions'
 import {Controls} from 'map/controls'
 import {store} from 'map/store'
 // lib/vendor/esri/dojo
@@ -29,7 +30,8 @@ export class Map extends React.Component {
     // individual foods
     for (let key in config.foods.individual) {
       let food = config.foods.individual[key]
-      foodControls.push(<div className='inline-block margin--small__wide'><button onClick={() => {actions.queryFda(food)}}>{food}</button></div>)
+      // foodControls.push(<div className='inline-block margin--small__wide'><button onClick={() => {actions.queryFda(food)}}>{food}</button></div>)
+      foodControls.push(<div className='inline-block margin--small__wide'><button onClick={() => {appActions.queryFda(food)}}>{food}</button></div>)
     }
 
     // nested foods

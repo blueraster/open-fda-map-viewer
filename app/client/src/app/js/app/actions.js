@@ -12,22 +12,19 @@ export const actions = dispatcher.createActions(class {
     document.body.className = config.dojoTheme
 
     // swal({
-    //     title:`
-    //       <h2>${messages.title}</h2>
-    //       <p>${messages.header}</p>
-    //       <p>${messages.subheader}</p>
-    //     `,
-    //     text: 'A custom <span style="color:#F8BB86">html<span> message.',
-    //     html: true
-    //   });
-
-    swal({
-        title:messages.title,
-        text:React.renderToStaticMarkup(<Welcome />),
-        html: true
-      });
+    //   title:messages.title,
+    //   text:React.renderToStaticMarkup(<Welcome />),
+    //   html: true
+    // });
 
     this.dispatch()
+  }
 
+  queryFda (food) {
+    this.dispatch(food)
+  }
+
+  queryFdaSuccess (json) {
+    this.dispatch(json)
   }
 })
