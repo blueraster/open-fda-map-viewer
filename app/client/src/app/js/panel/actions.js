@@ -9,6 +9,6 @@ export const actions = dispatcher.createActions(class {
     this.dispatch(firmName)
   }
   setCurrentEvent(eventID){
-    this.dispatch(firmName)
+    this.dispatch(eventID)
   }
 })

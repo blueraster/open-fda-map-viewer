@@ -42,15 +42,18 @@ export class Panel extends React.Component {
         [for (d of Object.keys(this.state.firmData)) <option  value={d}>{d} ({this.state.firmData[d].uniqueEventIds.length})</option>]
       )
 
-      let firmRecalls = this.state.currentFirm ===undefined ? undefined :(
+      let firmRecalls = this.state.currentFirm === undefined ? undefined :(
         [for(r of this.state.firmData[this.state.currentFirm].uniqueEventIds) <option>{r}</option>]
       )
       let recallDetails = this.state.currentSelectedFirmEvent ==undefined ? undefined: () =>{
         let currentAllRecalls = this.state.firmData[this.state.currentFirm.toString()].allRecalls
         //TODO Get all Recalls associated with event
-        let uniqueEventofFirm = Array.from(new Set([for (r of currentAllRecalls ) r.event_id]))
-        return uniqueEventofFirm
-
+        let options = Array.from(new Set([for (r of currentAllRecalls) if (r.event_id === this.state.currentSelectedFirmEvent) <option>{r.recall_number}</option>]))
+        return (
+          <select>
+            {options}
+          </select>
+        )
       }()
       //TODO
       // Add recall counts hide singler recall counts
@@ -65,11 +68,7 @@ export class Panel extends React.Component {
             {firmRecalls}
           </select>
           <div>Recall Details</div>
-            <div>
-              <ul>
-                <li>{recallDetails}</li>
-              </ul>
-            </div>
+            {recallDetails}
         </div>
       )
     }()

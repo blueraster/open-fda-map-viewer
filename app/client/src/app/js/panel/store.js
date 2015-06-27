@@ -16,14 +16,13 @@ export const store = dispatcher.createStore(class {
   }
   setCurentFirm(firmName){
     this.currentFirm = firmName
+    this.currentSelectedFirmEvent = this.firmData[this.currentFirm].uniqueEventIds[0]
   }
   setCurrentEvent(eventID){
     this.currentSelectedFirmEvent = eventID
   }
   handleQueryFdaSuccess (json) {
     // TODO: refactor panel processing
-    // console.debug(uniqueFirms)
-    // console.debug(uniqueFirms['Snoqualmie Gourmet Ice Cream'])
     let uniqueFirms = {},
         uniqueFirmNames,
         unique,
@@ -35,9 +34,6 @@ export const store = dispatcher.createStore(class {
         logField = (field) => [for (f of temp) console.debug(f.allRecalls)]
     this.firmData = uniqueFirms
     this.currentFirm = uniqueFirmNames[0]
-    this.currentSelectedFirmEvent = uniqueFirms[uniqueFirmNames[0]].uniqueEventIds
-    debugger
-    console.log(uniqueFirms)
-
+    this.currentSelectedFirmEvent = uniqueFirms[uniqueFirmNames[0]].uniqueEventIds[0]
   }
 }, 'panelStore')
