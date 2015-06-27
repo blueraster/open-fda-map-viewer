@@ -35,7 +35,8 @@ export const store = dispatcher.createStore(class {
         logField = (field) => [for (f of temp) console.debug(f.allRecalls)]
     this.firmData = uniqueFirms
     this.currentFirm = uniqueFirmNames[0]
-    this.currentSelectedFirmEvent = uniqueFirms[uniqueFirmNames[0]].uniqueEventIds[0]
+    this.currentSelectedFirmEvent = uniqueFirms[uniqueFirmNames[0]].uniqueEventIds
+    debugger
     console.log(uniqueFirms)
 
   }

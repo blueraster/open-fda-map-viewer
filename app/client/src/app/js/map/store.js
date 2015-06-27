@@ -50,7 +50,7 @@ export const store = dispatcher.createStore(class {
           // 'singleTemplate': infoTemplate,
           'useDefaultSymbol': false,
           'zoomOnClick': true,
-          // 'zoomOnClick': false,
+          'zoomOnClick': false,
           'showSingles': true,
           'objectIdField': 'FID',
           // outFields: ['NAME', 'COUNTRY', 'POPULATION', 'CAPITAL']
