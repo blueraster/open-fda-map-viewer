@@ -10,6 +10,7 @@ export const store = dispatcher.createStore(class {
     this.foodToQuery = undefined
     this.timeseries = undefined
     this.chart = undefined
+    this.infoWindowContent = undefined
     this.chartContext = undefined
     this.bindListeners({
       setChartContext: actions.SET_CHART_CONTEXT,

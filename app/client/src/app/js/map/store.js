@@ -3,7 +3,9 @@ import {dispatcher} from 'js/dispatcher'
 import {actions} from 'map/actions'
 import {actions as appActions} from 'app/actions'
 import {map as config} from 'js/config'
+import {InfoWindowContent} from 'map/infoWindowContent'
 // lib/vendor/esri/dojo
+import React from 'react'
 import ClusterFeatureLayer from 'ClusterFeatureLayer'
 import esriMap from 'esri/map'
 import FeatureLayer from 'esri/layers/FeatureLayer'
@@ -68,8 +70,16 @@ export const store = dispatcher.createStore(class {
       // })
       // map.addLayer(citiesLayer)
 
+      map.infoWindow.on('show', () => {
+        // map.infoWindow.setContent(React.renderToStaticMarkup(<InfoWindowContent />))
+      })
+      map.infoWindow.on('selection-change', () => {
+        map.infoWindow.setContent(React.renderToStaticMarkup(<InfoWindowContent />))
+      })
+      map.infoWindow.on('hide', () => {
+        console.debug('unmount component')
+      })
     })
-
     window.map = map
     this.map = map
   }
@@ -103,6 +113,7 @@ export const store = dispatcher.createStore(class {
           geometry = geometry.setX(cityGeometry.x)
           geometry = geometry.setY(cityGeometry.y)
           graphic = graphic.setGeometry(geometry)
+          graphic.attributes = data
           clusterData.push(graphic)
         }
         clustersLayer._clusterData = clusterData
