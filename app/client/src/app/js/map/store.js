@@ -49,7 +49,6 @@ export const store = dispatcher.createStore(class {
           'resolution': map.extent.getWidth() / map.width,
           // 'singleTemplate': infoTemplate,
           'useDefaultSymbol': false,
-          'zoomOnClick': true,
           'zoomOnClick': false,
           'showSingles': true,
           'objectIdField': 'FID',
