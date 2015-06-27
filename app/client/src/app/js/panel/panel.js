@@ -57,10 +57,6 @@ export class Panel extends React.Component {
         return this.state.currentSelectedRecall
       }()
 
-
-
-
-
       //TODO
       // Add recall counts hide singler recall counts
       return (
@@ -70,11 +66,11 @@ export class Panel extends React.Component {
             {firmOptions}
           </select>
           <div>Listed recall events</div>
-          <select className="fill__wide">
+          <select className="fill__wide" value={this.state.currentSelectedFirmEvent} onChange={(event) =>{actions.setCurrentEvent(event.target.value)}}>
             {firmEvents}
           </select>
           <div>Event Recalls</div>
-          <select className="fill__wide">
+          <select className="fill__wide" value={this.state.currentSelectedRecall} onChange={(event) =>{actions.setCurrentRecall(event.target.value)}} >
             {eventRecalls}
           </select>
 

@@ -21,18 +21,16 @@ export const store = dispatcher.createStore(class {
     this.currentSelectedFirmEvent = this.firmData[this.currentFirm].uniqueEventIds[0]
     let allrecalls = this.firmData[this.currentFirm].allRecalls
     this.currentSelectedRecall = Array.from(new Set([for (r of allrecalls) if (r.event_id === this.currentSelectedFirmEvent) r.recall_number]))[0]
-    //this.currentSelectedRecall = Array.from(new Set([for (r of allrecalls) if (r.event_id === this.currentSelectedFirmEvent) r.recall_number]))[0]
+
   }
   setCurrentEvent(eventID){
+    console.debug(eventID)
     this.currentSelectedFirmEvent = eventID
     let allrecalls = this.firmData[this.currentFirm].allRecalls
     this.currentSelectedRecall = Array.from(new Set([for (r of allrecalls) if (r.event_id === this.currentSelectedFirmEvent) r.recall_number]))[0]
-    //this.currentSelectedRecall = Array.from(new Set([for (r of allrecalls) if (r.event_id === this.currentSelectedFirmEvent) r.recall_number]))[0]
   }
   setCurrentRecall(recallID){
     this.currentSelectedRecall = recallID
-    let allrecalls = this.firmData[this.currentFirm].allRecalls
-    this.currentSelectedRecall = Array.from(new Set([for (r of allrecalls) if (r.event_id === this.currentSelectedFirmEvent) r.recall_number]))[0]
   }
   handleQueryFdaSuccess (json) {
     // TODO: refactor panel processing
