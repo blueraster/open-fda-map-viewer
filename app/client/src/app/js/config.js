@@ -32,6 +32,7 @@ export const config = {
       basemap: 'dark-gray',
       zoom: 5,
       minZoom: 3,
+      maxZoom: 8,
       center: [-100, 34.5]
     },
     controls: {

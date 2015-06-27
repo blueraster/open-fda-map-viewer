@@ -23,8 +23,7 @@ export class Map extends React.Component {
   }
   render () {
     let map = this.state.map,
-        controls = map === undefined ? undefined : <Controls {...this.state} />,
-        infoWindow = map === undefined ? undefined : map.infoWindow.isShowing === false ? undefined : <InfoWindow {...this.state}/>
+        controls = map === undefined ? undefined : <Controls {...this.state} />
 
     return (
       <div className='map-container absolute fill'>
