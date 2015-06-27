@@ -14,7 +14,7 @@ export const config = {
       individual: {
         iceCream: 'Ice Cream',
         wheat: 'Wheat',
-        // salads: 'Salads',
+        salads: 'Salads',
         peanuts: 'Peanuts'
       },
       nested: {

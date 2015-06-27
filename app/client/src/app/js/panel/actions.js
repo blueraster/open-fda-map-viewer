@@ -11,4 +11,7 @@ export const actions = dispatcher.createActions(class {
   setCurrentEvent(eventID){
     this.dispatch(eventID)
   }
+  setCurrentRecall(recallID){
+    this.dispatch(recallID)
+  }
 })
