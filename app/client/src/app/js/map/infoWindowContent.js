@@ -26,7 +26,6 @@ export class InfoWindowContent extends React.Component {
     }()
     return (
       <div>
-        {new Date().toISOString()}
         <div onClick={() => {console.debug("hey")}}>{ui}</div>
       </div>
     )
