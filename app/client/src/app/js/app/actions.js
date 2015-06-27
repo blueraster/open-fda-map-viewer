@@ -23,7 +23,7 @@ export const actions = dispatcher.createActions(class {
     this.dispatch()
   }
 
-  initChart (context) {
+  setChartContext (context) {
     this.dispatch(context)
   }
 
