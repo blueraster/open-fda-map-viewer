@@ -7,6 +7,5 @@ export const actions = dispatcher.createActions(class {
   }
   setCurrentFirm(firmName){
     this.dispatch(firmName)
-
   }
 })

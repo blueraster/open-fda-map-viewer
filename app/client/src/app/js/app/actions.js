@@ -22,6 +22,10 @@ export const actions = dispatcher.createActions(class {
     this.dispatch()
   }
 
+  initChart (context) {
+    this.dispatch(context)
+  }
+
   queryFda (food) {
     this.dispatch(food)
   }
