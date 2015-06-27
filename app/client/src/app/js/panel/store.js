@@ -5,15 +5,20 @@ import {map as config} from 'js/config'
 
 export const store = dispatcher.createStore(class {
   constructor () {
-    this.firmData = undefined;
-    this.currentFirm = undefined;
+    this.firmData = undefined
+    this.currentFirm = undefined
+    this.currentSelectedFirmEvent = undefined
     this.bindListeners({
       setCurentFirm:actions.SET_CURRENT_FIRM,
-      handleQueryFdaSuccess: appActions.QUERY_FDA_SUCCESS
+      handleQueryFdaSuccess: appActions.QUERY_FDA_SUCCESS,
+      setCurrentEvent:actions.SET_CURRENT_EVENT
     })
   }
   setCurentFirm(firmName){
     this.currentFirm = firmName
+  }
+  setCurrentEvent(eventID){
+    this.currentSelectedFirmEvent = eventID
   }
   handleQueryFdaSuccess (json) {
     // TODO: refactor panel processing
@@ -30,6 +35,7 @@ export const store = dispatcher.createStore(class {
         logField = (field) => [for (f of temp) console.debug(f.allRecalls)]
     this.firmData = uniqueFirms
     this.currentFirm = uniqueFirmNames[0]
+    this.currentSelectedFirmEvent = uniqueFirms[uniqueFirmNames[0]].uniqueEventIds[0]
     console.log(uniqueFirms)
 
   }

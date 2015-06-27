@@ -43,7 +43,10 @@ export class Panel extends React.Component {
       )
 
       let firmRecalls = this.state.currentFirm ===undefined ? undefined :(
-        [for(r of this.state.firmData[this.state.currentFirm].uniqueEventIds) <li>{r}</li>]
+        [for(r of this.state.firmData[this.state.currentFirm].uniqueEventIds) <option>{r}</option>]
+      )
+      let recallDetails = this.state.currentSelectedFirmEvent ==undefined ? undefined: (
+        this.state.currentSelectedFirmEvent
       )
       return (
         <div>
@@ -52,15 +55,15 @@ export class Panel extends React.Component {
             {firmOptions}
           </select>
           <div>Reported Recall Events </div>
-          <ul>
+          <select className="fill__wide">
             {firmRecalls}
-          </ul>
-          <div>Event Details</div>
-          <div>
-            <ul>
-              <li>attribute</li>
-            </ul>
-          </div>
+          </select>
+          <div>Recall Details</div>
+            <div>
+              <ul>
+                <li>{recallDetails}</li>
+              </ul>
+            </div>
         </div>
       )
     }()
