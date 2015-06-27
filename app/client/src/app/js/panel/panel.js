@@ -39,7 +39,8 @@ export class Panel extends React.Component {
 
     let firmUI = this.state.firmData === undefined ? undefined : () => {
       let firmOptions = this.state.firmData === undefined ? undefined : (
-        [for (d of Object.keys(this.state.firmData)) <option  value={d}>{d} ({this.state.firmData[d].uniqueEventIds.length})</option>]
+        // ({this.state.firmData[d].uniqueEventIds.length})
+        [for (d of Object.keys(this.state.firmData)) <option value={d}>{`${d} (${this.state.firmData[d].uniqueEventIds.length})`}</option>]
       )
 
       let firmRecalls = this.state.currentFirm === undefined ? undefined :(
@@ -49,11 +50,7 @@ export class Panel extends React.Component {
         let currentAllRecalls = this.state.firmData[this.state.currentFirm.toString()].allRecalls
         //TODO Get all Recalls associated with event
         let options = Array.from(new Set([for (r of currentAllRecalls) if (r.event_id === this.state.currentSelectedFirmEvent) <option>{r.recall_number}</option>]))
-        return (
-          <select>
-            {options}
-          </select>
-        )
+        return ({options})
       }()
       //TODO
       // Add recall counts hide singler recall counts
@@ -63,12 +60,15 @@ export class Panel extends React.Component {
           <select className='fill__wide' value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value)}}>
             {firmOptions}
           </select>
-          <div>Reported Recall Events </div>
+          <div>Reported Recall Events</div>
           <select className="fill__wide">
             {firmRecalls}
           </select>
           <div>Recall Details</div>
+          <select className="fill__wide">
             {recallDetails}
+          </select>
+
         </div>
       )
     }()
