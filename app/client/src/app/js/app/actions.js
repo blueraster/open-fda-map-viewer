@@ -2,6 +2,7 @@ import {dispatcher} from 'js/dispatcher'
 import {app as config} from 'js/config'
 import {messages} from 'js/messages'
 import {Welcome} from 'app/welcome'
+import {geocode} from 'util/shame'
 // Lib Vendor
 import React from 'react'
 import sweetAlert from 'sweetalert'

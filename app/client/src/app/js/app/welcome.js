@@ -1,8 +1,6 @@
 import {messages} from 'js/messages'
 import {resources} from 'js/resources'
-import {map as config} from 'js/config'
 import {actions as appActions} from 'app/actions'
-import {panel as config} from 'js/config'
 // lib/vendor/esri/dojo
 import React from 'react'
 
