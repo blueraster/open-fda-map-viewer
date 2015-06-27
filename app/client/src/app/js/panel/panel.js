@@ -3,6 +3,8 @@ import {resources} from 'js/resources'
 import {actions} from 'panel/actions'
 import {store} from 'panel/store'
 import {appStore} from 'app/store'
+import {map as config} from 'js/config'
+import {actions as appActions} from 'app/actions'
 
 // lib/vendor/esri/dojo
 import React from 'react'
@@ -22,7 +24,13 @@ export class Panel extends React.Component {
     this.setState(state)
   }
   render () {
+
+    let foodControl = (food)=>(
+      <li className="inline-block"><button onClick={()=>{appActions.queryFda(food)}}>{food}</button></li>
+    )
+    let mainPanelControls = [for (food of Object.keys(config.foods.individual)) foodControl(config.foods.individual[food])]
     let firmUI = this.state.firmData === undefined ? <div>nofirms</div> : () => {
+
       let firmOptions = this.state.firmData === undefined ? undefined : (
         [for (d of Object.keys(this.state.firmData)) <option  value={d}>{d}</option>]
       )
@@ -51,9 +59,14 @@ export class Panel extends React.Component {
     }()
 
     return (
-        <div className='padding back-white'>
+        <div className='padding back-dark-gray text-white'>
           <div>Open FDA Enforcement MAPPER</div>
-          {firmUI}
+            <div>
+              <ul className="text-black">
+                {mainPanelControls}
+              </ul>
+            </div>
+            {firmUI}
         </div>
     )
   }
