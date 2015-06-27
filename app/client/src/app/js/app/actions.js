@@ -11,12 +11,13 @@ export const actions = dispatcher.createActions(class {
     document.title = messages.title
     document.body.className = config.dojoTheme
 
-    swal({
-      title: messages.title,
-      text: React.renderToStaticMarkup(<Welcome />),
-      allowEscapeKey: true,
-      html: true
-    });
+    // swal({
+    //   title: messages.title,
+    //   text: React.renderToStaticMarkup(<Welcome />),
+    //   allowEscapeKey: false,
+    //   showConfirmButton:false,
+    //   html: true
+    // })
 
     this.dispatch()
   }

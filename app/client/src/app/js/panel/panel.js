@@ -3,7 +3,13 @@ import {resources} from 'js/resources'
 import {actions} from 'panel/actions'
 import {actions as appActions} from 'app/actions'
 import {store} from 'panel/store'
+<<<<<<< HEAD
 import {panel as config} from 'js/config'
+=======
+import {appStore} from 'app/store'
+import {map as config} from 'js/config'
+import {actions as appActions} from 'app/actions'
+>>>>>>> 29ca842776329ad6bdc6c42bc439b40f87f5f85d
 
 // lib/vendor/esri/dojo
 import React from 'react'
