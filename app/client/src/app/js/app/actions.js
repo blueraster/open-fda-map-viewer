@@ -14,9 +14,10 @@ export const actions = dispatcher.createActions(class {
     swal({
       title: messages.title,
       text: React.renderToStaticMarkup(<Welcome />),
-      allowEscapeKey: true,
+      allowEscapeKey: false,
+      showConfirmButton:false,
       html: true
-    });
+    })
 
     this.dispatch()
   }
