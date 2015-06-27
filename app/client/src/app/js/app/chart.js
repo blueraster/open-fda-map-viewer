@@ -41,7 +41,24 @@ export class Chart extends React.Component {
             }
         ]
     }
-    let chart = new Chartjs(context).Line(data, {})
+    var data2 = {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [
+            {
+                label: "My First dataset",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: [65, 59, 80, 81, 56, 55, 40]
+            }
+        ]
+    }
+    let chart = new Chartjs(context)
+    chart.Line(data, {})
+    setTimeout(() => chart.Line(data2, {}), 8000)
   }
   componentWillUnmount () {
     store.unlisten(this.onChange)
@@ -52,7 +69,7 @@ export class Chart extends React.Component {
   render () {
     let data = this.state.timeseries === undefined ? undefined : JSON.stringify(this.state.timeseries)
     return (
-      <div className='app-chart border-box absolute padding back-transparent overflow-auto'>
+      <div className='app-chart border-box absolute back-transparent overflow-auto'>
         <canvas id='chart' className='fill'></canvas>
       </div>
     )

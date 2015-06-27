@@ -8,20 +8,13 @@ export const config = {
       ofdaTimeseries: (recallTerm) => `https://api.fda.gov/food/enforcement.json?&count=report_date&search=reason_for_recall:${recallTerm}`
     }
   },
-  map: {
-    id: 'map',
-    options: {
-      basemap: 'dark-gray',
-      zoom: 5,
-      // minZoom: 3,
-      center: [-100, 34.5]
-    },
+  panel: {
     foods: {
       individual: {
         iceCream: 'Ice Cream',
         wheat: 'Wheat',
-        peanuts: 'Peanuts',
-        salads: 'Salads'
+        // salads: 'Salads',
+        peanuts: 'Peanuts'
       },
       nested: {
         bacteria: [
@@ -30,6 +23,15 @@ export const config = {
           'Listeria'
         ]
       }
+    },
+  },
+  map: {
+    id: 'map',
+    options: {
+      basemap: 'dark-gray',
+      zoom: 5,
+      minZoom: 3,
+      center: [-100, 34.5]
     },
     controls: {
       ids: {
@@ -45,3 +47,4 @@ export const config = {
 }
 export const app = config.app
 export const map = config.map
+export const panel = config.panel

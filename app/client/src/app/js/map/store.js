@@ -14,8 +14,8 @@ import on from 'dojo/on'
 export const store = dispatcher.createStore(class {
   constructor () {
     this.map = undefined
-    this.selectedFood = undefined
-    this.selectedBacteria = config.foods.nested.bacteria[0]
+    // this.selectedFood = undefined
+    // this.selectedBacteria = config.foods.nested.bacteria[0]
     this.bindListeners({
       mapInit: actions.MAP_INIT,
       setSelectedBacteria: actions.SET_SELECTED_BACTERIA,

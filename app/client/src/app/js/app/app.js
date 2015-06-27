@@ -13,7 +13,7 @@ actions.init()
 export class App extends React.Component {
   render () {
     return (
-      <div className='app '>
+      <div className='app back-gray--dark'>
         <div className="app__content back-gray--dark">
           <Map />
           <Chart />

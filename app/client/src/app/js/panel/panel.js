@@ -1,8 +1,9 @@
 import {messages} from 'js/messages'
 import {resources} from 'js/resources'
 import {actions} from 'panel/actions'
+import {actions as appActions} from 'app/actions'
 import {store} from 'panel/store'
-import {appStore} from 'app/store'
+import {panel as config} from 'js/config'
 
 // lib/vendor/esri/dojo
 import React from 'react'
@@ -22,7 +23,21 @@ export class Panel extends React.Component {
     this.setState(state)
   }
   render () {
-    let firmUI = this.state.firmData === undefined ? <div>nofirms</div> : () => {
+    let foodControl = (food) => <button onClick={() => {appActions.queryFda(food)}}>{food}</button>,
+        foodGroupControl = (group, foods) => (
+          <div className='inline-block'>
+            <button>{group[0].toUpperCase() + group.substr(1)}</button>
+            <select>
+              {[for (food of foods) <option>{food}</option>]}
+            </select>
+          </div>
+        ),
+        foodControls
+
+    foodControls = [for (food of Object.keys(config.foods.individual)) foodControl(config.foods.individual[food])]
+    foodControls = foodControls.concat([for (group of Object.keys(config.foods.nested)) foodGroupControl(group, [for (food of config.foods.nested[group]) food])])
+
+    let firmUI = this.state.firmData === undefined ? undefined : () => {
       let firmOptions = this.state.firmData === undefined ? undefined : (
         [for (d of Object.keys(this.state.firmData)) <option  value={d}>{d}</option>]
       )
@@ -52,7 +67,7 @@ export class Panel extends React.Component {
 
     return (
         <div className='padding back-white'>
-          <div>Open FDA Enforcement MAPPER</div>
+          <div>{foodControls}</div>
           {firmUI}
         </div>
     )
