@@ -61,22 +61,18 @@ export const store = dispatcher.createStore(class {
         clustersLayer._reCluster()
       })
 
-      // let citiesLayer = new FeatureLayer('http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Major_Cities/FeatureServer/0', {
-      //   id: 'cities',
-      //   // MODE: FeatureLayer.MODE_SNAPSHOT,
-      //   outFields: ['NAME','ST'],
-      //   visible: false
-      // })
-      // map.addLayer(citiesLayer)
+      let infoWindow = map.infoWindow,
+          infoWindowContentId = 'infoWindowContent',
 
-      map.infoWindow.on('show', () => {
-        // map.infoWindow.setContent(React.renderToStaticMarkup(<InfoWindowContent />))
-      })
-      map.infoWindow.on('selection-change', () => {
-        map.infoWindow.setContent(React.renderToStaticMarkup(<InfoWindowContent />))
-      })
-      map.infoWindow.on('hide', () => {
-        console.debug('unmount component')
+      mount = document.createElement('div')
+      mount.id = infoWindowContentId
+      mount.innerHTML = 'mountPoint'
+
+      infoWindow.on('show, selection-change', () => {
+        React.unmountComponentAtNode(mount)
+        infoWindow.setContent(mount)
+        React.render(<InfoWindowContent />, mount)
+        infoWindow.reposition()
       })
     })
     window.map = map
