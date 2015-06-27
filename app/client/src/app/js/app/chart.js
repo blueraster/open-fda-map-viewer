@@ -10,7 +10,7 @@ export class Chart extends React.Component {
   }
   componentDidMount () {
     store.listen(this.onChange.bind(this))
-    appActions.initChart(document.getElementById('chart').getContext('2d'))
+    appActions.setChartContext(document.getElementById('chart').getContext('2d'))
   }
   componentWillUnmount () {
     store.unlisten(this.onChange)

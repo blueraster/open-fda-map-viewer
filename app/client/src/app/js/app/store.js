@@ -10,14 +10,15 @@ export const store = dispatcher.createStore(class {
     this.foodToQuery = undefined
     this.timeseries = undefined
     this.chart = undefined
+    this.chartContext = undefined
     this.bindListeners({
-      initChart: actions.INIT_CHART,
+      setChartContext: actions.SET_CHART_CONTEXT,
       queryFda: actions.QUERY_FDA,
       queryFdaTimeseriesSuccess: actions.QUERY_FDA_TIMESERIES_SUCCESS,
     })
   }
-  initChart (context) {
-    this.chart = new Chartjs(context)
+  setChartContext (context) {
+    this.chartContext = context
   }
   queryFda (food) {
     this.foodToQuery = food
@@ -30,6 +31,7 @@ export const store = dispatcher.createStore(class {
   }
   queryFdaTimeseriesSuccess (timeseries) {
     let months = ['01','02','03','04','05','06','07','08','09','10','11','12'],
+        monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
         processedTimeseries = {},
         chartData = {}
     // init years
@@ -40,21 +42,20 @@ export const store = dispatcher.createStore(class {
     ;[for (t of timeseries) processedTimeseries[t.time.substr(0,4)][months.indexOf(t.time.substr(4,2))] += t.count]
     // shape data for chart
     chartData = {
-      labels: months,
+      labels: monthLabels,
       datasets: [for (t of Object.keys(processedTimeseries)) {
         label: t,
-        fillColor: "rgba(151,187,205,0.2)",
-        strokeColor: "rgba(151,187,205,1)",
-        pointColor: "rgba(151,187,205,1)",
-        pointStrokeColor: "#fff",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(151,187,205,1)",
+        fillColor: 'rgba(151,187,205,0.2)',
+        strokeColor: 'rgba(151,187,205,1)',
+        pointColor: 'rgba(151,187,205,1)',
+        pointStrokeColor: '#fff',
+        pointHighlightFill: '#fff',
+        pointHighlightStroke: 'rgba(151,187,205,1)',
         data: processedTimeseries[t]
       }]
     }
-    // console.debug(processedTimeseries)
-    // console.debug(chartData)
-    this.chart.Line(chartData, {})
+    if (this.chart !== undefined) {this.chart.destroy()}
+    this.chart = new Chartjs(this.chartContext).Line(chartData, {})
     this.timeseries = timeseries
   }
 })
