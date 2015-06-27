@@ -59,6 +59,7 @@ export class Panel extends React.Component {
 
       //TODO
       // Add recall counts hide singler recall counts
+      // Refactor select updates to single action
       return (
         <div>
           <label>Business ({Object.keys(this.state.firmData).length})</label>
@@ -73,12 +74,8 @@ export class Panel extends React.Component {
           <select className="fill__wide" value={this.state.currentSelectedRecall} onChange={(event) =>{actions.setCurrentRecall(event.target.value)}} >
             {eventRecalls}
           </select>
-
           <div>Details</div>
-            {recallDetails}
-
-
-
+          {recallDetails}
         </div>
       )
     }()

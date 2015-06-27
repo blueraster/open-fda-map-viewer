@@ -1,4 +1,5 @@
 import {store} from 'map/store'
+import {app as appConfig} from 'js/config'
 // lib/vendor/shim/esri/dojo
 import React from 'react'
 
@@ -15,15 +16,8 @@ export class InfoWindowContent extends React.Component {
       let recallingFirms = Array.from(new Set([for (f of infoWindow.features) f.attributes.recalling_firm])),
           feature =  infoWindow.getSelectedFeature(),
           attributes = feature.attributes,
-          labels = {
-            recall_number: 'Recall number',
-            product_description: 'Product Description',
-            distribution_pattern: 'Distribution Pattern'
-          },
-          recallDeatils = [for (key of Object.keys(feature.attributes)) if (labels[key] !== undefined) <div>{`${labels[key]}: ${attributes[key]}`}</div>]
-
+          recallDeatils = [for (label of appConfig.detailLabels) if (attributes[label.key] !== undefined) <div>{`${label.text}: ${attributes[label.key]}`}</div>]
       console.debug(feature.attributes)
-
       return ([
         'Firms:',
         recallingFirms.map((firmName) => <div><button>{firmName}</button></div>),
