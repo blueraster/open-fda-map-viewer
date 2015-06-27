@@ -14,14 +14,21 @@ export class InfoWindowContent extends React.Component {
     ui = infoWindow.features === null ? undefined : () => {
       let recallingFirms = Array.from(new Set([for (f of infoWindow.features) f.attributes.recalling_firm])),
           feature =  infoWindow.getSelectedFeature(),
-          featureDetails = Object.keys(feature.attributes).map((key) => <div>{`${key}: ${feature.attributes[key]}`}</div>)
+          attributes = feature.attributes,
+          labels = {
+            recall_number: 'Recall number',
+            product_description: 'Product Description',
+            distribution_pattern: 'Distribution Pattern'
+          },
+          recallDeatils = [for (key of Object.keys(feature.attributes)) if (labels[key] !== undefined) <div>{`${labels[key]}: ${attributes[key]}`}</div>]
 
       console.debug(feature.attributes)
 
       return ([
         'Firms:',
         recallingFirms.map((firmName) => <div><button>{firmName}</button></div>),
-        featureDetails
+        'Recall details:',
+        <div className='back-white border-black'>{recallDeatils}</div>
       ])
     }()
     return (
