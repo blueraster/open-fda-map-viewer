@@ -50,6 +50,5 @@ export const store = dispatcher.createStore(class {
     this.currentSelectedRecall = Array.from(new Set([for (r of allrecalls) if (r.event_id === this.currentSelectedFirmEvent) r.recall_number]))[0]
     this.x = Array.from(new Set([for (r of allrecalls) if (r.event_id === this.currentSelectedFirmEvent) r]))
     this.b = [for( i of this.x) if(i.recall_number === this.currentSelectedRecall) i]
-    debugger
   }
 }, 'panelStore')

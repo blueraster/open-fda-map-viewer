@@ -56,9 +56,29 @@ export const store = dispatcher.createStore(class {
           opacity: 0,
           outFields: []
       });
+
+      let firmClusterLayer = new ClusterFeatureLayer({
+          'id': 'firmsfirmCluster',
+          'url': 'http://services.arcgis.com/oKgs2tbjK6zwTdvi/arcgis/rest/services/Major_World_Cities/FeatureServer/0',
+          // 'distance': 75,
+          'distance': 0,
+          'labelColor': '#B00',
+          'resolution': map.extent.getWidth() / map.width,
+          // 'singleTemplate': infoTemplate,
+          'useDefaultSymbol': false,
+          'zoomOnClick': false,
+          'showSingles': true,
+          'objectIdField': 'FID',
+          // outFields: ['NAME', 'COUNTRY', 'POPULATION', 'CAPITAL']
+          opacity: 0,
+          outFields: []
+      });
+
       map.addLayer(clustersLayer)
+      map.addLayer(firmClusterLayer)
       map.on('extent-change', (event) => {
         clustersLayer._reCluster()
+        firmClusterLayer._reCluster()
       })
 
       let infoWindow = map.infoWindow,
@@ -84,12 +104,13 @@ export const store = dispatcher.createStore(class {
   handleQueryFdaSuccess (foodData) {
     let map = this.map,
         clustersLayer = map.getLayer('clusters'),
+        firmClusterLayer = map.getLayer(),
         clusterData = [],
         matchedCityFoodData,
         matchedStateFoodData,
         unmatchedCityFoodData,
         unmatchedStateFoodData
-
+    // TODO: This needed erorr catching, when node server is off app fails, should fall out clean
     fetch(config.requests.geoData())
       .then((response) => response.json())
       .then((json) => {
