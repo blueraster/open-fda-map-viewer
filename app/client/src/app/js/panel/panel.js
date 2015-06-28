@@ -4,6 +4,7 @@ import {actions} from 'panel/actions'
 import {actions as appActions} from 'app/actions'
 import {store} from 'panel/store'
 import {panel as config} from 'js/config'
+import {app as appConfig} from 'js/config'
 
 // lib/vendor/esri/dojo
 import React from 'react'
@@ -38,6 +39,8 @@ export class Panel extends React.Component {
     foodControls = [for (food of Object.keys(config.foods.individual)) foodControl(config.foods.individual[food])]
     foodControls = foodControls.concat([for (group of Object.keys(config.foods.nested)) foodGroupControl(group, [for (food of config.foods.nested[group]) food])])
     let firmUI = this.state.firmData === undefined ? undefined : () => {
+      let currentAllRecalls = this.state.firmData[this.state.currentFirm.toString()].allRecalls
+
       let firmOptions = this.state.firmData === undefined ? undefined : (
         // ({this.state.firmData[d].uniqueEventIds.length})
         [for (d of Object.keys(this.state.firmData)) <option value={d}>{`${d} (${this.state.firmData[d].uniqueEventIds.length})`}</option>]
@@ -47,14 +50,17 @@ export class Panel extends React.Component {
         [for(r of this.state.firmData[this.state.currentFirm].uniqueEventIds) <option value={r}>{r}</option>]
       )
       let eventRecalls = this.state.currentSelectedFirmEvent ==undefined ? undefined: () =>{
-        let currentAllRecalls = this.state.firmData[this.state.currentFirm.toString()].allRecalls
         currentRecalls = Array.from(new Set([for (r of currentAllRecalls) if (r.event_id === this.state.currentSelectedFirmEvent) r ]))
         let options = Array.from(new Set([for (r of currentAllRecalls) if (r.event_id === this.state.currentSelectedFirmEvent) <option value={r.recall_number}>{r.recall_number}</option>]))
         return ({options})
       }()
 
       let recallDetails = this.state.currentSelectedRecall ==undefined ? undefined: () =>{
-        return this.state.currentSelectedRecall
+        let recallForEvent = Array.from(new Set([for (r of currentAllRecalls) if (r.event_id === this.state.currentSelectedFirmEvent) r]))
+        let selectedRecall = [for( i of recallForEvent) if(i.recall_number === this.state.currentSelectedRecall) i][0]
+        // let recallDeatils = [for (label of appConfig.detailLabels) if (selectedRecall[label.key] !== undefined) <div>{`${label.text}: ${selectedRecall[label.key]}`}</div>]
+        let recallDeatils = [for (label of appConfig.detailLabels) <li>{`${label.text}: ${selectedRecall[label.key]}`}</li>]
+        return recallDeatils
       }()
 
       //TODO
@@ -75,7 +81,9 @@ export class Panel extends React.Component {
             {eventRecalls}
           </select>
           <div>Details</div>
-          {recallDetails}
+          <ul>
+            {recallDetails}
+          </ul>
         </div>
       )
     }()
