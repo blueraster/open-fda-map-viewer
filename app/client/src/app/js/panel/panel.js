@@ -39,11 +39,14 @@ export class Panel extends React.Component {
     foodControls = [for (food of Object.keys(config.foods.individual)) foodControl(config.foods.individual[food])]
     foodControls = foodControls.concat([for (group of Object.keys(config.foods.nested)) foodGroupControl(group, [for (food of config.foods.nested[group]) food])])
     let firmUI = this.state.firmData === undefined ? undefined : () => {
-      let currentAllRecalls = this.state.firmData[this.state.currentFirm.toString()].allRecalls
+      let currentAllRecalls = this.state.firmData[this.state.currentFirm.toString()].allRecalls,
+          firmData = this.state.firmData,
+          recallsLength
 
-      let firmOptions = this.state.firmData === undefined ? undefined : (
-        // ({this.state.firmData[d].uniqueEventIds.length})
-        [for (d of Object.keys(this.state.firmData)) <option value={d}>{`${d} (${this.state.firmData[d].uniqueEventIds.length})`}</option>]
+      let firmOptions = firmData === undefined ? undefined : (
+        // ({firmData[d].uniqueEventIds.length})
+        // [for (d of Object.keys(firmData)) <option value={d}>{`${d} (${firmData[d].uniqueEventIds.length})`}</option>]
+        [for (d of Object.keys(firmData)) <option value={d}>{`${d} ${firmData[d].uniqueEventIds.length < 2 ? '' : `(${firmData[d].uniqueEventIds.length})`}`}</option>]
       )
 
       let firmEvents = this.state.currentFirm === undefined ? undefined :(
@@ -52,6 +55,7 @@ export class Panel extends React.Component {
       let eventRecalls = this.state.currentSelectedFirmEvent ==undefined ? undefined: () =>{
         currentRecalls = Array.from(new Set([for (r of currentAllRecalls) if (r.event_id === this.state.currentSelectedFirmEvent) r ]))
         let options = Array.from(new Set([for (r of currentAllRecalls) if (r.event_id === this.state.currentSelectedFirmEvent) <option value={r.recall_number}>{r.recall_number}</option>]))
+        recallsLength = options.length
         return ({options})
       }()
 
@@ -63,6 +67,8 @@ export class Panel extends React.Component {
         return recallDeatils
       }()
 
+      let recallEventsLength = this.state.firmData[this.state.currentFirm].uniqueEventIds.length
+
       //TODO
       // Add recall counts hide singler recall counts
       // Refactor select updates to single action
@@ -72,12 +78,12 @@ export class Panel extends React.Component {
           <select className='fill--50p__wide' value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value)}}>
             {firmOptions}
           </select>
-          <div className='inline-block fill--50p__wide'>Listed recall events</div>
-          <select className="inline-block fill--50p__wide" value={this.state.currentSelectedFirmEvent} onChange={(event) =>{actions.setCurrentEvent(event.target.value)}}>
+          <div className='inline-block fill--50p__wide'>Listed recall events ({recallEventsLength})</div>
+          <select className="inline-block fill--50p__wide" value={this.state.currentSelectedFirmEvent} onChange={(event) =>{actions.setCurrentEvent(event.target.value)}} disabled={recallEventsLength === 1}>
             {firmEvents}
           </select>
-          <div className='inline-block fill--50p__wide'>Event Recalls</div>
-          <select className="inline-block fill--50p__wide" value={this.state.currentSelectedRecall} onChange={(event) =>{actions.setCurrentRecall(event.target.value)}} >
+          <div className='inline-block fill--50p__wide'>Event Recalls ({recallsLength})</div>
+          <select className="inline-block fill--50p__wide" value={this.state.currentSelectedRecall} onChange={(event) =>{actions.setCurrentRecall(event.target.value)}} disabled={recallsLength === 1}>
             {eventRecalls}
           </select>
           <div>Details</div>

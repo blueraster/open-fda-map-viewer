@@ -22,7 +22,7 @@ export class InfoWindowContent extends React.Component {
       // intelligently handle clicking a new cluster
       if (feature !== undefined && focusedFirmName !== undefined) {
         let firms = Array.from(new Set([for (f of infoWindow.features) f.attributes.recalling_firm]))
-        if (firms.length > 1 || firms[0].attributes.recalling_firm !== focusedFirmName) {
+        if (firms.length > 1 || firms[0] !== focusedFirmName) {
           updated = true
           actions.setFocusedFirmName(undefined)
         }
