@@ -6,6 +6,7 @@ import {actions as mapActions} from 'map/actions'
 import {store} from 'panel/store'
 import {panel as config} from 'js/config'
 import {app as appConfig} from 'js/config'
+import {map as mapConfig} from 'js/config'
 
 // lib/vendor/esri/dojo
 import React from 'react'
@@ -60,15 +61,27 @@ export class Panel extends React.Component {
         return ({options})
       }()
 
-      let recallDetails = this.state.currentSelectedRecall ==undefined ? undefined: () =>{
+      let recallDetails = this.state.currentSelectedRecall == undefined ? undefined: () =>{
         let recallForEvent = Array.from(new Set([for (r of currentAllRecalls) if (r.event_id === this.state.currentSelectedFirmEvent) r]))
-        let selectedRecall = [for( i of recallForEvent) if(i.recall_number === this.state.currentSelectedRecall) i][0]
-        // let recallDeatils = [for (label of appConfig.detailLabels) if (selectedRecall[label.key] !== undefined) <div>{`${label.text}: ${selectedRecall[label.key]}`}</div>]
-        let recallDeatils = [for (label of appConfig.detailLabels) <li>{`${label.text}: ${selectedRecall[label.key]}`}</li>]
-        return recallDeatils
+        let selectedRecall = [for (i of recallForEvent) if (i.recall_number === this.state.currentSelectedRecall) i][0]
+        let recallDetails = [for (label of appConfig.detailLabels) <li>{`${label.text}: ${selectedRecall[label.key]}`}</li>]
+        let stateCodes = selectedRecall.distribution_pattern.match(mapConfig.expressions.stateCodes) || []
+        let stateNames = selectedRecall.distribution_pattern.match(mapConfig.expressions.stateNames) || []
+        let stateMatches = {stateCodes, stateNames}
+        let distributionPattern = (stateCodes.length === 0 && stateNames.length === 0) ? undefined : (
+              <button onClick={() => {mapActions.setDistributionPatternMatches(stateMatches)}}>View distribution pattern</button>
+            )
+
+        return [
+          'Details',
+          <ul>{recallDetails}</ul>,
+          <button>Visualize firm recalls (toggle)</button>,
+          {distributionPattern}
+        ]
       }()
 
       let recallEventsLength = this.state.firmData[this.state.currentFirm].uniqueEventIds.length
+
 
       //TODO
       // Add recall counts hide singler recall counts
@@ -87,12 +100,7 @@ export class Panel extends React.Component {
           <select className="inline-block fill--50p__wide" value={this.state.currentSelectedRecall} onChange={(event) =>{actions.setCurrentRecall(event.target.value)}} disabled={recallsLength === 1}>
             {eventRecalls}
           </select>
-          <div>Details</div>
-          <ul>
-            {recallDetails}
-          </ul>
-          <button>Visualize firm recalls (toggle)</button>
-          <button>View distribution pattern</button>
+          {recallDetails}
         </div>
       )
     }()

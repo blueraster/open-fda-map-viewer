@@ -30,6 +30,7 @@ export const store = dispatcher.createStore(class {
       setSelectedBacteria: actions.SET_SELECTED_BACTERIA,
       setSelectedFirmNameForClusters: actions.SET_SELECTED_FIRM_NAME_FOR_CLUSTERS,
       setSelectedFirmNameForInfoWindowContent: actions.SET_SELECTED_FIRM_NAME_FOR_INFO_WINDOW_CONTENT,
+      setDistributionPatternMatches: actions.SET_DISTRIBUTION_PATTERN_MATCHES,
       handleQueryFdaSuccess: appActions.QUERY_FDA_SUCCESS
     })
   }
@@ -43,8 +44,9 @@ export const store = dispatcher.createStore(class {
     xlarge;
     on.once(map, 'extent-change', (event) => {
       let statesLayer = new FeatureLayer('http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_States_Generalized/FeatureServer/0', {
-        'id': 'states',
-        'visible': false
+        id: 'states',
+        // mode: FeatureLayer.MODE_SNAPSHOT,
+        visible: false
       })
       map.addLayer(statesLayer)
 
@@ -55,38 +57,38 @@ export const store = dispatcher.createStore(class {
         }
       })
     defaultSym = new SimpleMarkerSymbol("circle", 16,
-              new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([102,0,0, 0.55]), 3),
+              new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([102,0,0, .55]), 3),
               new Color([255, 255, 255, 1]));
 
       let clustersLayer = new ClusterFeatureLayer({
-          'id': 'clusters',
-          'url': 'http://services.arcgis.com/oKgs2tbjK6zwTdvi/arcgis/rest/services/Major_World_Cities/FeatureServer/0',
+          id: 'clusters',
+          url: 'http://services.arcgis.com/oKgs2tbjK6zwTdvi/arcgis/rest/services/Major_World_Cities/FeatureServer/0',
           // 'distance': 75,
-          'distance': 0,
-          'labelColor': '#fff',
-          'resolution': map.extent.getWidth() / map.width,
+          distance: 0,
+          labelColor: '#fff',
+          resolution: map.extent.getWidth() / map.width,
           // 'singleTemplate': infoTemplate,
-          'useDefaultSymbol': false,
-          'zoomOnClick': false,
-          'showSingles': true,
-          'objectIdField': 'FID',
+          useDefaultSymbol: false,
+          zoomOnClick: false,
+          showSingles: true,
+          objectIdField: 'FID',
           // outFields: ['NAME', 'COUNTRY', 'POPULATION', 'CAPITAL']
           opacity: 0,
           outFields: []
       });
 
       let firmClusterLayer = new ClusterFeatureLayer({
-          'id': 'firmClusters',
-          'url': 'http://services.arcgis.com/oKgs2tbjK6zwTdvi/arcgis/rest/services/Major_World_Cities/FeatureServer/0',
+          id: 'firmClusters',
+          url: 'http://services.arcgis.com/oKgs2tbjK6zwTdvi/arcgis/rest/services/Major_World_Cities/FeatureServer/0',
           // 'distance': 75,
-          'distance': 0,
-          'labelColor': '#fff',
-          'resolution': map.extent.getWidth() / map.width,
+          distance: 0,
+          labelColor: '#fff',
+          resolution: map.extent.getWidth() / map.width,
           // 'singleTemplate': infoTemplate,
-          'useDefaultSymbol': false,
-          'zoomOnClick': false,
-          'showSingles': true,
-          'objectIdField': 'FID',
+          useDefaultSymbol: false,
+          zoomOnClick: false,
+          showSingles: true,
+          objectIdField: 'FID',
           // outFields: ['NAME', 'COUNTRY', 'POPULATION', 'CAPITAL']
           opacity: 0,
           outFields: []
@@ -139,6 +141,19 @@ export const store = dispatcher.createStore(class {
   }
   setSelectedFirmNameForInfoWindowContent (firmName) {
     this.selectedFirmNameForInfoWindowContent = firmName
+  }
+  setDistributionPatternMatches (stateMatches) {
+    let statesLayer = this.map.getLayer('states'),
+        clause
+    if (stateMatches.stateCodes.length > 0) {
+      clause = `STATE_ABBR IN (${stateMatches.stateCodes.map((c) => `'${c}'`)})`
+    } else if (stateMatches.stateNames.length > 0 ) {
+      clause = `STATE_NAME IN (${stateMatches.stateNames.map((n) => `'${n}'`)})`
+    } else {
+      // TODO: error
+    }
+    statesLayer.setDefinitionExpression(clause)
+    statesLayer.setVisibility(true)
   }
   setSelectedFirmNameForClusters (firmName) {
     let alldata = this.map.getLayer('clusters')._clusterData

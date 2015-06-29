@@ -52,16 +52,23 @@ export class InfoWindowContent extends React.Component {
         let feature = infoWindow.getSelectedFeature(),
             firmName = feature.attributes.recalling_firm,
             attributes = feature.attributes,
-            recallDetails = [for (label of appConfig.detailLabels) if (attributes[label.key] !== undefined) <div>{`${label.text}: ${attributes[label.key]}`}</div>]
+            recallDetails = [for (label of appConfig.detailLabels) if (attributes[label.key] !== undefined) <div>{`${label.text}: ${attributes[label.key]}`}</div>],
+            stateCodes = attributes.distribution_pattern.match(config.expressions.stateCodes) || [],
+            stateNames = attributes.distribution_pattern.match(config.expressions.stateNames) || [],
+            stateMatches = {stateCodes, stateNames},
+            distributionPattern = (stateCodes.length === 0 && stateNames.length === 0) ? undefined : (
+              <button onClick={() => {actions.setDistributionPatternMatches(stateMatches)}}>View distribution pattern</button>
+            )
+
         // ENHANCEMENT: on back, return features to initally set features instead of hiding infowindow
         return [
           `Recalls for Firm: ${firmName}`,
-          <div><button onClick={infoWindow.hide.bind(infoWindow)}>Back</button></div>,
+          <div><button onClick={() => {this.setSelectedFirmNameForInfoWindowContent(undefined); infoWindow.hide()}}>Back</button></div>,
           <hr />,
           recallDetails,
           <hr />,
-          <button onClick={() => {this.showFirmClusters(firmName)}}>Visualize firm recalls (single click)</button>,
-          <button onClick={() => {this.showDistributionPattern(firmName)}}>View distribution pattern</button>
+          <button onClick={() => {actions.setSelectedFirmNameForClusters(firmName)}}>Visualize firm recalls (single click)</button>,
+          {distributionPattern}
         ]
       } else {
         let recallingFirms = Array.from(new Set([for (f of features) f.attributes.recalling_firm]))
@@ -77,16 +84,6 @@ export class InfoWindowContent extends React.Component {
         <div>{ui}</div>
       </div>
     )
-  }
-  showFirmClusters (firmName) {
-    // this.state.map.infoWindow.hide()
-    actions.setSelectedFirmNameForClusters(firmName)
-  }
-  showDistributionPattern (firmName) {
-    let feature = this.state.map.infoWindow.getSelectedFeature()
-
-    console.debug('showDistributionPattern')
-    console.debug(feature.attributes.distribution_pattern)
   }
   focusFirm (event) {
     let map = this.state.map,
