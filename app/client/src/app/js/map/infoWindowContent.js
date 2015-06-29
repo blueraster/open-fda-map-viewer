@@ -1,3 +1,4 @@
+import {actions} from 'map/actions'
 import {store} from 'map/store'
 import {map as config, app as appConfig} from 'js/config'
 // lib/vendor/shim/esri/dojo
@@ -10,21 +11,40 @@ export class InfoWindowContent extends React.Component {
     super(props)
     this.state = store.getState()
   }
+  componentDidMount () {
+    store.listen(this.onChange.bind(this))
+    let infoWindow = this.state.map.infoWindow
+    infoWindow.on('selection-change', () => {
+      this.forceUpdate()
+      infoWindow.reposition()
+    })
+  }
+  componentWillUnmount () {
+    store.unlisten(this.onChange)
+  }
+  onChange (state) {
+    this.setState(state)
+  }
   render () {
-    let infoWindow = this.state.map.infoWindow,
+    let focusedFirmID = this.state.focusedFirmID,
+        infoWindow = this.state.map.infoWindow,
         features = infoWindow.features,
         ui
 
-    ui = infoWindow.features === null ? undefined : () => {
-      let recallingFirms = Array.from(new Set([for (f of infoWindow.features) f.attributes.recalling_firm])),
-          feature =  infoWindow.getSelectedFeature(),
-          attributes = feature.attributes,
-          recallDeatils = [for (label of appConfig.detailLabels) if (attributes[label.key] !== undefined) <div>{`${label.text}: ${attributes[label.key]}`}</div>]
+    ui = features === null || features === undefined ? undefined : () => {
+      if (focusedFirmID !== undefined) {
+        return 'focused firm'
+      } else {
+        let recallingFirms = Array.from(new Set([for (f of features) f.attributes.recalling_firm])),
+            feature =  infoWindow.getSelectedFeature(),
+            attributes = feature.attributes,
+            recallDeatils = [for (label of appConfig.detailLabels) if (attributes[label.key] !== undefined) <div>{`${label.text}: ${attributes[label.key]}`}</div>]
 
-      return ([
-        'Firms:',
-        recallingFirms.map((firmName) => <div><button onClick={this.focusFirm.bind(this)}>{firmName}</button></div>),
-      ])
+        return ([
+          'Firms:',
+          recallingFirms.map((firmName) => <div><button onClick={this.focusFirm.bind(this)}>{firmName}</button></div>),
+        ])
+      }
     }()
     return (
       <div>
@@ -37,13 +57,13 @@ export class InfoWindowContent extends React.Component {
         infoWindow = map.infoWindow,
         features = infoWindow.features,
         feature = infoWindow.getSelectedFeature(),
-        firmFeatures = [for (f of features) if (f.attributes.recalling_firm === event.target.innerText) f],
-        recallsExtent = graphicsUtils.graphicsExtent(firmFeatures)
+        firmFeatures = [for (f of features) if (f.attributes.recalling_firm === event.target.innerText) f]
 
     // map.setExtent(recallsExtent)
-    map.centerAndZoom(firmFeatures[0].geometry, config.options.maxZoom)
+    // map.centerAndZoom(firmFeatures[0].geometry, config.options.maxZoom)
     infoWindow.setFeatures(firmFeatures)
-    on.once(map, 'zoom-end', () => {infoWindow.reposition()})
+    actions.setFocusedFirmID(feature.recalling_firm)
+    // on.once(map, 'zoom-end', () => {infoWindow.reposition()})
 
     // debugger
     // console.debug(graphicsExtent(firmFeatures))
