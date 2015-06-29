@@ -67,7 +67,7 @@ export class Panel extends React.Component {
       // Add recall counts hide singler recall counts
       // Refactor select updates to single action
       return (
-        <div>
+        <div className='padding__bottom padding__wide'>
           <label className='inline-block fill--50p__wide'>Business ({Object.keys(this.state.firmData).length})</label>
           <select className='fill--50p__wide' value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value)}}>
             {firmOptions}
@@ -91,8 +91,8 @@ export class Panel extends React.Component {
     }()
 
     return (
-        <div className='padding back-white'>
-          <div>{foodControls}</div>
+        <div className='back-white'>
+          <div className='padding'>{foodControls}</div>
           {firmUI}
         </div>
     )
