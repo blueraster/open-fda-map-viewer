@@ -2,7 +2,7 @@
 import {dispatcher} from 'js/dispatcher'
 
 export const actions = dispatcher.createActions(class {
-  mapInit () {
+  initMap () {
     this.dispatch()
   }
   setSelectedBacteria (bacteria) {

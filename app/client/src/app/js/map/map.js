@@ -13,7 +13,7 @@ export class Map extends React.Component {
   }
   componentDidMount () {
     store.listen(this.onChange.bind(this))
-    actions.mapInit()
+    actions.initMap()
   }
   componentWillUnmount () {
     store.unlisten(this.onChange)

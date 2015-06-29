@@ -19,13 +19,13 @@ export const store = dispatcher.createStore(class {
     this.map = undefined
     this.focusedFirmID = undefined
     this.bindListeners({
-      mapInit: actions.MAP_INIT,
+      initMap: actions.INIT_MAP,
       setSelectedBacteria: actions.SET_SELECTED_BACTERIA,
       handleQueryFdaSuccess: appActions.QUERY_FDA_SUCCESS,
       handleSetCurentFirm: panelActions.SET_CURRENT_FIRM
     })
   }
-  mapInit () {
+  initMap () {
     let map = new esriMap(config.id, config.options)
     on.once(map, 'extent-change', (event) => {
       let statesLayer = new FeatureLayer('http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_States_Generalized/FeatureServer/0', {
