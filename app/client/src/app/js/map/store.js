@@ -17,16 +17,15 @@ import on from 'dojo/on'
 export const store = dispatcher.createStore(class {
   constructor () {
     this.map = undefined
-    // this.selectedFood = undefined
-    // this.selectedBacteria = config.foods.nested.bacteria[0]
+    this.focusedFirmID = undefined
     this.bindListeners({
-      mapInit: actions.MAP_INIT,
+      initMap: actions.INIT_MAP,
       setSelectedBacteria: actions.SET_SELECTED_BACTERIA,
       handleQueryFdaSuccess: appActions.QUERY_FDA_SUCCESS,
       handleSetCurentFirm: panelActions.SET_CURRENT_FIRM
     })
   }
-  mapInit () {
+  initMap () {
     let map = new esriMap(config.id, config.options)
     on.once(map, 'extent-change', (event) => {
       let statesLayer = new FeatureLayer('http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_States_Generalized/FeatureServer/0', {
@@ -72,7 +71,7 @@ export const store = dispatcher.createStore(class {
           'showSingles': true,
           'objectIdField': 'FID',
           // outFields: ['NAME', 'COUNTRY', 'POPULATION', 'CAPITAL']
-          opacity: 0,
+          visible: false,
           outFields: []
       });
 
@@ -84,18 +83,13 @@ export const store = dispatcher.createStore(class {
       })
 
       let infoWindow = map.infoWindow,
-          infoWindowContentId = 'infoWindowContent',
+          mount
 
       mount = document.createElement('div')
-      mount.id = infoWindowContentId
       mount.innerHTML = 'mountPoint'
-
-      infoWindow.on('show, selection-change', () => {
-        React.unmountComponentAtNode(mount)
-        infoWindow.setContent(mount)
-        React.render(<InfoWindowContent />, mount)
-        infoWindow.reposition()
-      })
+      mount.className = 'padding back-white'
+      map.infoWindow._contentPane.parentElement.appendChild(mount)
+      React.render(<InfoWindowContent />, mount)
     })
     window.map = map
     this.map = map
@@ -103,7 +97,9 @@ export const store = dispatcher.createStore(class {
   setSelectedBacteria (Bacteria) {
     this.selectedBacteria =Bacteria
   }
-
+  setFocusedFirmID (firmID) {
+    this.focusedFirmID = firmID
+  }
   handleSetCurentFirm (firmID){
     debugger
     console.log(firmID)
@@ -136,7 +132,7 @@ export const store = dispatcher.createStore(class {
           geometry = geometry.setX(cityGeometry.x)
           geometry = geometry.setY(cityGeometry.y)
           graphic = graphic.setGeometry(geometry)
-          graphic.attributes = data
+          graphic = graphic.setAttributes(data)
           clusterData.push(graphic)
         }
         clustersLayer._clusterData = clusterData
