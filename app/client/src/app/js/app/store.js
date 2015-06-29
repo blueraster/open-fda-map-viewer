@@ -15,8 +15,11 @@ export const store = dispatcher.createStore(class {
     this.bindListeners({
       setChartContext: actions.SET_CHART_CONTEXT,
       queryFda: actions.QUERY_FDA,
-      queryFdaTimeseriesSuccess: actions.QUERY_FDA_TIMESERIES_SUCCESS,
+      queryFdaTimeseriesSuccess: actions.QUERY_FDA_TIMESERIES_SUCCESS
     })
+  }
+  queryFdaEvents(context){
+    debugger
   }
   setChartContext (context) {
     this.chartContext = context

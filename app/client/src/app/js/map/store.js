@@ -2,6 +2,7 @@
 import {dispatcher} from 'js/dispatcher'
 import {actions} from 'map/actions'
 import {actions as appActions} from 'app/actions'
+import {actions as panelActions} from 'panel/actions'
 import {map as config} from 'js/config'
 import {InfoWindowContent} from 'map/infoWindowContent'
 // lib/vendor/esri/dojo
@@ -21,7 +22,8 @@ export const store = dispatcher.createStore(class {
     this.bindListeners({
       mapInit: actions.MAP_INIT,
       setSelectedBacteria: actions.SET_SELECTED_BACTERIA,
-      handleQueryFdaSuccess: appActions.QUERY_FDA_SUCCESS
+      handleQueryFdaSuccess: appActions.QUERY_FDA_SUCCESS,
+      handleSetCurentFirm: panelActions.SET_CURRENT_FIRM
     })
   }
   mapInit () {
@@ -101,20 +103,24 @@ export const store = dispatcher.createStore(class {
   setSelectedBacteria (Bacteria) {
     this.selectedBacteria =Bacteria
   }
+
+  handleSetCurentFirm (firmID){
+    console.log('My motherfing map ')
+  }
   handleQueryFdaSuccess (foodData) {
     let map = this.map,
         clustersLayer = map.getLayer('clusters'),
-        firmClusterLayer = map.getLayer(),
+        firmClusterLayer = map.getLayer('firmsfirmCluster'),
         clusterData = [],
         matchedCityFoodData,
         matchedStateFoodData,
         unmatchedCityFoodData,
         unmatchedStateFoodData
+
     // TODO: This needed erorr catching, when node server is off app fails, should fall out clean
     fetch(config.requests.geoData())
       .then((response) => response.json())
       .then((json) => {
-
         unmatchedStateFoodData = [for (d of foodData) if (json[d.state] === undefined) d]
         matchedStateFoodData = [for (d of foodData) if (json[d.state] !== undefined) d]
         unmatchedCityFoodData = [for (d of matchedStateFoodData) if (json[d.state][d.city] === undefined) d]
@@ -136,6 +142,8 @@ export const store = dispatcher.createStore(class {
         clustersLayer._reCluster()
         clustersLayer.setOpacity(1)
 
+        let uniqueFirmNames = Array.from(new Set([for (r of foodData) r.recalling_firm]));
+        console.log(uniqueFirmNames[0])
         // debugger;
       })
   }

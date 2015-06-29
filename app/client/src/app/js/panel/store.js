@@ -10,13 +10,13 @@ export const store = dispatcher.createStore(class {
     this.currentSelectedFirmEvent = undefined
     this.currentSelectedRecall = undefined
     this.bindListeners({
-      setCurentFirm:actions.SET_CURRENT_FIRM,
+      setCurrentFirm:actions.SET_CURRENT_FIRM,
       handleQueryFdaSuccess: appActions.QUERY_FDA_SUCCESS,
       setCurrentEvent:actions.SET_CURRENT_EVENT,
       setCurrentRecall:actions.SET_CURRENT_RECALL
     })
   }
-  setCurentFirm(firmName){
+  setCurrentFirm(firmName){
     this.currentFirm = firmName
     this.currentSelectedFirmEvent = this.firmData[this.currentFirm].uniqueEventIds[0]
     let allrecalls = this.firmData[this.currentFirm].allRecalls
@@ -48,7 +48,5 @@ export const store = dispatcher.createStore(class {
     this.currentSelectedFirmEvent = uniqueFirms[uniqueFirmNames[0]].uniqueEventIds[0]
     let allrecalls = this.firmData[this.currentFirm].allRecalls
     this.currentSelectedRecall = Array.from(new Set([for (r of allrecalls) if (r.event_id === this.currentSelectedFirmEvent) r.recall_number]))[0]
-    this.x = Array.from(new Set([for (r of allrecalls) if (r.event_id === this.currentSelectedFirmEvent) r]))
-    this.b = [for( i of this.x) if(i.recall_number === this.currentSelectedRecall) i]
   }
 }, 'panelStore')
