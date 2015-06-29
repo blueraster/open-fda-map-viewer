@@ -105,7 +105,8 @@ export const store = dispatcher.createStore(class {
   }
 
   handleSetCurentFirm (firmID){
-    console.log('My motherfing map ')
+    debugger
+    console.log(firmID)
   }
   handleQueryFdaSuccess (foodData) {
     let map = this.map,
@@ -143,7 +144,7 @@ export const store = dispatcher.createStore(class {
         clustersLayer.setOpacity(1)
 
         let uniqueFirmNames = Array.from(new Set([for (r of foodData) r.recalling_firm]));
-        console.log(uniqueFirmNames[0])
+        this.handleSetCurentFirm(uniqueFirmNames[0])
         // debugger;
       })
   }
