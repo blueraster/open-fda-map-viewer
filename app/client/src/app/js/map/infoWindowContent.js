@@ -63,7 +63,7 @@ export class InfoWindowContent extends React.Component {
         // ENHANCEMENT: on back, return features to initally set features instead of hiding infowindow
         return [
           `Recalls for Firm: ${firmName}`,
-          <div><button onClick={() => {this.setSelectedFirmNameForInfoWindowContent(undefined); infoWindow.hide()}}>Back</button></div>,
+          <div><button onClick={() => {actions.setSelectedFirmNameForInfoWindowContent(undefined); infoWindow.hide()}}>Back</button></div>,
           <hr />,
           recallDetails,
           <hr />,
@@ -75,7 +75,7 @@ export class InfoWindowContent extends React.Component {
 
         return ([
           'Firms:',
-          recallingFirms.map((firmName) => <div><button onClick={this.focusFirm.bind(this)}>{firmName}</button></div>),
+          recallingFirms.map((firmName) => <div><button onClick={() => {this.focusFirm(firmName)}}>{firmName}</button></div>),
         ])
       }
     }()
@@ -85,15 +85,15 @@ export class InfoWindowContent extends React.Component {
       </div>
     )
   }
-  focusFirm (event) {
+  focusFirm (firmName) {
     let map = this.state.map,
         infoWindow = map.infoWindow,
         features = infoWindow.features,
         feature = infoWindow.getSelectedFeature(),
-        firmFeatures = [for (f of features) if (f.attributes.recalling_firm === event.target.innerText) f]
+        firmFeatures = [for (f of features) if (f.attributes.recalling_firm === firmName) f]
 
     infoWindow.setFeatures(firmFeatures)
-    actions.setSelectedFirmNameForInfoWindowContent(feature.attributes.recalling_firm)
+    actions.setSelectedFirmNameForInfoWindowContent(firmName)
     setTimeout(infoWindow.reposition.bind(infoWindow), 1)
   }
 }

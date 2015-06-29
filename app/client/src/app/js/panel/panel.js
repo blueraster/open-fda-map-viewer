@@ -29,8 +29,8 @@ export class Panel extends React.Component {
     let foodControl = (food) => <button onClick={() => {appActions.queryFda(food)}}>{food}</button>,
         foodGroupControl = (group, foods) => (
           <div className='inline-block'>
-            <button>{group[0].toUpperCase() + group.substr(1)}</button>
-            <select>
+            <button onClick={() => {appActions.queryFda(document.getElementById(config.ids.bacteriaSelect).value)}}>{group[0].toUpperCase() + group.substr(1)}</button>
+            <select id={config.ids.bacteriaSelect}>
               {[for (food of foods) <option>{food}</option>]}
             </select>
           </div>
@@ -51,9 +51,10 @@ export class Panel extends React.Component {
         [for (d of Object.keys(firmData)) <option value={d}>{`${d} ${firmData[d].uniqueEventIds.length < 2 ? '' : `(${firmData[d].uniqueEventIds.length})`}`}</option>]
       )
 
-      let firmEvents = this.state.currentFirm === undefined ? undefined :(
+      let firmEvents = this.state.currentFirm === undefined ? undefined : (
         [for(r of this.state.firmData[this.state.currentFirm].uniqueEventIds) <option value={r}>{r}</option>]
       )
+
       let eventRecalls = this.state.currentSelectedFirmEvent ==undefined ? undefined: () =>{
         currentRecalls = Array.from(new Set([for (r of currentAllRecalls) if (r.event_id === this.state.currentSelectedFirmEvent) r ]))
         let options = Array.from(new Set([for (r of currentAllRecalls) if (r.event_id === this.state.currentSelectedFirmEvent) <option value={r.recall_number}>{r.recall_number}</option>]))
