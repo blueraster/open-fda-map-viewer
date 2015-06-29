@@ -10,8 +10,13 @@ import React from 'react'
 import ClusterFeatureLayer from 'ClusterFeatureLayer'
 import esriMap from 'esri/map'
 import FeatureLayer from 'esri/layers/FeatureLayer'
+import ClassBreaksRenderer from 'esri/renderers/ClassBreaksRenderer'
+import SimpleMarkerSymbol from 'esri/symbols/SimpleMarkerSymbol'
+import SimpleLineSymbol from 'esri/symbols/SimpleLineSymbol'
+import SimpleFillSymbol from 'esri/symbols/SimpleFillSymbol'
 import Graphic from 'esri/graphic'
 import Point from 'esri/geometry/Point'
+import Color from 'dojo/_base/Color'
 import on from 'dojo/on'
 
 export const store = dispatcher.createStore(class {
@@ -27,6 +32,12 @@ export const store = dispatcher.createStore(class {
   }
   initMap () {
     let map = new esriMap(config.id, config.options)
+    let renderer,
+    defaultSym,
+    small,
+    medium,
+    large,
+    xlarge;
     on.once(map, 'extent-change', (event) => {
       let statesLayer = new FeatureLayer('http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_States_Generalized/FeatureServer/0', {
         'id': 'states',
@@ -40,6 +51,9 @@ export const store = dispatcher.createStore(class {
           // TODO: clear state highlights
         }
       })
+    defaultSym = new SimpleMarkerSymbol("circle", 16,
+              new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([102,0,0, 0.55]), 3),
+              new Color([255, 255, 255, 1]));
 
       let clustersLayer = new ClusterFeatureLayer({
           'id': 'clusters',
@@ -63,7 +77,7 @@ export const store = dispatcher.createStore(class {
           'url': 'http://services.arcgis.com/oKgs2tbjK6zwTdvi/arcgis/rest/services/Major_World_Cities/FeatureServer/0',
           // 'distance': 75,
           'distance': 0,
-          'labelColor': '#B00',
+          'labelColor': '#fff',
           'resolution': map.extent.getWidth() / map.width,
           // 'singleTemplate': infoTemplate,
           'useDefaultSymbol': false,
@@ -71,9 +85,32 @@ export const store = dispatcher.createStore(class {
           'showSingles': true,
           'objectIdField': 'FID',
           // outFields: ['NAME', 'COUNTRY', 'POPULATION', 'CAPITAL']
-          visible: false,
+          opacity: 0,
           outFields: []
       });
+
+        renderer = new ClassBreaksRenderer(defaultSym, "clusterCount");
+
+        // Red Clusters
+        small = new SimpleMarkerSymbol("circle", 25,
+            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([212,116,60,0.5]), 15),
+            new Color([212,116,60,0.75]));
+        medium = new SimpleMarkerSymbol("circle", 50,
+            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([144,24,13,0.5]), 15),
+            new Color([178,70,37,0.75]));
+        large = new SimpleMarkerSymbol("circle", 80,
+            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([144,24,13,0.5]), 15),
+            new Color([144,24,13,0.75]));
+        xlarge = new SimpleMarkerSymbol("circle", 110,
+            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([102,0,0,0.5]), 15),
+            new Color([102,0,0,0.75]));
+
+        renderer.addBreak(2, 50, small);
+        renderer.addBreak(50, 250, medium);
+        renderer.addBreak(250, 1000, large);
+        renderer.addBreak(1000, 50000, xlarge);
+
+        firmClusterLayer.setRenderer(renderer);
 
       map.addLayer(clustersLayer)
       map.addLayer(firmClusterLayer)
@@ -102,6 +139,14 @@ export const store = dispatcher.createStore(class {
   }
   handleSetCurentFirm (firmID){
     debugger
+    let alldata = this.map.getLayer('clusters')._clusterData
+    let matchedData = [for(d of alldata) if (d.attributes.recalling_firm ===firmID) d]
+    let clustersLayer = this.map.getLayer('firmsfirmCluster')
+    clustersLayer._clusterData = matchedData
+    clustersLayer._reCluster()
+    clustersLayer.setOpacity(1)
+
+
     console.log(firmID)
   }
   handleQueryFdaSuccess (foodData) {
