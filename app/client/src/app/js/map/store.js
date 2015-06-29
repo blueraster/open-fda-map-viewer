@@ -22,13 +22,15 @@ import on from 'dojo/on'
 export const store = dispatcher.createStore(class {
   constructor () {
     this.map = undefined
-    this.focusedFirmName = undefined
+    this.selectedFirmNameForClusters = undefined
+    this.selectedFirmNameForInfoWindowContent = undefined
+    // TODO: refactor ridiculously long listeners & dependencie into own components
     this.bindListeners({
       initMap: actions.INIT_MAP,
       setSelectedBacteria: actions.SET_SELECTED_BACTERIA,
-      setFocusedFirmName: actions.SET_FOCUSED_FIRM_NAME,
-      handleQueryFdaSuccess: appActions.QUERY_FDA_SUCCESS,
-      handleSetCurentFirm: panelActions.SET_CURRENT_FIRM
+      setSelectedFirmNameForClusters: actions.SET_SELECTED_FIRM_NAME_FOR_CLUSTERS,
+      setSelectedFirmNameForInfoWindowContent: actions.SET_SELECTED_FIRM_NAME_FOR_INFO_WINDOW_CONTENT,
+      handleQueryFdaSuccess: appActions.QUERY_FDA_SUCCESS
     })
   }
   initMap () {
@@ -74,7 +76,7 @@ export const store = dispatcher.createStore(class {
       });
 
       let firmClusterLayer = new ClusterFeatureLayer({
-          'id': 'firmsfirmCluster',
+          'id': 'firmClusters',
           'url': 'http://services.arcgis.com/oKgs2tbjK6zwTdvi/arcgis/rest/services/Major_World_Cities/FeatureServer/0',
           // 'distance': 75,
           'distance': 0,
@@ -133,27 +135,23 @@ export const store = dispatcher.createStore(class {
     this.map = map
   }
   setSelectedBacteria (Bacteria) {
-    this.selectedBacteria =Bacteria
+    this.selectedBacteria = Bacteria
   }
-  setFocusedFirmName (firmName) {
-    this.focusedFirmName = firmName
+  setSelectedFirmNameForInfoWindowContent (firmName) {
+    this.selectedFirmNameForInfoWindowContent = firmName
   }
-  handleSetCurentFirm (firmID){
-    // debugger
+  setSelectedFirmNameForClusters (firmName) {
     let alldata = this.map.getLayer('clusters')._clusterData
-    let matchedData = [for(d of alldata) if (d.attributes.recalling_firm ===firmID) d]
-    let clustersLayer = this.map.getLayer('firmsfirmCluster')
+    let matchedData = [for(d of alldata) if (d.attributes.recalling_firm === firmName) d]
+    let clustersLayer = this.map.getLayer('firmClusters')
     clustersLayer._clusterData = matchedData
     clustersLayer._reCluster()
     clustersLayer.setOpacity(1)
-
-
-    console.log(firmID)
   }
   handleQueryFdaSuccess (foodData) {
     let map = this.map,
         clustersLayer = map.getLayer('clusters'),
-        firmClusterLayer = map.getLayer('firmsfirmCluster'),
+        firmClusterLayer = map.getLayer('firmClusters'),
         clusterData = [],
         matchedCityFoodData,
         matchedStateFoodData,
@@ -186,7 +184,7 @@ export const store = dispatcher.createStore(class {
         clustersLayer.setOpacity(1)
 
         let uniqueFirmNames = Array.from(new Set([for (r of foodData) r.recalling_firm]));
-        this.handleSetCurentFirm(uniqueFirmNames[0])
+        this.setSelectedFirmNameForClusters(uniqueFirmNames[0])
         // debugger;
       })
   }

@@ -17,14 +17,14 @@ export class InfoWindowContent extends React.Component {
         updated = false
     infoWindow.on('selection-change', () => {
       let feature = infoWindow.getSelectedFeature(),
-          focusedFirmName = this.state.focusedFirmName
+          selectedFirmName = this.state.selectedFirmNameForInfoWindowContent
 
       // intelligently handle clicking a new cluster
-      if (feature !== undefined && focusedFirmName !== undefined) {
+      if (feature !== undefined && selectedFirmName !== undefined) {
         let firms = Array.from(new Set([for (f of infoWindow.features) f.attributes.recalling_firm]))
-        if (firms.length > 1 || firms[0] !== focusedFirmName) {
+        if (firms.length > 1 || firms[0] !== selectedFirmName) {
           updated = true
-          actions.setFocusedFirmName(undefined)
+          actions.setSelectedFirmNameForInfoWindowContent(undefined)
         }
       }
 
@@ -32,7 +32,7 @@ export class InfoWindowContent extends React.Component {
       infoWindow.reposition()
     })
     infoWindow.on('hide', () => {
-      actions.setFocusedFirmName(undefined)
+      actions.setSelectedFirmNameForInfoWindowContent(undefined)
     })
   }
   componentWillUnmount () {
@@ -42,25 +42,26 @@ export class InfoWindowContent extends React.Component {
     this.setState(state)
   }
   render () {
-    let focusedFirmName = this.state.focusedFirmName,
+    let selectedFirmName = this.state.selectedFirmNameForInfoWindowContent,
         infoWindow = this.state.map.infoWindow,
         features = infoWindow.features,
         ui
 
     ui = features === null || features === undefined ? undefined : () => {
-      if (focusedFirmName !== undefined) {
+      if (selectedFirmName !== undefined) {
         let feature = infoWindow.getSelectedFeature(),
+            firmName = feature.attributes.recalling_firm,
             attributes = feature.attributes,
             recallDetails = [for (label of appConfig.detailLabels) if (attributes[label.key] !== undefined) <div>{`${label.text}: ${attributes[label.key]}`}</div>]
         // ENHANCEMENT: on back, return features to initally set features instead of hiding infowindow
         return [
-          `Recalls for Firm: ${feature.attributes.recalling_firm}`,
+          `Recalls for Firm: ${firmName}`,
           <div><button onClick={infoWindow.hide.bind(infoWindow)}>Back</button></div>,
           <hr />,
           recallDetails,
           <hr />,
-          <button onClick={this.showFirmClusters.bind(this)}>Visualize firm recalls (single click)</button>,
-          <button onClick={this.showDistributionPattern.bind(this)}>View distribution pattern</button>
+          <button onClick={() => {this.showFirmClusters(firmName)}}>Visualize firm recalls (single click)</button>,
+          <button onClick={() => {this.showDistributionPattern(firmName)}}>View distribution pattern</button>
         ]
       } else {
         let recallingFirms = Array.from(new Set([for (f of features) f.attributes.recalling_firm]))
@@ -77,11 +78,15 @@ export class InfoWindowContent extends React.Component {
       </div>
     )
   }
-  showFirmClusters () {
-    console.debug('showFirmClusters')
+  showFirmClusters (firmName) {
+    // this.state.map.infoWindow.hide()
+    actions.setSelectedFirmNameForClusters(firmName)
   }
-  showDistributionPattern () {
+  showDistributionPattern (firmName) {
+    let feature = this.state.map.infoWindow.getSelectedFeature()
+
     console.debug('showDistributionPattern')
+    console.debug(feature.attributes.distribution_pattern)
   }
   focusFirm (event) {
     let map = this.state.map,
@@ -91,7 +96,7 @@ export class InfoWindowContent extends React.Component {
         firmFeatures = [for (f of features) if (f.attributes.recalling_firm === event.target.innerText) f]
 
     infoWindow.setFeatures(firmFeatures)
-    actions.setFocusedFirmName(feature.attributes.recalling_firm)
+    actions.setSelectedFirmNameForInfoWindowContent(feature.attributes.recalling_firm)
     setTimeout(infoWindow.reposition.bind(infoWindow), 1)
   }
 }

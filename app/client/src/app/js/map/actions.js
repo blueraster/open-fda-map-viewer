@@ -8,7 +8,10 @@ export const actions = dispatcher.createActions(class {
   setSelectedBacteria (bacteria) {
     this.dispatch(bacteria)
   }
-  setFocusedFirmName (firmName) {
+  setSelectedFirmNameForClusters (firmName) {
+    this.dispatch(firmName)
+  }
+  setSelectedFirmNameForInfoWindowContent (firmName) {
     this.dispatch(firmName)
   }
 })

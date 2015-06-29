@@ -2,6 +2,7 @@ import {messages} from 'js/messages'
 import {resources} from 'js/resources'
 import {actions} from 'panel/actions'
 import {actions as appActions} from 'app/actions'
+import {actions as mapActions} from 'map/actions'
 import {store} from 'panel/store'
 import {panel as config} from 'js/config'
 import {app as appConfig} from 'js/config'
@@ -75,7 +76,7 @@ export class Panel extends React.Component {
       return (
         <div className='padding__bottom padding__wide'>
           <label className='inline-block fill--50p__wide'>Business ({Object.keys(this.state.firmData).length})</label>
-          <select className='fill--50p__wide' value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value)}}>
+          <select className='fill--50p__wide' value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value);mapActions.setSelectedFirmNameForClusters(event.target.value)}}>
             {firmOptions}
           </select>
           <div className='inline-block fill--50p__wide'>Listed recall events ({recallEventsLength})</div>
