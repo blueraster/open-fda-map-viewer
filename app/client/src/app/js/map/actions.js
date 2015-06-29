@@ -8,7 +8,7 @@ export const actions = dispatcher.createActions(class {
   setSelectedBacteria (bacteria) {
     this.dispatch(bacteria)
   }
-  setFocusedFirmID (firmID) {
-    this.dispatch(firmID)
+  setFocusedFirmName (firmName) {
+    this.dispatch(firmName)
   }
 })

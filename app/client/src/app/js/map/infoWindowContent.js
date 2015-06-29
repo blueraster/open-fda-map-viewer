@@ -13,10 +13,26 @@ export class InfoWindowContent extends React.Component {
   }
   componentDidMount () {
     store.listen(this.onChange.bind(this))
-    let infoWindow = this.state.map.infoWindow
+    let infoWindow = this.state.map.infoWindow,
+        updated = false
     infoWindow.on('selection-change', () => {
-      this.forceUpdate()
+      let feature = infoWindow.getSelectedFeature(),
+          focusedFirmName = this.state.focusedFirmName
+
+      // intelligently handle clicking a new cluster
+      if (feature !== undefined && focusedFirmName !== undefined) {
+        let firms = Array.from(new Set([for (f of infoWindow.features) f.attributes.recalling_firm]))
+        if (firms.length > 1 || firms[0].attributes.recalling_firm !== focusedFirmName) {
+          updated = true
+          actions.setFocusedFirmName(undefined)
+        }
+      }
+
+      if (!updated) {this.forceUpdate()}
       infoWindow.reposition()
+    })
+    infoWindow.on('hide', () => {
+      actions.setFocusedFirmName(undefined)
     })
   }
   componentWillUnmount () {
@@ -26,19 +42,28 @@ export class InfoWindowContent extends React.Component {
     this.setState(state)
   }
   render () {
-    let focusedFirmID = this.state.focusedFirmID,
+    let focusedFirmName = this.state.focusedFirmName,
         infoWindow = this.state.map.infoWindow,
         features = infoWindow.features,
         ui
 
     ui = features === null || features === undefined ? undefined : () => {
-      if (focusedFirmID !== undefined) {
-        return 'focused firm'
-      } else {
-        let recallingFirms = Array.from(new Set([for (f of features) f.attributes.recalling_firm])),
-            feature =  infoWindow.getSelectedFeature(),
+      if (focusedFirmName !== undefined) {
+        let feature = infoWindow.getSelectedFeature(),
             attributes = feature.attributes,
-            recallDeatils = [for (label of appConfig.detailLabels) if (attributes[label.key] !== undefined) <div>{`${label.text}: ${attributes[label.key]}`}</div>]
+            recallDetails = [for (label of appConfig.detailLabels) if (attributes[label.key] !== undefined) <div>{`${label.text}: ${attributes[label.key]}`}</div>]
+        // ENHANCEMENT: on back, return features to initally set features instead of hiding infowindow
+        return [
+          `Recalls for Firm: ${feature.attributes.recalling_firm}`,
+          <div><button onClick={infoWindow.hide.bind(infoWindow)}>Back</button></div>,
+          <hr />,
+          recallDetails,
+          <hr />,
+          <button onClick={this.showFirmClusters.bind(this)}>Visualize firm recalls (single click)</button>,
+          <button onClick={this.showDistributionPattern.bind(this)}>View distribution pattern</button>
+        ]
+      } else {
+        let recallingFirms = Array.from(new Set([for (f of features) f.attributes.recalling_firm]))
 
         return ([
           'Firms:',
@@ -52,6 +77,12 @@ export class InfoWindowContent extends React.Component {
       </div>
     )
   }
+  showFirmClusters () {
+    console.debug('showFirmClusters')
+  }
+  showDistributionPattern () {
+    console.debug('showDistributionPattern')
+  }
   focusFirm (event) {
     let map = this.state.map,
         infoWindow = map.infoWindow,
@@ -59,21 +90,8 @@ export class InfoWindowContent extends React.Component {
         feature = infoWindow.getSelectedFeature(),
         firmFeatures = [for (f of features) if (f.attributes.recalling_firm === event.target.innerText) f]
 
-    // map.setExtent(recallsExtent)
-    // map.centerAndZoom(firmFeatures[0].geometry, config.options.maxZoom)
     infoWindow.setFeatures(firmFeatures)
-    actions.setFocusedFirmID(feature.recalling_firm)
-    // on.once(map, 'zoom-end', () => {infoWindow.reposition()})
-
-    // debugger
-    // console.debug(graphicsExtent(firmFeatures))
-    // map.setExtent(graphicsUtils.graphicsExtent(firmFeatures), true)
-    // filter features by firm event
-    // get extent of all features
-    // zoom to extent
-    // infoWindow.hide()
-    // set features
-    // infoWindow.show()
-    // debugger
+    actions.setFocusedFirmName(feature.attributes.recalling_firm)
+    setTimeout(infoWindow.reposition.bind(infoWindow), 1)
   }
 }

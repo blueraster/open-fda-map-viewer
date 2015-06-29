@@ -22,10 +22,11 @@ import on from 'dojo/on'
 export const store = dispatcher.createStore(class {
   constructor () {
     this.map = undefined
-    this.focusedFirmID = undefined
+    this.focusedFirmName = undefined
     this.bindListeners({
       initMap: actions.INIT_MAP,
       setSelectedBacteria: actions.SET_SELECTED_BACTERIA,
+      setFocusedFirmName: actions.SET_FOCUSED_FIRM_NAME,
       handleQueryFdaSuccess: appActions.QUERY_FDA_SUCCESS,
       handleSetCurentFirm: panelActions.SET_CURRENT_FIRM
     })
@@ -134,11 +135,11 @@ export const store = dispatcher.createStore(class {
   setSelectedBacteria (Bacteria) {
     this.selectedBacteria =Bacteria
   }
-  setFocusedFirmID (firmID) {
-    this.focusedFirmID = firmID
+  setFocusedFirmName (firmName) {
+    this.focusedFirmName = firmName
   }
   handleSetCurentFirm (firmID){
-    debugger
+    // debugger
     let alldata = this.map.getLayer('clusters')._clusterData
     let matchedData = [for(d of alldata) if (d.attributes.recalling_firm ===firmID) d]
     let clustersLayer = this.map.getLayer('firmsfirmCluster')

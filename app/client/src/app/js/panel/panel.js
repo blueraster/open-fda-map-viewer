@@ -68,22 +68,24 @@ export class Panel extends React.Component {
       // Refactor select updates to single action
       return (
         <div>
-          <label>Business ({Object.keys(this.state.firmData).length})</label>
-          <select className='fill__wide' value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value)}}>
+          <label className='inline-block fill--50p__wide'>Business ({Object.keys(this.state.firmData).length})</label>
+          <select className='fill--50p__wide' value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value)}}>
             {firmOptions}
           </select>
-          <div>Listed recall events</div>
-          <select className="fill__wide" value={this.state.currentSelectedFirmEvent} onChange={(event) =>{actions.setCurrentEvent(event.target.value)}}>
+          <div className='inline-block fill--50p__wide'>Listed recall events</div>
+          <select className="inline-block fill--50p__wide" value={this.state.currentSelectedFirmEvent} onChange={(event) =>{actions.setCurrentEvent(event.target.value)}}>
             {firmEvents}
           </select>
-          <div>Event Recalls</div>
-          <select className="fill__wide" value={this.state.currentSelectedRecall} onChange={(event) =>{actions.setCurrentRecall(event.target.value)}} >
+          <div className='inline-block fill--50p__wide'>Event Recalls</div>
+          <select className="inline-block fill--50p__wide" value={this.state.currentSelectedRecall} onChange={(event) =>{actions.setCurrentRecall(event.target.value)}} >
             {eventRecalls}
           </select>
           <div>Details</div>
           <ul>
             {recallDetails}
           </ul>
+          <button>Visualize firm recalls (toggle)</button>
+          <button>View distribution pattern</button>
         </div>
       )
     }()
