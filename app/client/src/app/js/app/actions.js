@@ -1,25 +1,15 @@
 import {dispatcher} from 'js/dispatcher'
 import {app as config} from 'js/config'
 import {messages} from 'js/messages'
-import {Welcome} from 'app/welcome'
 import {geocode} from 'util/shame'
 // Lib Vendor
 import React from 'react'
-import sweetAlert from 'sweetalert'
+import boron from 'boron'
 
 export const actions = dispatcher.createActions(class {
   init () {
     document.title = messages.title
     document.body.className = config.dojoTheme
-
-    // swal({
-    //   title: messages.title,
-    //   text: React.renderToStaticMarkup(<Welcome />),
-    //   allowEscapeKey: false,
-    //   showConfirmButton:false,
-    //   html: true
-    // })
-
     this.dispatch()
   }
 

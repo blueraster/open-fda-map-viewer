@@ -24,10 +24,10 @@
           ['alt', 'vendor/alt/dist/alt'],
           ['react', 'vendor/react/react'],
           ['ClusterFeatureLayer', 'vendor/cluster-layer-js/src/clusterfeaturelayer'],
-          ['sweetalert','vendor/sweetalert/dist/sweetalert.min'],
           ['Chartjs', 'vendor/Chart.js/Chart.min'],
           ['babel-polyfill', 'shim/babel-polyfill/browser-polyfill'],
-          ['fetch', 'shim/fetch/fetch']
+          ['fetch', 'shim/fetch/fetch'],
+          ['boron','vendor/boron.min/index.js']
         ],
         deps: [
           'dojo/domReady!'

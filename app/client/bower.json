@@ -14,7 +14,7 @@
     "fetch": "~0.9.0",
     "alt": "~0.16.10",
     "cluster-layer-js": "Esri/cluster-layer-js",
-    "sweetalert": "~1.0.1",
-    "Chart.js": "~1.0.2"
+    "Chart.js": "~1.0.2",
+    "boron.min": "https://raw.githubusercontent.com/yuanyan/boron/master/dist/boron.min.js"
   }
 }

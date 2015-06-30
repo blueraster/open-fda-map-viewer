@@ -45,6 +45,7 @@ export const store = dispatcher.createStore(class {
     // aggregate month counts
     ;[for (t of timeseries) processedTimeseries[t.time.substr(0,4)][months.indexOf(t.time.substr(4,2))] += t.count]
     // shape data for chart
+    console.log(Object.keys(processedTimeseries))
     chartData = {
       labels: monthLabels,
       datasets: [for (t of Object.keys(processedTimeseries)) {
@@ -55,7 +56,7 @@ export const store = dispatcher.createStore(class {
         pointStrokeColor: '#fff',
         pointHighlightFill: '#fff',
         pointHighlightStroke: 'rgba(151,187,205,1)',
-        data: processedTimeseries[t]
+        data: processedTimeseries[t],
       }]
     }
     if (this.chart !== undefined) {this.chart.destroy()}
