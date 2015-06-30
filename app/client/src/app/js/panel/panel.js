@@ -52,18 +52,31 @@ export class Panel extends React.Component {
         let recallForEvent = Array.from(new Set([for (r of currentAllRecalls) if (r.event_id === this.state.currentSelectedFirmEvent) r]))
         let selectedRecall = [for (i of recallForEvent) if (i.recall_number === this.state.currentSelectedRecall) i][0]
         let rows = ['reason_for_recall', 'distribution_pattern', 'product_description']
-        let recallDetails = [for (label of appConfig.detailLabels) <li>{`${label.text}: ${selectedRecall[label.key]}`}</li>]
+        let recallDetails = [for (key of rows) <li className='padding__bottom'><span className='text-gray--subtle'>{appConfig.detailLabelsUnordered[key]}: </span>{selectedRecall[key]}</li>]
 
         return (
           <div className='margin__top'>
             <strong>Details:</strong>
-            <ul className='panel__details'>{recallDetails}</ul>
+            <div className='panel__details'>
+              <div className='inline-block padding__bottom fill--50p__wide'>
+                <div>Report Date</div>
+              </div>
+              <div className='inline-block padding__bottom fill--50p__wide text-right'>
+                <div>City</div>
+                <div>State</div>
+              </div>
+              <ul>{recallDetails}</ul>
+            </div>
           </div>
         )
       }()
 
       let recallEventsLength = this.state.firmData[this.state.currentFirm].uniqueEventIds.length
 
+      // let recallEvents = recallEventsLength ===  1 ? <div
+      // if (recallEventsLength === 1) {
+
+      // }
 
       //TODO
       // Add recall counts hide singler recall counts
@@ -74,12 +87,12 @@ export class Panel extends React.Component {
           <select className='fill--50p__wide' value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value);mapActions.setSelectedFirmNameForClusters(event.target.value)}}>
             {firmOptions}
           </select>
-          <div className='inline-block fill--50p__wide'>Listed recall events ({recallEventsLength})</div>
-          <select className="inline-block fill--50p__wide" value={this.state.currentSelectedFirmEvent} onChange={(event) =>{actions.setCurrentEvent(event.target.value)}} disabled={recallEventsLength === 1}>
+          <div className='inline-block fill--50p__wide'>Event ({recallEventsLength})</div>
+          <select className="inline-block fill--50p__wide" value={this.state.currentSelectedFirmEvent} onChange={(event) =>{actions.setCurrentEvent(event.target.value)}}>
             {firmEvents}
           </select>
-          <div className='inline-block fill--50p__wide'>Event Recalls ({recallsLength})</div>
-          <select className="inline-block fill--50p__wide" value={this.state.currentSelectedRecall} onChange={(event) =>{actions.setCurrentRecall(event.target.value)}} disabled={recallsLength === 1}>
+          <div className='inline-block fill--50p__wide'>Recall ({recallsLength})</div>
+          <select className="inline-block fill--50p__wide" value={this.state.currentSelectedRecall} onChange={(event) =>{actions.setCurrentRecall(event.target.value)}}>
             {eventRecalls}
           </select>
           {recallDetails}

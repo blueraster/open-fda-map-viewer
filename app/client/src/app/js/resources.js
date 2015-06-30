@@ -4,6 +4,10 @@
  export const resources = {
   openFdaImage: `${basePath}/images/l_openFDA.png`,
   blueRasterImage: `${basePath}/images/br_logo.png`,
-  closeIcon: `${basePath}/images/close.png`
-
+  closeIcon: `${basePath}/images/close.png`,
+  legendSymbols: {
+    allRecalls: `${basePath}/images/all_recalls.png`,
+    firmRecalls: `${basePath}/images/firm_recalls.png`,
+    distributionPatterns: `${basePath}/images/distribution_patterns.png`,
+  }
 }

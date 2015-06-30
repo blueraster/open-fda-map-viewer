@@ -15,7 +15,17 @@ export const config = {
       {key: 'reason_for_recall', text: 'Reason for Recall'},
       {key: 'distribution_pattern', text: 'Distribution Pattern'},
       {key: 'product_description', text: 'Product Description'}
-    ]
+    ],
+    detailLabelsUnordered: {
+      'report_date': 'Report Date',
+      'recall_number': 'Recall Number',
+      'city': 'City',
+      'state': 'State',
+      'status': 'Status',
+      'reason_for_recall': 'Reason for Recall',
+      'distribution_pattern': 'Distribution Pattern',
+      'product_description': 'Product Description'
+    }
   },
   panel: {
     foods: {

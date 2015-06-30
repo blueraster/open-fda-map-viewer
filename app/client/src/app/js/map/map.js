@@ -3,6 +3,7 @@ import {actions} from 'map/actions'
 import {actions as appActions} from 'app/actions'
 import {Controls} from 'map/controls'
 import {store} from 'map/store'
+import {resources} from 'js/resources'
 // lib/vendor/esri/dojo
 import React from 'react'
 
@@ -30,10 +31,10 @@ export class Map extends React.Component {
         <div id={config.id} className='fill'></div>
         {controls}
         <div className='absolute legend'>
-          Legend (WIP - click toggles visibility)
-          <div>(symbol) All Clusters</div>
-          <div>(symbol) Firm Clusters</div>
-          <div>(symbol) Distribution Pattern</div>
+          <span className='margin__bottom'>Legend (WIP - will toggle visibility on click)</span>
+          <div><img className='vertical-middle' src={resources.legendSymbols.allRecalls} /><span className='vertical-middle'>All Recalls</span></div>
+          <div><img className='vertical-middle' src={resources.legendSymbols.firmRecalls} /><span className='vertical-middle'>Firm Recalls</span></div>
+          <div><img className='vertical-middle' src={resources.legendSymbols.distributionPatterns} /><span className='vertical-middle'>Distribution Patterns</span></div>
         </div>
       </div>
     )
