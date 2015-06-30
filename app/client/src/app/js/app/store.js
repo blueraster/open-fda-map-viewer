@@ -18,9 +18,6 @@ export const store = dispatcher.createStore(class {
       queryFdaTimeseriesSuccess: actions.QUERY_FDA_TIMESERIES_SUCCESS
     })
   }
-  queryFdaEvents(context){
-    debugger
-  }
   setChartContext (context) {
     this.chartContext = context
   }

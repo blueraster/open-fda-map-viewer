@@ -1,57 +1,47 @@
 import {messages} from 'js/messages'
 import {resources} from 'js/resources'
 import {actions as appActions} from 'app/actions'
+import {panel as config} from 'js/config'
+import {app as appConfig} from 'js/config'
+
 // lib/vendor/esri/dojo
 import React from 'react'
 // import {DropModal as Modal} from 'boron'
 // var Modal = require('boron/DropModal');
-export class Welcome extends React.createClass {
-  showModal(){
-    this.refs.modal.show()
+export class Welcome extends React.Component {
+  open () {
   }
-  hideModal(){
-    this.refs.modal.hide()
-
+  close (){
+    let closeIcon = document.getElementsByClassName('popup')
+    closeIcon[0].classList.add('hidden')
   }
   render () {
-    //onClick={appActions.queryFda(food)}
-    // let foodControl = (food)=>(
-    //   <button>{food}</button>
-    // )
-    // let foodCategories = (
-    //   [for (food of Object.keys(config.foods.individual)) foodControl(config.foods.individual[food])]
-    // )
+    let foodControl = (food) => <button onClick={() => {appActions.queryFda(food)}}>{food}</button>
+    let foodGroupControl = (group, foods) => (
+          <div className='inline-block'>
+            <button onClick={() => {appActions.queryFda(document.getElementById(config.ids.bacteriaSelect).value)}}>{group[0].toUpperCase() + group.substr(1)}</button>
+            <select id={config.ids.bacteriaSelect}>
+              {[for (food of foods) <option>{food}</option>]}
+            </select>
+          </div>
+        ),
+    foodControls
+
+    foodControls = [for (food of Object.keys(config.foods.individual)) foodControl(config.foods.individual[food])]
+    foodControls = foodControls.concat([for (group of Object.keys(config.foods.nested)) foodGroupControl(group, [for (food of config.foods.nested[group]) food])])
     return (
-      <button onClick={this.showModal.bind(this)}>Open</button>
-      // <Modal ref="modal">
-      //     <h2>I'm a dialog</h2>
-      //     <button onClick={this.hideModal.bind(this)}>Close</button>
-      // </Modal>
-    )
+        <div className='popup'>
+          <div className='popup__film'></div>
+          <div className='popup__inner'>
+            <img onClick={()=>this.close()} className='popup__closeIcon'src={resources.closeIcon} />
+            <h2>{messages.welcome}</h2>
+            <h3>{messages.title}</h3>
+            {foodControls}
+            <div className="clear"></div>
+            <img className="popup__image" src={resources.openFdaImage} />
+            <img className="popup__image" src={resources.blueRasterImage} />
+          </div>
+        </div>
+      )
   }
 }
-
-
-      // <div>
-      //   <p className="text-left">{messages.text}</p>
-      //   <h4 className="text-left">{messages.selectHeader}</h4>
-      //   <div>
-      //     {foodCategories}
-      //   </div>
-      // </div>
-
-// showModal: function(){
-//         this.refs.modal.show();
-//     },
-//     hideModal: function(){
-//         this.refs.modal.hide();
-//     },
-//     render: function() {
-//         return (
-//             <button onClick={this.showModal}>Open</button>
-//             <Modal ref="modal">
-//                 <h2>I'm a dialog</h2>
-//                 <button onClick={this.hideModal}>Close</button>
-//             </Modal>
-//         );
-//     }

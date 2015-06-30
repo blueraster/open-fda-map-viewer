@@ -4,7 +4,6 @@ import {messages} from 'js/messages'
 import {geocode} from 'util/shame'
 // Lib Vendor
 import React from 'react'
-import boron from 'boron'
 
 export const actions = dispatcher.createActions(class {
   init () {
@@ -18,6 +17,8 @@ export const actions = dispatcher.createActions(class {
   }
 
   queryFda (food) {
+    let closeIcon = document.getElementsByClassName('popup')
+    closeIcon[0].classList.add('hidden')
     this.dispatch(food)
   }
 

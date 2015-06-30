@@ -26,8 +26,7 @@
           ['ClusterFeatureLayer', 'vendor/cluster-layer-js/src/clusterfeaturelayer'],
           ['Chartjs', 'vendor/Chart.js/Chart.min'],
           ['babel-polyfill', 'shim/babel-polyfill/browser-polyfill'],
-          ['fetch', 'shim/fetch/fetch'],
-          ['boron','vendor/boron.min/index.js']
+          ['fetch', 'shim/fetch/fetch']
         ],
         deps: [
           'dojo/domReady!'
