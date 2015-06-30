@@ -22,7 +22,7 @@ export class App extends React.Component {
         </div>
         <div className='app__panel-container absolute no-bottom no-left no-right margin-auto z-index-panel text-center text-black'>
           <div className='app__panel--dark inline-block back-white text-left'>
-            <div className='app__panel__header'><FoodControls /></div>
+            <div className='app__panel__header text-center'><FoodControls /></div>
             <div className='app__panel__half inline-block'><Panel /></div>
             <div className='app__panel__half inline-block relative overflow-hidden'><Chart /></div>
           </div>

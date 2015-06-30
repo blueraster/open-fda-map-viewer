@@ -22,8 +22,11 @@ export class Chart extends React.Component {
     let data = this.state.timeseries === undefined ? undefined : JSON.stringify(this.state.timeseries)
 
     return (
-      <div className='app-chart absolute no-bottom no-left no-right margin-auto'>
-        <canvas id='chart' className='fill'></canvas>
+      <div>
+        <div className='text-center'>%Food% Recalls for %Latest Year%</div>
+        <div className='app-chart no-bottom no-left no-right margin-auto'>
+          <canvas id='chart' className='fill'></canvas>
+        </div>
       </div>
     )
   }

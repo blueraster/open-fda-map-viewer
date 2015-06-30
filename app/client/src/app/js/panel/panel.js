@@ -53,10 +53,12 @@ export class Panel extends React.Component {
         let selectedRecall = [for (i of recallForEvent) if (i.recall_number === this.state.currentSelectedRecall) i][0]
         let recallDetails = [for (label of appConfig.detailLabels) <li>{`${label.text}: ${selectedRecall[label.key]}`}</li>]
 
-        return [
-          'Details',
-          <ul>{recallDetails}</ul>
-        ]
+        return (
+          <div className='margin__top'>
+            <strong>Details:</strong>
+            <ul className='panel__details'>{recallDetails}</ul>
+          </div>
+        )
       }()
 
       let recallEventsLength = this.state.firmData[this.state.currentFirm].uniqueEventIds.length
