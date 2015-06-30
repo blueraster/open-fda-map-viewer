@@ -1,5 +1,6 @@
 import {store} from 'app/store'
 import {actions as appActions} from 'app/actions'
+import {ChartTitle} from 'app/chartTitle'
 // lib/vendor/shim/esri/dojo
 import React from 'react'
 
@@ -23,7 +24,7 @@ export class Chart extends React.Component {
 
     return (
       <div>
-        <div className='text-center'>%Food% Recalls for %Latest Year%</div>
+        <ChartTitle />
         <div className='app-chart no-bottom no-left no-right margin-auto'>
           <canvas id='chart' className='fill'></canvas>
         </div>

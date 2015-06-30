@@ -53,9 +53,27 @@ export const store = dispatcher.createStore(class {
         pointStrokeColor: '#fff',
         pointHighlightFill: '#fff',
         pointHighlightStroke: 'rgba(151,187,205,1)',
-        data: processedTimeseries[t],
+        data: processedTimeseries[t]
       }]
     }
+    let latestYear = Math.max.apply(Math, Object.keys(processedTimeseries).map((k) => parseInt(k))).toString()
+    chartData = {
+      labels: monthLabels,
+      datasets: [{
+        label: latestYear,
+        fillColor: 'rgba(151,187,205,0.2)',
+        strokeColor: 'rgba(151,187,205,1)',
+        pointColor: 'rgba(151,187,205,1)',
+        pointStrokeColor: '#fff',
+        pointHighlightFill: '#fff',
+        pointHighlightStroke: 'rgba(151,187,205,1)',
+        data: processedTimeseries[latestYear]
+      }]
+    }
+
+    console.debug(chartData)
+    this.timeseriesYear = latestYear
+
     if (this.chart !== undefined) {this.chart.destroy()}
     this.chart = new Chartjs(this.chartContext).Line(chartData, {
       scaleFontFamily: 'Raleway, sans-serif',
