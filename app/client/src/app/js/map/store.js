@@ -15,6 +15,7 @@ import ClassBreaksRenderer from 'esri/renderers/ClassBreaksRenderer'
 import SimpleMarkerSymbol from 'esri/symbols/SimpleMarkerSymbol'
 import SimpleLineSymbol from 'esri/symbols/SimpleLineSymbol'
 import SimpleFillSymbol from 'esri/symbols/SimpleFillSymbol'
+import SimpleRenderer from 'esri/renderers/SimpleRenderer'
 import Graphic from 'esri/graphic'
 import Point from 'esri/geometry/Point'
 import Color from 'dojo/_base/Color'
@@ -47,8 +48,10 @@ export const store = dispatcher.createStore(class {
       let statesLayer = new FeatureLayer('http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_States_Generalized/FeatureServer/0', {
         id: 'states',
         // mode: FeatureLayer.MODE_SNAPSHOT,
+        // showLabels: true,
         visible: false
       })
+      statesLayer.setRenderer(new SimpleRenderer(new SimpleFillSymbol(config.symbology.states)))
       map.addLayer(statesLayer)
 
       map.on('click', (event) => {

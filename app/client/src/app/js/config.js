@@ -57,6 +57,9 @@ export const config = {
         search: 'search'
       }
     },
+    symbology: {
+      states: { "color": [ 232, 104, 80, 64 ], "outline": { "color": [ 232, 104, 80, 255 ], "width": 1.5, "type": "esriSLS", "style": "esriSLSSolid" }, "type": "esriSFS", "style": "esriSFSSolid" }
+    },
     expressions: {
       states: /HI|Hawaii|WA|Washington|MT|Montana|ME|Maine|ND|North Dakota|SD|South Dakota|WY|Wyoming|WI|Wisconsin|ID|Idaho|VT|Vermont|MN|Minnesota|OR|Oregon|NH|New Hampshire|IA|Iowa|MA|Massachusetts|NE|Nebraska|NY|New York|PA|Pennsylvania|CT|Connecticut|RI|Rhode Island|NJ|New Jersey|IN|Indiana|NV|Nevada|UT|Utah|CA|California|OH|Ohio|IL|Illinois|DC|District of Columbia|DE|Delaware|WV|West Virginia|MD|Maryland|CO|Colorado|KY|Kentucky|KS|Kansas|VA|Virginia|MO|Missouri|AZ|Arizona|OK|Oklahoma|NC|North Carolina|TN|Tennessee|TX|Texas|NM|New Mexico|AL|Alabama|MS|Mississippi|GA|Georgia|SC|South Carolina|AR|Arkansas|LA|Louisiana|FL|Florida|MI|Michigan|AK|Alaska/g,
       stateCodes: /HI|WA|MT|ME|ND|SD|WY|WI|ID|VT|MN|OR|NH|IA|MA|NE|NY|PA|CT|RI|NJ|IN|NV|UT|CA|OH|IL|DC|DE|WV|MD|CO|KY|KS|VA|MO|AZ|OK|NC|TN|TX|NM|AL|MS|GA|SC|AR|LA|FL|MI|AK/g,
