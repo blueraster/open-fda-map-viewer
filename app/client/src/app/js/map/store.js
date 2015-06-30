@@ -11,11 +11,11 @@ import React from 'react'
 import ClusterFeatureLayer from 'ClusterFeatureLayer'
 import esriMap from 'esri/map'
 import FeatureLayer from 'esri/layers/FeatureLayer'
-import ClassBreaksRenderer from 'esri/renderers/ClassBreaksRenderer'
 import SimpleMarkerSymbol from 'esri/symbols/SimpleMarkerSymbol'
 import SimpleLineSymbol from 'esri/symbols/SimpleLineSymbol'
 import SimpleFillSymbol from 'esri/symbols/SimpleFillSymbol'
 import SimpleRenderer from 'esri/renderers/SimpleRenderer'
+import ClassBreaksRenderer from 'esri/renderers/ClassBreaksRenderer'
 import Graphic from 'esri/graphic'
 import Point from 'esri/geometry/Point'
 import Color from 'dojo/_base/Color'
@@ -92,34 +92,14 @@ export const store = dispatcher.createStore(class {
           useDefaultSymbol: false,
           zoomOnClick: false,
           showSingles: true,
+          singleSymbol: new SimpleMarkerSymbol(config.symbology.firmClustersSingle),
           objectIdField: 'FID',
           // outFields: ['NAME', 'COUNTRY', 'POPULATION', 'CAPITAL']
           opacity: 0,
           outFields: []
       });
 
-        renderer = new ClassBreaksRenderer(defaultSym, "clusterCount");
-
-        // Red Clusters
-        small = new SimpleMarkerSymbol("circle", 25,
-            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([212,116,60,0.5]), 15),
-            new Color([212,116,60,0.75]));
-        medium = new SimpleMarkerSymbol("circle", 50,
-            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([144,24,13,0.5]), 15),
-            new Color([178,70,37,0.75]));
-        large = new SimpleMarkerSymbol("circle", 80,
-            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([144,24,13,0.5]), 15),
-            new Color([144,24,13,0.75]));
-        xlarge = new SimpleMarkerSymbol("circle", 110,
-            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([102,0,0,0.5]), 15),
-            new Color([102,0,0,0.75]));
-
-        renderer.addBreak(2, 50, small);
-        renderer.addBreak(50, 250, medium);
-        renderer.addBreak(250, 1000, large);
-        renderer.addBreak(1000, 50000, xlarge);
-
-        firmClusterLayer.setRenderer(renderer);
+      firmClusterLayer.setRenderer(new ClassBreaksRenderer(config.symbology.firmClustersRenderer))
 
       map.addLayer(clustersLayer)
       map.addLayer(firmClusterLayer)
