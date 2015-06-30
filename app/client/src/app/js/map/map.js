@@ -30,7 +30,7 @@ export class Map extends React.Component {
         <div id={config.id} className='fill'></div>
         {controls}
         <div className='absolute legend'>
-          Legend (WIP)
+          Legend (WIP - click toggles visibility)
           <div>(symbol) All Clusters</div>
           <div>(symbol) Firm Clusters</div>
           <div>(symbol) Distribution Pattern</div>

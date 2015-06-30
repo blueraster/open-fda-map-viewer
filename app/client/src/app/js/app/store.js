@@ -43,43 +43,53 @@ export const store = dispatcher.createStore(class {
     // aggregate month counts
     ;[for (t of timeseries) processedTimeseries[t.time.substr(0,4)][months.indexOf(t.time.substr(4,2))] += t.count]
     // shape data for chart
-    chartData = {
-      labels: monthLabels,
-      datasets: [for (t of Object.keys(processedTimeseries)) {
-        label: t,
-        fillColor: 'rgba(151,187,205,0.2)',
-        strokeColor: 'rgba(151,187,205,1)',
-        pointColor: 'rgba(151,187,205,1)',
-        pointStrokeColor: '#fff',
-        pointHighlightFill: '#fff',
-        pointHighlightStroke: 'rgba(151,187,205,1)',
-        data: processedTimeseries[t]
-      }]
-    }
+
+    // REFERENCE: old multi-dataset
+    // chartData = {
+    //   labels: monthLabels,
+    //   datasets: [for (t of Object.keys(processedTimeseries)) {
+    //     label: t,
+    //     fillColor: 'rgba(151,187,205,0.2)',
+    //     strokeColor: 'rgba(151,187,205,1)',
+    //     pointColor: 'rgba(151,187,205,1)',
+    //     pointStrokeColor: '#fff',
+    //     pointHighlightFill: '#fff',
+    //     pointHighlightStroke: 'rgba(151,187,205,1)',
+    //     data: processedTimeseries[t]
+    //   }]
+    // }
+
     let latestYear = Math.max.apply(Math, Object.keys(processedTimeseries).map((k) => parseInt(k))).toString()
-    chartData = {
-      labels: monthLabels,
-      datasets: [{
-        label: latestYear,
-        fillColor: 'rgba(151,187,205,0.2)',
-        strokeColor: 'rgba(151,187,205,1)',
-        pointColor: 'rgba(151,187,205,1)',
-        pointStrokeColor: '#fff',
-        pointHighlightFill: '#fff',
-        pointHighlightStroke: 'rgba(151,187,205,1)',
-        data: processedTimeseries[latestYear]
-      }]
+
+    if (this.chart === undefined) {
+      // initialize
+      chartData = {
+        labels: monthLabels,
+        datasets: [{
+          label: latestYear,
+          fillColor: 'rgba(151,187,205,0.2)',
+          strokeColor: 'rgba(151,187,205,1)',
+          pointColor: 'rgba(151,187,205,1)',
+          pointStrokeColor: '#fff',
+          pointHighlightFill: '#fff',
+          pointHighlightStroke: 'rgba(151,187,205,1)',
+          data: processedTimeseries[latestYear]
+        }]
+      }
+
+      this.chart = new Chartjs(this.chartContext).Line(chartData, {
+        scaleFontFamily: 'Raleway, sans-serif',
+        scaleFontColor: '#FFF',
+        scaleGridLineColor: 'rgba(255,255,255,.25)',
+        tooltipFontColor: '#FFF'
+      })
+    } else {
+      // update
+      processedTimeseries[latestYear].forEach((p, i) => {this.chart.datasets[0].points[i].value = p})
+      this.chart.update()
     }
 
-    this.timeseriesYear = latestYear
-
-    if (this.chart !== undefined) {this.chart.destroy()}
-    this.chart = new Chartjs(this.chartContext).Line(chartData, {
-      scaleFontFamily: 'Raleway, sans-serif',
-      scaleFontColor: '#FFF',
-      scaleGridLineColor: 'rgba(255,255,255,.25)',
-      tooltipFontColor: '#FFF'
-    })
     this.timeseries = timeseries
+    this.timeseriesYear = latestYear
   }
 })
