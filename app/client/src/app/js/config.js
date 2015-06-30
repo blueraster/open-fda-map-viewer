@@ -8,7 +8,6 @@ export const config = {
     },
     detailLabels: [
       {key: 'report_date', text: 'Report Date'},
-      {key: 'recalling_firm', text: 'Recalling Firm'},
       {key: 'recall_number', text: 'Recall Number'},
       {key: 'city', text: 'City'},
       {key: 'state', text: 'State'},

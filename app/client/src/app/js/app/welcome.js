@@ -2,12 +2,9 @@ import {messages} from 'js/messages'
 import {resources} from 'js/resources'
 import {actions as appActions} from 'app/actions'
 import {panel as config} from 'js/config'
-import {app as appConfig} from 'js/config'
-
 // lib/vendor/esri/dojo
 import React from 'react'
-// import {DropModal as Modal} from 'boron'
-// var Modal = require('boron/DropModal');
+
 export class Welcome extends React.Component {
   open () {
   }

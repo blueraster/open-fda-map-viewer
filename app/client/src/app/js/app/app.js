@@ -6,6 +6,7 @@ import {Map} from 'map/map'
 import {Panel} from 'panel/panel'
 import {Chart} from 'app/chart'
 import {Welcome} from 'app/welcome'
+import {FoodControls} from 'app/foodControls'
 // lib/vendor/esri/dojo
 import React from 'react'
 
@@ -19,15 +20,11 @@ export class App extends React.Component {
         <div className="app__content back-gray--dark">
           <Map />
         </div>
-        <div className='app__panel-container absolute no-bottom no-left no-right margin-auto z-index-panel text-center'>
+        <div className='app__panel-container absolute no-bottom no-left no-right margin-auto z-index-panel text-center text-black'>
           <div className='app__panel--dark inline-block back-white text-left'>
-            <div className='app__panel__underlay'></div>
-            <div className='app__panel__half inline-block'>
-              <Panel />
-            </div>
-            <div className='app__panel__half inline-block relative overflow-hidden'>
-              <Chart />
-            </div>
+            <div className='app__panel__header'><FoodControls /></div>
+            <div className='app__panel__half inline-block'><Panel /></div>
+            <div className='app__panel__half inline-block relative overflow-hidden'><Chart /></div>
           </div>
         </div>
       </div>
