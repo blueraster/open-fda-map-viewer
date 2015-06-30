@@ -29,6 +29,12 @@ export class Map extends React.Component {
       <div className='map-container absolute fill'>
         <div id={config.id} className='fill'></div>
         {controls}
+        <div className='absolute legend'>
+          Legend
+          <div>(symbol) All Clusters</div>
+          <div>(symbol) Firm Clusters</div>
+          <div>(symbol) Distribution Pattern</div>
+        </div>
       </div>
     )
   }
