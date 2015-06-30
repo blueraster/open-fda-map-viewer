@@ -56,7 +56,7 @@ export const store = dispatcher.createStore(class {
         unique,
         getRecallsByFirm = (firm) => json.filter((r) => r.recalling_firm === firm)
 
-    uniqueFirmNames = Array.from(new Set([for (r of json) r.recalling_firm]));
+    uniqueFirmNames = Array.from(new Set([for (r of json) r.recalling_firm])).sort();
     ;[for (f of uniqueFirmNames) uniqueFirms[f] = {allRecalls: getRecallsByFirm(f), uniqueEventIds: []}]
     ;[for (f of uniqueFirmNames) uniqueFirms[f].uniqueEventIds = Array.from(new Set([for (r of uniqueFirms[f].allRecalls) r.event_id]))]
     this.firmData = uniqueFirms
