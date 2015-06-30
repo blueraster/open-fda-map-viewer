@@ -13,6 +13,7 @@ export const config = {
       {key: 'city', text: 'City'},
       {key: 'state', text: 'State'},
       {key: 'status', text: 'Status'},
+      {key: 'reason_for_recall', text: 'Reason for Recall'},
       {key: 'distribution_pattern', text: 'Distribution Pattern'},
       {key: 'product_description', text: 'Product Description'}
     ]
@@ -34,6 +35,7 @@ export const config = {
       }
     },
     ids: {
+      bacteriaSelect: 'bacteria',
       firmSelect: 'firm',
       eventSelect: 'event',
       recallSelect: 'recall'

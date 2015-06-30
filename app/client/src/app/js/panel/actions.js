@@ -5,13 +5,13 @@ export const actions = dispatcher.createActions(class {
   panelInit () {
     //something
   }
-  setCurrentFirm(firmName){
+  setCurrentFirm (firmName){
     this.dispatch(firmName)
   }
-  setCurrentEvent(eventID){
+  setCurrentEvent (eventID){
     this.dispatch(eventID)
   }
-  setCurrentRecall(recallID){
+  setCurrentRecall (recallID){
     this.dispatch(recallID)
   }
 })
