@@ -11,10 +11,10 @@ export class FoodControls extends React.Component {
             {[for (food of foods) foodControl(food)]}
           </div>
         ),
-        foodControls = [<span>Foods:</span>]
+        foodControls = [<span className='foodControls__label'break>Foods:</span>]
 
     foodControls = foodControls.concat([for (food of Object.keys(panelConfig.foods.individual)) foodControl(panelConfig.foods.individual[food])])
-    foodControls = foodControls.concat([<span className='text-white'>Bacteria:</span>])
+    foodControls = foodControls.concat([<span className='foodControls__label'>Bacteria:</span>])
     foodControls = foodControls.concat([for (group of Object.keys(panelConfig.foods.nested)) foodGroupControl(group, [for (food of panelConfig.foods.nested[group]) food])])
     return (
       <div className='foodControls'>
