@@ -33,7 +33,6 @@ export class Welcome extends React.Component {
         <div className='popup'>
           <div className='popup__film'></div>
           <div className='popup__inner'>
-            <img onClick={()=>this.close()} className='popup__closeIcon'src={resources.closeIcon} />
             <h2>{messages.welcome}</h2>
             <h3>{messages.title}</h3>
             {foodControls}

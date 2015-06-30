@@ -13,8 +13,8 @@ export class InfoWindowContent extends React.Component {
   }
   componentDidMount () {
     store.listen(this.onChange.bind(this))
-    let infoWindow = this.state.map.infoWindow,
-        updated = false
+    let infoWindow = this.state.map.infoWindow
+
     infoWindow.on('selection-change', () => {
       let feature = infoWindow.getSelectedFeature(),
           selectedFirmName = this.state.selectedFirmNameForInfoWindowContent
@@ -23,12 +23,11 @@ export class InfoWindowContent extends React.Component {
       if (feature !== undefined && selectedFirmName !== undefined) {
         let firms = Array.from(new Set([for (f of infoWindow.features) f.attributes.recalling_firm]))
         if (firms.length > 1 || firms[0] !== selectedFirmName) {
-          updated = true
           actions.setSelectedFirmNameForInfoWindowContent(undefined)
         }
       }
 
-      if (!updated) {this.forceUpdate()}
+      this.forceUpdate()
       infoWindow.reposition()
     })
     infoWindow.on('hide', () => {
