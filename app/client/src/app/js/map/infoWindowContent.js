@@ -54,6 +54,11 @@ export class InfoWindowContent extends React.Component {
             attributes = feature.attributes,
             recallDetails = [for (label of appConfig.detailLabels) if (attributes[label.key] !== undefined) <div>{`${label.text}: ${attributes[label.key]}`}</div>]
 
+        // show titlepane controls
+        document.querySelector('.title').style.fontSize = ''
+        document.querySelector('.titleButton.next').style.display = ''
+        document.querySelector('.titleButton.prev').style.display = ''
+
         // ENHANCEMENT: on back, return features to initally set features instead of hiding infowindow
         return [
           `Recalls for Firm: ${firmName}`,
@@ -65,6 +70,10 @@ export class InfoWindowContent extends React.Component {
         ]
       } else {
         let recallingFirms = Array.from(new Set([for (f of features) f.attributes.recalling_firm]))
+        // hide titlepane controls
+        document.querySelector('.title').style.fontSize = '0px'
+        document.querySelector('.titleButton.next').style.display = 'none'
+        document.querySelector('.titleButton.prev').style.display = 'none'
 
         return ([
           'Firms:',
@@ -73,7 +82,7 @@ export class InfoWindowContent extends React.Component {
       }
     }()
     return (
-      <div>
+      <div className='infoWindowContent'>
         <div>{ui}</div>
       </div>
     )
