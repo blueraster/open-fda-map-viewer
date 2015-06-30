@@ -17,11 +17,11 @@ export const store = dispatcher.createStore(class {
     })
   }
   setCurrentFirm(firmName){
+    //TODO Add the Distribution action/update
     this.currentFirm = firmName
     this.currentSelectedFirmEvent = this.firmData[this.currentFirm].uniqueEventIds[0]
     let allrecalls = this.firmData[this.currentFirm].allRecalls
     this.currentSelectedRecall = Array.from(new Set([for (r of allrecalls) if (r.event_id === this.currentSelectedFirmEvent) r.recall_number]))[0]
-
   }
   setCurrentEvent(eventID){
     console.debug(eventID)
@@ -33,6 +33,7 @@ export const store = dispatcher.createStore(class {
     this.currentSelectedRecall = recallID
   }
   handleQueryFdaSuccess (json) {
+    //TODO Add the Distribution action/update
     // TODO: refactor panel processing
     let uniqueFirms = {},
         uniqueFirmNames,
