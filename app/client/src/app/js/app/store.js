@@ -71,7 +71,6 @@ export const store = dispatcher.createStore(class {
       }]
     }
 
-    console.debug(chartData)
     this.timeseriesYear = latestYear
 
     if (this.chart !== undefined) {this.chart.destroy()}
