@@ -51,6 +51,7 @@ export class Panel extends React.Component {
       let recallDetails = this.state.currentSelectedRecall == undefined ? undefined: () =>{
         let recallForEvent = Array.from(new Set([for (r of currentAllRecalls) if (r.event_id === this.state.currentSelectedFirmEvent) r]))
         let selectedRecall = [for (i of recallForEvent) if (i.recall_number === this.state.currentSelectedRecall) i][0]
+        let rows = ['reason_for_recall', 'distribution_pattern', 'product_description']
         let recallDetails = [for (label of appConfig.detailLabels) <li>{`${label.text}: ${selectedRecall[label.key]}`}</li>]
 
         return (
