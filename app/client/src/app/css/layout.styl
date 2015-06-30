@@ -5,18 +5,30 @@
 .app
     position relative
 
-    &__panel
+    &__panel-container
         font-size .75em
-        width 440px
-        position absolute
-        right 20px
-        bottom 20px
-        background-color transparent
-        z-index 9
+
+    &__panel
+        &, &--dark
+            border-top-left-radius 20px
+            border-top-right-radius 20px
+
+        &--dark
+            background-color rgba(0,0,0,.5)
+            color white
+            text-shadow 1px 2px black
+
+        &__underlay
+            filter blur(2px)
+
+        &__half
+            padding 10px 10px 0px
+            width 600px
+
+        &__half:nth-child(2)
+            border-right 5px solid rgba(0,0,0,.5)
 
 .app-chart
-    bottom 20px
-    left 20px
     height 200px
     width 500px
 
