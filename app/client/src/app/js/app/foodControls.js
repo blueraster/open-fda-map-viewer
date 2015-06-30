@@ -5,7 +5,7 @@ import React from 'react'
 
 export class FoodControls extends React.Component {
   render () {
-    let foodControl = (food) => <button onClick={() => {actions.queryFda(food)}}>{food}</button>,
+    let foodControl = (food) => <button className='foodControls__button' onClick={() => {actions.queryFda(food)}}>{food}</button>,
         foodGroupControl = (group, foods) => (
           <div className='inline-block'>
             {[for (food of foods) foodControl(food)]}

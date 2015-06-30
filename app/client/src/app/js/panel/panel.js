@@ -34,6 +34,7 @@ export class Panel extends React.Component {
       let firmOptions = firmData === undefined ? undefined : (
         // ({firmData[d].uniqueEventIds.length})
         // [for (d of Object.keys(firmData)) <option value={d}>{`${d} (${firmData[d].uniqueEventIds.length})`}</option>]
+
         [for (d of Object.keys(firmData)) <option value={d}>{`${d} ${firmData[d].uniqueEventIds.length < 2 ? '' : `(${firmData[d].uniqueEventIds.length})`}`}</option>]
       )
 
