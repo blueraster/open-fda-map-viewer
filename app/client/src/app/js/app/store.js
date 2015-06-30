@@ -35,6 +35,7 @@ export const store = dispatcher.createStore(class {
         monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
         processedTimeseries = {},
         chartData
+
     // init years
     ;[for (t of timeseries) processedTimeseries[t.time.substr(0,4)] = {}]
     // init empty months
@@ -56,7 +57,12 @@ export const store = dispatcher.createStore(class {
       }]
     }
     if (this.chart !== undefined) {this.chart.destroy()}
-    this.chart = new Chartjs(this.chartContext).Line(chartData, {})
+    this.chart = new Chartjs(this.chartContext).Line(chartData, {
+      scaleFontFamily: 'Raleway, sans-serif',
+      scaleFontColor: '#FFF',
+      scaleGridLineColor: 'rgba(255,255,255,.25)',
+      tooltipFontColor: '#FFF'
+    })
     this.timeseries = timeseries
   }
 })

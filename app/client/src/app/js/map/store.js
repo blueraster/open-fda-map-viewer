@@ -148,6 +148,7 @@ export const store = dispatcher.createStore(class {
   }
   handleSetCurrentRecallStateMatches () {
     this.waitFor(panelStore.dispatchToken)
+    this.setSelectedFirmNameForClusters(panelStore.getState().currentFirm)
     this.setDistributionPatternMatches(panelStore.getState().currentSelectedRecallStateMatches)
   }
   setDistributionPatternMatches (stateMatches) {

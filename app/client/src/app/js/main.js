@@ -1,4 +1,5 @@
 import babelPolyfill from 'babel-polyfill'
+import fetch from 'fetch'
 import {app as config} from 'js/config'
 import {App} from 'app/app'
 import React from 'react'
