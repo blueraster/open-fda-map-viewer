@@ -5,9 +5,6 @@ export const actions = dispatcher.createActions(class {
   initMap () {
     this.dispatch()
   }
-  setDistributionPatternMatches (stateMatches) {
-    this.dispatch(stateMatches)
-  }
   setSelectedBacteria (bacteria) {
     this.dispatch(bacteria)
   }

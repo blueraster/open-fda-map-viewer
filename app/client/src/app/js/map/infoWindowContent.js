@@ -1,4 +1,5 @@
 import {actions} from 'map/actions'
+import {actions as panelActions} from 'panel/actions'
 import {store} from 'map/store'
 import {map as config, app as appConfig} from 'js/config'
 // lib/vendor/shim/esri/dojo
@@ -51,13 +52,7 @@ export class InfoWindowContent extends React.Component {
         let feature = infoWindow.getSelectedFeature(),
             firmName = feature.attributes.recalling_firm,
             attributes = feature.attributes,
-            recallDetails = [for (label of appConfig.detailLabels) if (attributes[label.key] !== undefined) <div>{`${label.text}: ${attributes[label.key]}`}</div>],
-            stateCodes = attributes.distribution_pattern.match(config.expressions.stateCodes) || [],
-            stateNames = attributes.distribution_pattern.match(config.expressions.stateNames) || [],
-            stateMatches = {stateCodes, stateNames},
-            distributionPattern = (stateCodes.length === 0 && stateNames.length === 0) ? undefined : (
-              <button onClick={() => {actions.setDistributionPatternMatches(stateMatches)}}>View distribution pattern</button>
-            )
+            recallDetails = [for (label of appConfig.detailLabels) if (attributes[label.key] !== undefined) <div>{`${label.text}: ${attributes[label.key]}`}</div>]
 
         // ENHANCEMENT: on back, return features to initally set features instead of hiding infowindow
         return [
@@ -66,8 +61,7 @@ export class InfoWindowContent extends React.Component {
           <hr />,
           recallDetails,
           <hr />,
-          <button onClick={() => {actions.setSelectedFirmNameForClusters(firmName)}}>Visualize firm recalls (single click)</button>,
-          {distributionPattern}
+          <button onClick={() => {this.focusPanel(attributes)}}>View in Panel</button>
         ]
       } else {
         let recallingFirms = Array.from(new Set([for (f of features) f.attributes.recalling_firm]))
@@ -94,5 +88,11 @@ export class InfoWindowContent extends React.Component {
     infoWindow.setFeatures(firmFeatures)
     actions.setSelectedFirmNameForInfoWindowContent(firmName)
     setTimeout(infoWindow.reposition.bind(infoWindow), 1)
+  }
+  focusPanel (recall) {
+    panelActions.setCurrentFirm(recall.recalling_firm)
+    panelActions.setCurrentEvent(recall.event_id)
+    panelActions.setCurrentRecall(recall.recall_number)
+    this.state.map.infoWindow.hide()
   }
 }

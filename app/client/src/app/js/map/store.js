@@ -4,6 +4,7 @@ import {actions} from 'map/actions'
 import {actions as appActions} from 'app/actions'
 import {actions as panelActions} from 'panel/actions'
 import {map as config} from 'js/config'
+import {store as panelStore} from 'panel/store'
 import {InfoWindowContent} from 'map/infoWindowContent'
 // lib/vendor/esri/dojo
 import React from 'react'
@@ -30,7 +31,7 @@ export const store = dispatcher.createStore(class {
       setSelectedBacteria: actions.SET_SELECTED_BACTERIA,
       setSelectedFirmNameForClusters: actions.SET_SELECTED_FIRM_NAME_FOR_CLUSTERS,
       setSelectedFirmNameForInfoWindowContent: actions.SET_SELECTED_FIRM_NAME_FOR_INFO_WINDOW_CONTENT,
-      setDistributionPatternMatches: actions.SET_DISTRIBUTION_PATTERN_MATCHES,
+      handleSetCurrentRecallStateMatches: [panelActions.SET_CURRENT_FIRM, panelActions.SET_CURRENT_EVENT, panelActions.SET_CURRENT_RECALL],
       handleQueryFdaSuccess: appActions.QUERY_FDA_SUCCESS
     })
   }
@@ -142,6 +143,10 @@ export const store = dispatcher.createStore(class {
   setSelectedFirmNameForInfoWindowContent (firmName) {
     this.selectedFirmNameForInfoWindowContent = firmName
   }
+  handleSetCurrentRecallStateMatches () {
+    this.waitFor(panelStore.dispatchToken)
+    this.setDistributionPatternMatches(panelStore.getState().currentSelectedRecallStateMatches)
+  }
   setDistributionPatternMatches (stateMatches) {
     let statesLayer = this.map.getLayer('states'),
         clause
@@ -149,11 +154,13 @@ export const store = dispatcher.createStore(class {
       clause = `STATE_ABBR IN (${stateMatches.stateCodes.map((c) => `'${c}'`)})`
     } else if (stateMatches.stateNames.length > 0 ) {
       clause = `STATE_NAME IN (${stateMatches.stateNames.map((n) => `'${n}'`)})`
-    } else {
-      // TODO: error
     }
-    statesLayer.setDefinitionExpression(clause)
-    statesLayer.setVisibility(true)
+    if (clause !== undefined) {
+      statesLayer.setDefinitionExpression(clause)
+      statesLayer.setVisibility(true)
+    } else {
+      statesLayer.setVisibility(false)
+    }
   }
   setSelectedFirmNameForClusters (firmName) {
     let alldata = this.map.getLayer('clusters')._clusterData
@@ -164,6 +171,8 @@ export const store = dispatcher.createStore(class {
     clustersLayer.setOpacity(1)
   }
   handleQueryFdaSuccess (foodData) {
+    this.waitFor(panelStore.dispatchToken)
+    this.setDistributionPatternMatches(panelStore.getState().currentSelectedRecallStateMatches)
     let map = this.map,
         clustersLayer = map.getLayer('clusters'),
         firmClusterLayer = map.getLayer('firmClusters'),

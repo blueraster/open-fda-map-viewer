@@ -34,7 +34,7 @@ export const store = dispatcher.createStore(class {
     let months = ['01','02','03','04','05','06','07','08','09','10','11','12'],
         monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
         processedTimeseries = {},
-        chartData = {}
+        chartData
     // init years
     ;[for (t of timeseries) processedTimeseries[t.time.substr(0,4)] = {}]
     // init empty months
@@ -42,7 +42,6 @@ export const store = dispatcher.createStore(class {
     // aggregate month counts
     ;[for (t of timeseries) processedTimeseries[t.time.substr(0,4)][months.indexOf(t.time.substr(4,2))] += t.count]
     // shape data for chart
-    console.log(Object.keys(processedTimeseries))
     chartData = {
       labels: monthLabels,
       datasets: [for (t of Object.keys(processedTimeseries)) {

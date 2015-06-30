@@ -1,7 +1,8 @@
 import {dispatcher} from 'js/dispatcher'
 import {actions} from 'panel/actions'
 import {actions as appActions} from 'app/actions'
-import {map as config} from 'js/config'
+import {actions as mapActions} from 'map/actions'
+import {map as mapConfig} from 'js/config'
 
 export const store = dispatcher.createStore(class {
   constructor () {
@@ -9,6 +10,7 @@ export const store = dispatcher.createStore(class {
     this.currentFirm = undefined
     this.currentSelectedFirmEvent = undefined
     this.currentSelectedRecall = undefined
+    this.currentSelectedRecallStateMatches = undefined
     this.bindListeners({
       setCurrentFirm:actions.SET_CURRENT_FIRM,
       handleQueryFdaSuccess: appActions.QUERY_FDA_SUCCESS,
@@ -21,19 +23,33 @@ export const store = dispatcher.createStore(class {
     this.currentFirm = firmName
     this.currentSelectedFirmEvent = this.firmData[this.currentFirm].uniqueEventIds[0]
     let allrecalls = this.firmData[this.currentFirm].allRecalls
-    this.currentSelectedRecall = Array.from(new Set([for (r of allrecalls) if (r.event_id === this.currentSelectedFirmEvent) r.recall_number]))[0]
+    let currentSelectedRecallData = Array.from(new Set([for (r of allrecalls) if (r.event_id === this.currentSelectedFirmEvent) r]))[0]
+    this.currentSelectedRecall = currentSelectedRecallData.recall_number
+    let stateCodes = currentSelectedRecallData.distribution_pattern.match(mapConfig.expressions.stateCodes) || [],
+        stateNames = currentSelectedRecallData.distribution_pattern.match(mapConfig.expressions.stateNames) || [],
+        stateMatches = {stateCodes, stateNames}
+    this.currentSelectedRecallStateMatches = stateMatches
   }
   setCurrentEvent(eventID){
-    console.debug(eventID)
     this.currentSelectedFirmEvent = eventID
-    let allrecalls = this.firmData[this.currentFirm].allRecalls
-    this.currentSelectedRecall = Array.from(new Set([for (r of allrecalls) if (r.event_id === this.currentSelectedFirmEvent) r.recall_number]))[0]
+    let allrecalls = this.firmData[this.currentFirm].allRecalls,
+        currentSelectedRecallData = Array.from(new Set([for (r of allrecalls) if (r.event_id === this.currentSelectedFirmEvent) r]))[0]
+    this.currentSelectedRecall = currentSelectedRecallData.recall_number
+    let stateCodes = currentSelectedRecallData.distribution_pattern.match(mapConfig.expressions.stateCodes) || [],
+        stateNames = currentSelectedRecallData.distribution_pattern.match(mapConfig.expressions.stateNames) || [],
+        stateMatches = {stateCodes, stateNames}
+    this.currentSelectedRecallStateMatches = stateMatches
   }
   setCurrentRecall(recallID){
     this.currentSelectedRecall = recallID
+    let recall = this.firmData[this.currentFirm].allRecalls.filter((r) => r.recall_number === recallID)[0],
+        stateCodes = recall.distribution_pattern.match(mapConfig.expressions.stateCodes) || [],
+        stateNames = recall.distribution_pattern.match(mapConfig.expressions.stateNames) || [],
+        stateMatches = {stateCodes, stateNames}
+    this.currentSelectedRecallStateMatches = stateMatches
+    // TODO: fire recall update map action to update distribution layer
   }
   handleQueryFdaSuccess (json) {
-    //TODO Add the Distribution action/update
     // TODO: refactor panel processing
     let uniqueFirms = {},
         uniqueFirmNames,
@@ -47,6 +63,11 @@ export const store = dispatcher.createStore(class {
     this.currentFirm = uniqueFirmNames[0]
     this.currentSelectedFirmEvent = uniqueFirms[uniqueFirmNames[0]].uniqueEventIds[0]
     let allrecalls = this.firmData[this.currentFirm].allRecalls
-    this.currentSelectedRecall = Array.from(new Set([for (r of allrecalls) if (r.event_id === this.currentSelectedFirmEvent) r.recall_number]))[0]
+    let currentSelectedRecallData = Array.from(new Set([for (r of allrecalls) if (r.event_id === this.currentSelectedFirmEvent) r]))[0]
+    this.currentSelectedRecall = currentSelectedRecallData.recall_number
+    let stateCodes = currentSelectedRecallData.distribution_pattern.match(mapConfig.expressions.stateCodes) || [],
+        stateNames = currentSelectedRecallData.distribution_pattern.match(mapConfig.expressions.stateNames) || [],
+        stateMatches = {stateCodes, stateNames}
+    this.currentSelectedRecallStateMatches = stateMatches
   }
 }, 'panelStore')

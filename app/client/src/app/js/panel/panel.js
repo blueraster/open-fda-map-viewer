@@ -66,18 +66,10 @@ export class Panel extends React.Component {
         let recallForEvent = Array.from(new Set([for (r of currentAllRecalls) if (r.event_id === this.state.currentSelectedFirmEvent) r]))
         let selectedRecall = [for (i of recallForEvent) if (i.recall_number === this.state.currentSelectedRecall) i][0]
         let recallDetails = [for (label of appConfig.detailLabels) <li>{`${label.text}: ${selectedRecall[label.key]}`}</li>]
-        let stateCodes = selectedRecall.distribution_pattern.match(mapConfig.expressions.stateCodes) || []
-        let stateNames = selectedRecall.distribution_pattern.match(mapConfig.expressions.stateNames) || []
-        let stateMatches = {stateCodes, stateNames}
-        let distributionPattern = (stateCodes.length === 0 && stateNames.length === 0) ? undefined : (
-              <button onClick={() => {mapActions.setDistributionPatternMatches(stateMatches)}}>View distribution pattern</button>
-            )
 
         return [
           'Details',
-          <ul>{recallDetails}</ul>,
-          <button>Visualize firm recalls (toggle)</button>,
-          {distributionPattern}
+          <ul>{recallDetails}</ul>
         ]
       }()
 
