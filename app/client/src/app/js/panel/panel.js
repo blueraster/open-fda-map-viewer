@@ -55,7 +55,7 @@ export class Panel extends React.Component {
         let recallDetails = [for (key of rows) <li className='padding__bottom'><span className='text-gray--subtle'>{appConfig.detailLabelsUnordered[key]}: </span>{selectedRecall[key]}</li>]
 
         return (
-          <div className='margin__top'>
+          <div>
             <strong>Details:</strong>
             <div className='panel__details'>
               <div className='inline-block padding__bottom fill--50p__wide'>
@@ -82,20 +82,25 @@ export class Panel extends React.Component {
       // Add recall counts hide singler recall counts
       // Refactor select updates to single action
       return (
-        <div className='padding__wide'>
-          <label className='inline-block fill--50p__wide'>Business ({Object.keys(this.state.firmData).length})</label>
-          <select className='fill--50p__wide' value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value);mapActions.setSelectedFirmNameForClusters(event.target.value)}}>
-            {firmOptions}
-          </select>
-          <div className='inline-block fill--50p__wide'>Event ({recallEventsLength})</div>
-          <select className="inline-block fill--50p__wide" value={this.state.currentSelectedFirmEvent} onChange={(event) =>{actions.setCurrentEvent(event.target.value)}}>
-            {firmEvents}
-          </select>
-          <div className='inline-block fill--50p__wide'>Recall ({recallsLength})</div>
-          <select className="inline-block fill--50p__wide" value={this.state.currentSelectedRecall} onChange={(event) =>{actions.setCurrentRecall(event.target.value)}}>
-            {eventRecalls}
-          </select>
-          {recallDetails}
+        <div className=''>
+          <div className='inline-block border-box padding__wide fill--50p__wide vertical-top'>
+            <label className='inline-block fill--50p__wide'>Business ({Object.keys(this.state.firmData).length})</label>
+            <select className='fill--50p__wide' value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value);mapActions.setSelectedFirmNameForClusters(event.target.value)}}>
+              {firmOptions}
+            </select>
+            <div className='inline-block fill--50p__wide'>Event ({recallEventsLength})</div>
+            <select className="inline-block fill--50p__wide" value={this.state.currentSelectedFirmEvent} onChange={(event) =>{actions.setCurrentEvent(event.target.value)}}>
+              {firmEvents}
+            </select>
+            <div className='inline-block fill--50p__wide'>Recall ({recallsLength})</div>
+            <select className="inline-block fill--50p__wide" value={this.state.currentSelectedRecall} onChange={(event) =>{actions.setCurrentRecall(event.target.value)}}>
+              {eventRecalls}
+            </select>
+          </div>
+
+          <div className='inline-block border-box padding__wide fill--50p__wide vertical-top'>
+            {recallDetails}
+          </div>
         </div>
       )
     }()
