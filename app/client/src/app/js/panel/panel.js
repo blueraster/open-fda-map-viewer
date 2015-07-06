@@ -85,18 +85,18 @@ export class Panel extends React.Component {
       return (
         <div className='fill__long'>
           <div className='inline-block border-box padding__wide fill__long fill--25p__wide vertical-top'>
-            <label className='inline-block fill--50p__wide'>Business ({Object.keys(this.state.firmData).length})</label>
-            <select className='fill--50p__wide' value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value);mapActions.setSelectedFirmNameForClusters(event.target.value)}}>
+            <label className='inline-block fill--50p__wide'>Firms ({Object.keys(this.state.firmData).length})</label>
+            <select className='text-black fill--50p__wide' value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value);mapActions.setSelectedFirmNameForClusters(event.target.value)}}>
               {firmOptions}
             </select>
-            <div className='text-gray--subtle margin__bottom'>Business description</div>
+            <div className='text-gray--subtle margin__bottom'>Firm description</div>
             <div className='inline-block fill--50p__wide'>Event ({recallEventsLength})</div>
-            <select className="inline-block fill--50p__wide" value={this.state.currentSelectedFirmEvent} onChange={(event) =>{actions.setCurrentEvent(event.target.value)}}>
+            <select className="text-black inline-block fill--50p__wide" value={this.state.currentSelectedFirmEvent} onChange={(event) =>{actions.setCurrentEvent(event.target.value)}}>
               {firmEvents}
             </select>
             <div className='text-gray--subtle margin__bottom'>Event description</div>
             <div className='inline-block fill--50p__wide'>Recall ({recallsLength})</div>
-            <select className="inline-block fill--50p__wide" value={this.state.currentSelectedRecall} onChange={(event) =>{actions.setCurrentRecall(event.target.value)}}>
+            <select className="text-black inline-block fill--50p__wide" value={this.state.currentSelectedRecall} onChange={(event) =>{actions.setCurrentRecall(event.target.value)}}>
               {eventRecalls}
             </select>
             <div className='text-gray--subtle margin__bottom'>Recall description</div>

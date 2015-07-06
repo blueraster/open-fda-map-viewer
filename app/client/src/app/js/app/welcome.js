@@ -13,7 +13,6 @@ export class Welcome extends React.Component {
         <div className='popup'>
           <div className='popup__film'></div>
           <div className='popup__inner'>
-            <h2>{messages.welcome}</h2>
             <h3>{messages.title}</h3>
             <div className='popup__foodControls'>
               <FoodControls />

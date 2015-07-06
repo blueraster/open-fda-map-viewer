@@ -65,7 +65,7 @@ export class InfoWindowContent extends React.Component {
           <hr />,
           recallDetails,
           <hr />,
-          <button onClick={() => {this.focusPanel(attributes)}}>View in Panel</button>
+          <button onClick={() => {this.focusPanel(attributes)}}>View Details</button>
         ]
       } else {
         let recallingFirms = Array.from(new Set([for (f of features) f.attributes.recalling_firm]))

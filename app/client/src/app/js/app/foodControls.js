@@ -14,9 +14,9 @@ export class FoodControls extends React.Component {
         foodControls = [<span className='foodControls__label'break>Foods:</span>]
 
     foodControls = foodControls.concat([for (food of Object.keys(panelConfig.foods.individual)) foodControl(panelConfig.foods.individual[food])])
-    foodControls = foodControls.concat([<span className='foodControls__label'>Bacteria:</span>])
+    foodControls = foodControls.concat([<span className='foodControls__label'>Contaminants:</span>])
     foodControls = foodControls.concat([for (group of Object.keys(panelConfig.foods.nested)) foodGroupControl([for (food of panelConfig.foods.nested[group]) food])])
-    foodControls = foodControls.concat([<span className='foodControls__label'>Classification:</span>, foodGroupControl(['Class I', 'Class II', 'Class III'])])
+    foodControls = foodControls.concat([<span className='foodControls__label'>Severity:</span>, foodGroupControl(['Class I', 'Class II', 'Class III'])])
 
     return (
       <div className='foodControls'>
