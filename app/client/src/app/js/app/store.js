@@ -59,7 +59,12 @@ export const store = dispatcher.createStore(class {
     //   }]
     // }
 
-    let latestYear = Math.max.apply(Math, Object.keys(processedTimeseries).map((k) => parseInt(k))).toString()
+    let years = Object.keys(processedTimeseries),
+        latestYear = years[years.length-1]
+
+    if (years[years.length-1] === '2015') {
+      latestYear = Math.max.apply(Math, years.slice(0, years.length-1).map((k) => parseInt(k))).toString()
+    }
 
     if (this.chart === undefined) {
       // initialize
