@@ -1,9 +1,16 @@
 import {app as config} from 'js/config'
+import {panel as panelConfig} from 'js/config'
 
 export function fetchFoodData (food) {
-  let limit = 100
+  let limit = 100,
+      request = config.requests.ofdaRecalls
+
+  if (panelConfig.classifications.indexOf(food) > -1) {
+    request = config.requests.ofdaRecallsByClassification
+  }
+
   return new Promise((resolve, reject) => {
-    fetch(config.requests.ofdaRecalls(food, limit, 0))
+    fetch(request(food, limit, 0))
       .then((response) => response.json())
       .then((json) => {
         let meta = json.meta,

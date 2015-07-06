@@ -4,6 +4,7 @@ export const config = {
     dojoTheme: 'claro',
     requests: {
       ofdaRecalls: (recallTerm, limit, skip) => `http://api.fda.gov/food/enforcement.json?limit=${limit}&skip=${skip}&search=reason_for_recall:${recallTerm}`,
+      ofdaRecallsByClassification: (classification, limit, skip) => `http://api.fda.gov/food/enforcement.json?limit=${limit}&skip=${skip}&search=classification:${classification}`,
       ofdaTimeseries: (recallTerm) => `https://api.fda.gov/food/enforcement.json?&count=report_date&search=reason_for_recall:${recallTerm}`
     },
     detailLabels: [
@@ -40,6 +41,11 @@ export const config = {
         ]
       }
     },
+    classifications: [
+      'Class I',
+      'Class II',
+      'Class III'
+    ],
     ids: {
       bacteriaSelect: 'bacteria',
       firmSelect: 'firm',

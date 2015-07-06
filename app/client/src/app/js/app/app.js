@@ -16,6 +16,11 @@ export class App extends React.Component {
   render () {
     return (
       <div className='app back-gray--dark'>
+        <div className='app__logo position absolute z-index-panel'>
+          <a href='http://www.blueraster.com' target='_blank'>
+            <img src={resources.blueRasterImage} />
+          </a>
+        </div>
         <Welcome />
         <div className="app__content back-gray--dark">
           <Map />
