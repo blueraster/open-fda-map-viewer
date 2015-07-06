@@ -19,7 +19,7 @@ export function fetchFoodData (food) {
             allRequests = []
 
         for (let i = 0; i !== remainingPageSkips; i++) {
-          allRequests.push(fetch(config.requests.ofdaRecalls(food, limit, (limit * (i +1)))))
+          allRequests.push(fetch(request(food, limit, (limit * (i +1)))))
         }
 
         Promise.all(allRequests)
