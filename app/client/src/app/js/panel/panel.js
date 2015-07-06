@@ -83,8 +83,8 @@ export class Panel extends React.Component {
       // Add recall counts hide singler recall counts
       // Refactor select updates to single action
       return (
-        <div className=''>
-          <div className='inline-block border-box padding__wide fill--50p__wide vertical-top'>
+        <div className='fill__long'>
+          <div className='inline-block border-box padding__wide fill__long fill--25p__wide vertical-top'>
             <label className='inline-block fill--50p__wide'>Business ({Object.keys(this.state.firmData).length})</label>
             <select className='fill--50p__wide' value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value);mapActions.setSelectedFirmNameForClusters(event.target.value)}}>
               {firmOptions}
@@ -102,7 +102,7 @@ export class Panel extends React.Component {
             <div>Recall description</div>
           </div>
 
-          <div className='inline-block border-box padding__wide fill--50p__wide vertical-top'>
+          <div className='inline-block border-box padding__wide fill__long fill--75p__wide vertical-top'>
             {recallDetails}
           </div>
         </div>
@@ -110,7 +110,7 @@ export class Panel extends React.Component {
     }()
 
     return (
-        <div>
+        <div className='fill__long'>
           {firmUI}
         </div>
     )

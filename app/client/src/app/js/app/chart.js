@@ -23,9 +23,9 @@ export class Chart extends React.Component {
     let data = this.state.timeseries === undefined ? undefined : JSON.stringify(this.state.timeseries)
 
     return (
-      <div>
+      <div className='fill'>
         <ChartTitle />
-        <div className='app-chart no-bottom no-left no-right margin-auto'>
+        <div className='app-chart no-bottom no-left no-right margin-auto fill__long'>
           <canvas id='chart' className='fill'></canvas>
         </div>
       </div>

@@ -20,24 +20,27 @@
             color white
             text-shadow 1px 2px black
 
-        &__half
-            vertical-align top
-            padding 10px
-            height 200px
-            width 600px
-
         &__header
             padding 20px
             border-bottom 5px solid rgba(0,0,0,.5)
 
+        &__half
+            box-sizing border-box
+            vertical-align top
+            padding 10px
+            height 250px
+
+        &__half:nth-child(2)
+            width 900px
+
         &__half:nth-child(3)
+            width 300px
             border-left 5px solid rgba(0,0,0,.5)
             @media tablet-mq
                 border-left none
 
 .app-chart
-    height 150px
-    width 550px
+    height 220px
 
 .popup
     position absolute
