@@ -51,19 +51,20 @@ export class Panel extends React.Component {
       let recallDetails = this.state.currentSelectedRecall == undefined ? undefined: () =>{
         let recallForEvent = Array.from(new Set([for (r of currentAllRecalls) if (r.event_id === this.state.currentSelectedFirmEvent) r]))
         let selectedRecall = [for (i of recallForEvent) if (i.recall_number === this.state.currentSelectedRecall) i][0]
-        let rows = ['reason_for_recall', 'distribution_pattern', 'product_description']
+        let rows = ['classification', 'reason_for_recall', 'distribution_pattern', 'product_description']
         let recallDetails = [for (key of rows) <li className='padding__bottom'><span className='text-gray--subtle'>{appConfig.detailLabelsUnordered[key]}: </span>{selectedRecall[key]}</li>]
-
+        let date = [selectedRecall['report_date'].substr(4,2), selectedRecall['report_date'].substr(2,2), selectedRecall['report_date'].substr(0,4)].join('/')
         return (
           <div>
-            <strong>Details:</strong>
+            <strong>Recall Specifics:</strong>
             <div className='panel__details'>
               <div className='inline-block padding__bottom fill--50p__wide'>
-                <div>Report Date</div>
+                <div>{date}</div>
+                <div>{selectedRecall['status']}</div>
               </div>
               <div className='inline-block padding__bottom fill--50p__wide text-right'>
-                <div>City</div>
-                <div>State</div>
+                <div>{selectedRecall['city']}</div>
+                <div>{selectedRecall['state']}</div>
               </div>
               <ul>{recallDetails}</ul>
             </div>
@@ -88,14 +89,17 @@ export class Panel extends React.Component {
             <select className='fill--50p__wide' value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value);mapActions.setSelectedFirmNameForClusters(event.target.value)}}>
               {firmOptions}
             </select>
+            <div>Business description</div>
             <div className='inline-block fill--50p__wide'>Event ({recallEventsLength})</div>
             <select className="inline-block fill--50p__wide" value={this.state.currentSelectedFirmEvent} onChange={(event) =>{actions.setCurrentEvent(event.target.value)}}>
               {firmEvents}
             </select>
+            <div>Event description</div>
             <div className='inline-block fill--50p__wide'>Recall ({recallsLength})</div>
             <select className="inline-block fill--50p__wide" value={this.state.currentSelectedRecall} onChange={(event) =>{actions.setCurrentRecall(event.target.value)}}>
               {eventRecalls}
             </select>
+            <div>Recall description</div>
           </div>
 
           <div className='inline-block border-box padding__wide fill--50p__wide vertical-top'>

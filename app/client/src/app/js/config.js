@@ -11,20 +11,16 @@ export const config = {
       {key: 'recall_number', text: 'Recall Number'},
       {key: 'city', text: 'City'},
       {key: 'state', text: 'State'},
+      {key: 'classification', text: 'Classification'},
       {key: 'status', text: 'Status'},
       {key: 'reason_for_recall', text: 'Reason for Recall'},
       {key: 'distribution_pattern', text: 'Distribution Pattern'},
       {key: 'product_description', text: 'Product Description'}
     ],
-    detailLabelsUnordered: {
-      'report_date': 'Report Date',
-      'recall_number': 'Recall Number',
-      'city': 'City',
-      'state': 'State',
-      'status': 'Status',
-      'reason_for_recall': 'Reason for Recall',
-      'distribution_pattern': 'Distribution Pattern',
-      'product_description': 'Product Description'
+    get detailLabelsUnordered () {
+      let response  = {}
+      ;[for (label of this.detailLabels) response[label.key] = label.text]
+      return response
     }
   },
   panel: {
