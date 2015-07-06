@@ -54,6 +54,7 @@ export class Panel extends React.Component {
         let rows = ['classification', 'reason_for_recall', 'distribution_pattern', 'product_description']
         let recallDetails = [for (key of rows) <li className='padding__bottom'><span className='text-gray--subtle'>{appConfig.detailLabelsUnordered[key]}: </span>{selectedRecall[key]}</li>]
         let date = [selectedRecall['report_date'].substr(4,2), selectedRecall['report_date'].substr(2,2), selectedRecall['report_date'].substr(0,4)].join('/')
+        let location = `${selectedRecall['city']}, ${selectedRecall['state']}`
         return (
           <div>
             <strong>Recall Specifics:</strong>
@@ -63,8 +64,7 @@ export class Panel extends React.Component {
                 <div>{selectedRecall['status']}</div>
               </div>
               <div className='inline-block padding__bottom fill--50p__wide text-right'>
-                <div>{selectedRecall['city']}</div>
-                <div>{selectedRecall['state']}</div>
+                <div><span className='text-gray--subtle'>Location: </span>{location}</div>
               </div>
               <ul>{recallDetails}</ul>
             </div>
