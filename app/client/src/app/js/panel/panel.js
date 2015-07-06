@@ -89,17 +89,17 @@ export class Panel extends React.Component {
             <select className='fill--50p__wide' value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value);mapActions.setSelectedFirmNameForClusters(event.target.value)}}>
               {firmOptions}
             </select>
-            <div>Business description</div>
+            <div className='text-gray--subtle margin__bottom'>Business description</div>
             <div className='inline-block fill--50p__wide'>Event ({recallEventsLength})</div>
             <select className="inline-block fill--50p__wide" value={this.state.currentSelectedFirmEvent} onChange={(event) =>{actions.setCurrentEvent(event.target.value)}}>
               {firmEvents}
             </select>
-            <div>Event description</div>
+            <div className='text-gray--subtle margin__bottom'>Event description</div>
             <div className='inline-block fill--50p__wide'>Recall ({recallsLength})</div>
             <select className="inline-block fill--50p__wide" value={this.state.currentSelectedRecall} onChange={(event) =>{actions.setCurrentRecall(event.target.value)}}>
               {eventRecalls}
             </select>
-            <div>Recall description</div>
+            <div className='text-gray--subtle margin__bottom'>Recall description</div>
           </div>
 
           <div className='inline-block border-box padding__wide fill__long fill--75p__wide vertical-top'>
