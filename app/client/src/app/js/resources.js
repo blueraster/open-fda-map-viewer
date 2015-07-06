@@ -3,7 +3,7 @@
 
  export const resources = {
   openFdaImage: `${basePath}/images/l_openFDA.png`,
-  blueRasterImage: `${basePath}/images/br_logo.png`,
+  blueRasterImage: `${basePath}/images/br_logo.jpeg`,
   closeIcon: `${basePath}/images/close.png`,
   legendSymbols: {
     allRecalls: `${basePath}/images/all_recalls.png`,
