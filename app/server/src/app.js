@@ -30,10 +30,7 @@ if (config.env === 'production') {
   app.use(cors())
 }
 
-
-app.get('/', function (req, res) {
-  res.send('Open FDA Map Viewer')
-})
+app.use(express.static('public'));
 
 // TODO: config port
 let server = app.listen(config.server.port, function () {
