@@ -1,6 +1,6 @@
 [openFDA Enforcement Mapper](http://open-fda-mapper.blueraster.io/)
 --------------------------
-openFDA Enforcement Mapper
+![openFDA Enforcement Mapper](https://raw.githubusercontent.com/blueraster/open-fda-map-viewer/master/reference/app-progression/2015-07-07.png)
 
 ---
 ###[View demo](http://open-fda-mapper.blueraster.io/) | [View Install Guide](https://github.com/blueraster/open-fda-map-viewer/blob/master/documentation.md)
@@ -78,7 +78,7 @@ A daily standup meeting to discuss projects, nightly builds, and frequent demons
 
 K) Documentation
 -------
-Blue Raster provided sufficient documentation in the readme.md file at https://github.com/blueraster/open-fda-map-viewer and a docker container to install and run the prototype on another machine.
+Blue Raster provided sufficient documentation in the [documentation.md](https://github.com/blueraster/open-fda-map-viewer/blob/master/documentation.md) file at https://github.com/blueraster/open-fda-map-viewer and a docker container to install and run the prototype on another machine.
 
 L) Openly Licensed
 -------
