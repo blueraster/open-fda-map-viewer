@@ -84,5 +84,5 @@ L) Openly Licensed
 -------
 The prototype and underlying platforms used to create and run the prototype are openly licensed and free of charge.
 
-To learn more about Blue Raster's work visit [www.blueraster.com/blog](www.blueraster.com/blog)
+To learn more about Blue Raster's work visit [http://www.blueraster.com/blog](http://www.blueraster.com/blog)
 
