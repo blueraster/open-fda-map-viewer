@@ -1,4 +1,4 @@
-[openFDA Enforcement Mapper](http://open-fda-mapper.blueraster.io/)
+openFDA Enforcement Mapper
 --------------------------
 ![openFDA Enforcement Mapper](https://raw.githubusercontent.com/blueraster/open-fda-map-viewer/master/reference/app-progression/2015-07-07.png)
 
