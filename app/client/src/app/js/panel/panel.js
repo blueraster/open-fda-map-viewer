@@ -55,15 +55,19 @@ export class Panel extends React.Component {
         let recallDetails = [for (key of rows) <li className='padding__bottom'><span className='text-gray--subtle'>{appConfig.detailLabelsUnordered[key]}: </span>{selectedRecall[key]}</li>]
         let date = [selectedRecall['report_date'].substr(4,2), selectedRecall['report_date'].substr(2,2), selectedRecall['report_date'].substr(0,4)].join('/')
         let location = `${selectedRecall['city']}, ${selectedRecall['state']}`
+
         return (
           <div>
-            <strong>Recall Specifics:</strong>
+            <div className='margin__bottom'>
+              <h4 className='inline-block vertical-bottom no-margin padding--small__right'></h4><h2 className='inline-block vertical-bottom no-margin'>{selectedRecall['recalling_firm']}</h2>
+            </div>
             <div className='panel__details'>
-              <div className='inline-block padding__bottom fill--50p__wide'>
-                <div>{date}</div>
-                <div>{selectedRecall['status']}</div>
+              <div className='margin__bottom border-white__bottom'>Recall Specifics:</div>
+              <div className='inline-block padding__bottom fill--50p__wide vertical-top'>
+                <div><span className='text-gray--subtle'>Date: </span>{date}</div>
               </div>
               <div className='inline-block padding__bottom fill--50p__wide text-right'>
+                <div><span className='text-gray--subtle'>Status: </span>{selectedRecall['status']}</div>
                 <div><span className='text-gray--subtle'>Location: </span>{location}</div>
               </div>
               <ul>{recallDetails}</ul>
@@ -89,17 +93,14 @@ export class Panel extends React.Component {
             <select className='text-black fill--50p__wide' value={this.state.currentFirm} onChange={(event) => {actions.setCurrentFirm(event.target.value);mapActions.setSelectedFirmNameForClusters(event.target.value)}}>
               {firmOptions}
             </select>
-            <div className='text-gray--subtle margin__bottom'>Firm description</div>
-            <div className='inline-block fill--50p__wide'>Event ({recallEventsLength})</div>
+            <div className='inline-block fill--50p__wide'>Events ({recallEventsLength})</div>
             <select className="text-black inline-block fill--50p__wide" value={this.state.currentSelectedFirmEvent} onChange={(event) =>{actions.setCurrentEvent(event.target.value)}}>
               {firmEvents}
             </select>
-            <div className='text-gray--subtle margin__bottom'>Event description</div>
             <div className='inline-block fill--50p__wide'>Recall ({recallsLength})</div>
             <select className="text-black inline-block fill--50p__wide" value={this.state.currentSelectedRecall} onChange={(event) =>{actions.setCurrentRecall(event.target.value)}}>
               {eventRecalls}
             </select>
-            <div className='text-gray--subtle margin__bottom'>Recall description</div>
           </div>
 
           <div className='inline-block border-box padding__wide fill__long fill--75p__wide vertical-top'>

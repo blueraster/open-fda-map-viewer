@@ -36,6 +36,8 @@ button
 
     &:active
     &:hover
+    &:focus
+    &.active
         background #E86850
 
 .button--esri
@@ -43,8 +45,10 @@ button
     border none
     width 32px
     height 32px
-    outline none
+    border 1px solid #57585A
+
     &:hover
         background-color rgba(102,102,102,0.90)
+
     &:active
         background-color rgba(102,102,102,0.60)

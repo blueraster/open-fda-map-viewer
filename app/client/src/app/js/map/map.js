@@ -33,9 +33,18 @@ export class Map extends React.Component {
         {controls}
         <div className='absolute legend'>
           <div className='inline-block margin__bottom margin__bottom'>{messages.title}</div>
-          <div><img className='vertical-middle' src={resources.legendSymbols.allRecalls} /><span className='vertical-middle'>All Recalls</span></div>
-          <div><img className='vertical-middle' src={resources.legendSymbols.firmRecalls} /><span className='vertical-middle'>Firm Recalls</span></div>
-          <div><img className='vertical-middle' src={resources.legendSymbols.distributionPatterns} /><span className='vertical-middle'>Distribution Patterns</span></div>
+          <div className='margin--small__bottom'>
+            <div className='legend__symbol'><img className='fill' src={resources.legendSymbols.allRecalls} /></div>
+            <span className='vertical-middle'>Recalls</span>
+          </div>
+          <div className='margin--small__bottom'>
+            <div className='legend__symbol'><img className='fill' src={resources.legendSymbols.firmRecalls} /></div>
+            <span className='vertical-middle'>Selected Firm</span>
+          </div>
+          <div className='margin--small__bottom'>
+            <div className='legend__symbol'><img className='fill' src={resources.legendSymbols.distributionPatterns} /></div>
+            <span className='vertical-middle'>Affected States</span>
+          </div>
         </div>
       </div>
     )
