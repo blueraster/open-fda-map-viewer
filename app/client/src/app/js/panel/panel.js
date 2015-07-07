@@ -52,7 +52,7 @@ export class Panel extends React.Component {
         let recallForEvent = Array.from(new Set([for (r of currentAllRecalls) if (r.event_id === this.state.currentSelectedFirmEvent) r]))
         let selectedRecall = [for (i of recallForEvent) if (i.recall_number === this.state.currentSelectedRecall) i][0]
         let rows = ['classification', 'reason_for_recall', 'distribution_pattern', 'product_description']
-        let recallDetails = [for (key of rows) <li className='padding__bottom'><span className='text-gray--subtle'>{appConfig.detailLabelsUnordered[key]}: </span>{selectedRecall[key]}</li>]
+        let recallDetails = [for (key of rows) <li className='padding__bottom'><span className='text-blue'>{appConfig.detailLabelsUnordered[key]}: </span>{selectedRecall[key]}</li>]
         let date = [selectedRecall['report_date'].substr(4,2), selectedRecall['report_date'].substr(2,2), selectedRecall['report_date'].substr(0,4)].join('/')
         let location = `${selectedRecall['city']}, ${selectedRecall['state']}`
 
@@ -64,11 +64,11 @@ export class Panel extends React.Component {
             <div className='panel__details'>
               <div className='margin__bottom border-white__bottom'>Recall Specifics:</div>
               <div className='inline-block padding__bottom fill--50p__wide vertical-top'>
-                <div><span className='text-gray--subtle'>Date: </span>{date}</div>
+                <div><span className='text-blue'>Date: </span>{date}</div>
               </div>
               <div className='inline-block padding__bottom fill--50p__wide text-right'>
-                <div><span className='text-gray--subtle'>Status: </span>{selectedRecall['status']}</div>
-                <div><span className='text-gray--subtle'>Location: </span>{location}</div>
+                <div><span className='text-blue'>Status: </span>{selectedRecall['status']}</div>
+                <div><span className='text-blue'>Location: </span>{location}</div>
               </div>
               <ul>{recallDetails}</ul>
             </div>
