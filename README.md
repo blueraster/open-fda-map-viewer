@@ -3,8 +3,8 @@
 ![openFDA Enforcement Mapper](https://raw.githubusercontent.com/blueraster/open-fda-map-viewer/master/reference/app-progression/2015-07-07.png)
 
 ---
-
-Blue Raster developed this interactive web mapping application at http://open-fda-mapper.blueraster.io/ by using openFDA data at https://open.fda.gov/ in response to RFQ 4QTFHS150004. We are experts at creating custom web applications, helping our clients to analyze data quickly, visualize challenges and opportunities, and make sound decisions using geospatial intelligence. Our agile development strategy emphasizes collaboration and personal attention at every stage.
+###[View demo](http://open-fda-mapper.blueraster.io/)
+Blue Raster developed this interactive web mapping application at http://open-fda-mapper.blueraster.io/ by using openFDA data at https://open.fda.gov/ in response to 18F's RFQ 4QTFHS150004. We are experts at creating custom web applications, helping our clients to analyze data quickly, visualize challenges and opportunities, and make sound decisions using geospatial intelligence. Our agile development strategy emphasizes collaboration and personal attention at every stage.
 
 This application consumes data from https://api.fda.gov/food/enforcement.json, and consists of two main components:
 
@@ -21,7 +21,7 @@ To support this solution development, in addition to the Product Manager, we est
 
 C) Technology Used
 -------
-By the project mid-point, we identified and implemented the following modern and open-source technologies:
+The following modern and open-source technologies were used in the application:
 
  1. Source code pre-processing: Babel, Jade and Stylus
  2. JavaScript ES6 & 7
@@ -65,14 +65,14 @@ The project began with a vision of a mapping application that shows issued enfor
 Site design was inspired by a story map at: http://storymaps.esri.com/snack/, and cluster map at http://www.opendataenterprise.org/map/viz/. We analyzed representative reasons for recall on the enforcement reports and selected the following recall keywords for demonstration purposes:
 
  1. Contaminants:
-    a.  Chloramphenicol
-    b.  Salmonella
-    c.  Listeria
+	a.	Chloramphenicol
+	b.	Salmonella
+	c.	Listeria
  2. Food
-    a.  Ice Cream
-    b.  Wheat
-    c.  Peanuts
-    d.  Salads
+	a.	Ice Cream
+	b.	Wheat
+	c.	Peanuts
+	d.	Salads
 
 A daily standup meeting to discuss projects, nightly builds, and frequent demonstrations facilitated an iterative development process. Close collaboration between team members ensured a quality, robust prototype deliverable.  During progressive demonstrations and application refinement, we modified the wording of the interactive application to make it more accessible to a wider audience, and incorporated the severity of the recall.
 
@@ -83,3 +83,6 @@ Blue Raster provided sufficient documentation in the readme.md file at https://g
 L) Openly Licensed
 -------
 The prototype and underlying platforms used to create and run the prototype are openly licensed and free of charge.
+
+To learn more about Blue Raster's work visit [www.blueraster.com/blog](www.blueraster.com/blog)
+
