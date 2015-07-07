@@ -2,6 +2,7 @@ import {dispatcher} from 'js/dispatcher'
 import {actions} from 'app/actions'
 import {fetchFoodData} from 'app/fetcher'
 import {app as config} from 'js/config'
+import {panel as panelConfig} from 'js/config'
 // lib/vendor/shim/esri/dojo
 import Chartjs from 'Chartjs'
 
@@ -23,9 +24,17 @@ export const store = dispatcher.createStore(class {
   }
   queryFda (food) {
     this.foodToQuery = food
+
     fetchFoodData(food)
       .then((foodData, food) => actions.queryFdaSuccess(foodData, this.foodToQuery))
-    fetch(config.requests.ofdaTimeseries(food))
+
+    let request = config.requests.ofdaTimeseries
+
+    if (panelConfig.classifications.indexOf(food) > -1) {
+      request = config.requests.ofdaTimeseriesByClassification
+    }
+
+    fetch(request(food))
       .then((response) => response.json())
       .then((json) => actions.queryFdaTimeseriesSuccess(json.results))
       // TODO: .catch(actions.queryFdaFailure)

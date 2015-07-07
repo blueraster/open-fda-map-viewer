@@ -5,7 +5,8 @@ export const config = {
     requests: {
       ofdaRecalls: (recallTerm, limit, skip) => `http://api.fda.gov/food/enforcement.json?limit=${limit}&skip=${skip}&search=reason_for_recall:${recallTerm}`,
       ofdaRecallsByClassification: (classification, limit, skip) => `http://api.fda.gov/food/enforcement.json?limit=${limit}&skip=${skip}&search=classification:${classification}`,
-      ofdaTimeseries: (recallTerm) => `https://api.fda.gov/food/enforcement.json?&count=report_date&search=reason_for_recall:${recallTerm}`
+      ofdaTimeseries: (recallTerm) => `https://api.fda.gov/food/enforcement.json?&count=report_date&search=reason_for_recall:${recallTerm}`,
+      ofdaTimeseriesByClassification: (classification) => `https://api.fda.gov/food/enforcement.json?&count=report_date&search=classification:${classification}`
     },
     detailLabels: [
       {key: 'report_date', text: 'Report Date'},
