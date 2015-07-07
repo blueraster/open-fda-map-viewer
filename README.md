@@ -1,10 +1,10 @@
 [openFDA Enforcement Mapper](http://open-fda-mapper.blueraster.io/)
 --------------------------
-![openFDA Enforcement Mapper](https://raw.githubusercontent.com/blueraster/open-fda-map-viewer/master/reference/app-progression/2015-07-07.png)
+openFDA Enforcement Mapper
 
 ---
-###[View demo](http://open-fda-mapper.blueraster.io/)
-Blue Raster developed this interactive web mapping application at http://open-fda-mapper.blueraster.io/ by using openFDA data at https://open.fda.gov/ in response to 18F's RFQ 4QTFHS150004. We are experts at creating custom web applications, helping our clients to analyze data quickly, visualize challenges and opportunities, and make sound decisions using geospatial intelligence. Our agile development strategy emphasizes collaboration and personal attention at every stage.
+###[View demo](http://open-fda-mapper.blueraster.io/) | [View Install Guide](https://github.com/blueraster/open-fda-map-viewer/blob/master/documentation.md)
+Blue Raster developed this interactive web mapping application at http://open-fda-mapper.blueraster.io/ by using openFDA data in response to 18F's RFQ 4QTFHS150004. We are experts at creating custom web applications, helping our clients to analyze data quickly, visualize challenges and opportunities, and make sound decisions using geospatial intelligence. Our agile development strategy emphasizes collaboration and personal attention at every stage.
 
 This application consumes data from https://api.fda.gov/food/enforcement.json, and consists of two main components:
 
