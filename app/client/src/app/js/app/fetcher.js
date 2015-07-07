@@ -3,10 +3,15 @@ import {panel as panelConfig} from 'js/config'
 
 export function fetchFoodData (food) {
   let limit = 100,
-      request = config.requests.ofdaRecalls
+      request = config.requests.ofdaRecalls,
+      fail
 
   if (panelConfig.classifications.indexOf(food) > -1) {
     request = config.requests.ofdaRecallsByClassification
+  }
+
+  fail = (error) => {
+    if (error) {alert('Error: OVER_RATE_LIMIT\n\nYou have exceeded the Open FDA API rate limit. Please wait a moment and try again.')}
   }
 
   return new Promise((resolve, reject) => {
@@ -29,6 +34,8 @@ export function fetchFoodData (food) {
             apiResults = Array.prototype.concat.apply([], apiResults)
             resolve(apiResults)
           })
+          .catch(fail)
       })
+      .catch(fail)
   })
 }
