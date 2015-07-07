@@ -30,11 +30,9 @@ Requirements:
 
 1. [Docker](https://www.docker.com/)
 
-
-    git clone https://github.com/blueraster/open-fda-map-viewer.git
-
-    docker build -t ofda .
-
-    docker run -p 3000:3000 -d ofda
+<pre><code>git clone https://github.com/blueraster/open-fda-map-viewer.git
+docker build -t ofda .
+docker run -p 3000:3000 -d ofda
+</code></pre>
 
 App will run at: http://localhost:3000
