@@ -86,7 +86,7 @@ export const store = dispatcher.createStore(class {
           url: 'http://services.arcgis.com/oKgs2tbjK6zwTdvi/arcgis/rest/services/Major_World_Cities/FeatureServer/0',
           // 'distance': 75,
           distance: 0,
-          labelColor: '#fff',
+          labelColor: [255,255,255,0],
           resolution: map.extent.getWidth() / map.width,
           // 'singleTemplate': infoTemplate,
           useDefaultSymbol: false,
@@ -148,7 +148,7 @@ export const store = dispatcher.createStore(class {
   }
   setSelectedFirmNameForClusters (firmName) {
     let alldata = this.map.getLayer('clusters')._clusterData
-    let matchedData = [for(d of alldata) if (d.attributes.recalling_firm === firmName) d]
+    let matchedData = [for (d of alldata) if (d.attributes.recalling_firm === firmName) d]
     let clustersLayer = this.map.getLayer('firmClusters')
     clustersLayer._clusterData = matchedData
     clustersLayer._reCluster()

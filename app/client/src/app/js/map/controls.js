@@ -1,5 +1,6 @@
 // src
 import {map as config} from 'js/config'
+import {resources} from 'js/resources'
 // lib/vendor/esri/dojo
 import React from 'react'
 import HomeButton from 'esri/dijit/HomeButton'
@@ -14,8 +15,12 @@ export class Controls extends React.Component {
   render() {
     return (
       <div>
-        <div className='home-button-container z-index-map absolute'><div id={config.controls.ids.home}></div></div>
-        <div className='fullscreen-button-container z-index-map absolute'><button className='button--esri' onClick={this.toggleFullscreen}>f</button></div>
+        <div className='home-button-container z-index-map absolute'>
+          <div id={config.controls.ids.home}></div>
+        </div>
+        <div className='fullscreen-button-container z-index-map absolute'>
+          <button className='button--esri' onClick={this.toggleFullscreen}><img className='fill border-box' style={{padding: '5px'}} src={resources.fullscreenIcon} /></button>
+        </div>
       </div>
     )
   }
