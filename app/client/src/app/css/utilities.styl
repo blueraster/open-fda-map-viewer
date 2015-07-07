@@ -1,0 +1,223 @@
+// alignment
+
+.text-left
+    text-align left
+
+.text-right
+    text-align right
+
+.text-center
+    text-align center
+
+.vertical-top
+    vertical-align top
+
+.vertical-middle
+    vertical-align middle
+
+.vertical-bottom
+    vertical-align bottom
+
+.vertical-sub
+    vertical-align sub
+
+.vertical-baseline
+    vertical-align baseline
+
+.float-left
+    float left
+
+.float-right
+    float right
+
+// display
+.hidden
+    display none
+
+.absolute
+    position absolute
+
+.relative
+    position relative
+
+.inline-block
+    display inline-block
+
+.table
+    display table
+
+.table-row
+    display table-row
+
+.table-cell
+    display table-cell
+
+// box model
+
+.border-box
+    box-sizing border-box
+
+.no-long, .no-top
+    top 0px
+
+.no-long, .no-bottom
+    bottom 0px
+
+.no-wide, .no-left
+    left 0px
+
+.no-wide, .no-right
+    right 0px
+
+.no-margin
+    cardinal-generator('margin', 0px)
+
+.margin
+    cardinal-generator('margin', 1em)
+
+    &--small
+        cardinal-generator('margin', .5em)
+
+    &-auto
+        margin auto
+
+.no-padding
+    cardinal-generator('padding', 0px)
+
+.padding
+    cardinal-generator('padding', 1em)
+
+    &--small
+        cardinal-generator('padding', .5em)
+
+// table model
+
+.no-border-spacing
+    border-spacing 0
+
+// sizing
+
+.fill
+    &, &__long
+        height 100%
+    &, &__wide
+       width 100%
+
+    &--25p
+        &, &__long
+            height 25%
+        &, &__wide
+            width 25%
+
+    &--50p
+        &, &__long
+            height 50%
+        &, &__wide
+            width 50%
+
+    &--75p
+        &, &__long
+            height 75%
+        &, &__wide
+            width 75%
+
+
+// color
+
+.text-inherit-color
+    color inherit
+
+.back-transparent
+    color rgba(0,0,0,0)
+
+.text-white
+    color white
+
+.text-black
+    color black
+
+.back-white
+    background-color white
+
+.back-dark-gray
+    background-color dark--gray
+
+    &--translucent
+        background-color white--translucent
+
+.border-white
+    border 1px solid white
+
+    &__bottom
+        border-bottom 1px solid white
+
+.border-black
+    border 1px solid black
+
+.text-gray--light
+    color gray--light
+
+.text-gray--subtle
+    color gray--subtle
+
+.back-gray
+    background-color gray
+
+.back-gray--dark
+    background-color gray--dark
+
+.feedback-outline-orange
+    &:hover, &:active, &:hover, &:focus
+        outline 1px solid orange
+
+// miscellaneous
+.clear
+    clear both
+.clearfix
+    overflow auto
+
+.mobile-mq-hide
+    @media mobile-mq
+        display none
+
+.border-radius
+    border-radius 5px
+
+.pointer
+    cursor pointer
+
+.no-wrap
+    white-space nowrap
+
+.no-border
+    border none
+
+.overflow-auto
+    overflow auto
+
+.overflow-visible
+    overflow visible
+
+.overflow-visible
+    overflow hidden
+
+.ellipsis
+    white-space nowrap
+    overflow hidden
+    text-overflow ellipsis
+
+.z-index-map
+    z-index z-indices['map']
+
+.z-index-controls
+    z-index z-indices['controls']
+
+.z-index-panel
+    z-index z-indices['panel']
+
+.z-index-logo
+    z-index z-indices['logo']
+
+.flex
+    display flex
+    flex-direction row

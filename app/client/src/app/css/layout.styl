@@ -1,0 +1,109 @@
+.root
+.app
+    height 100%
+
+.app
+    position relative
+
+    &__logo
+        top 20px
+        left 20px
+        opacity .5
+        transition all .25s
+
+        &:hover
+            opacity 1
+
+        img
+            height 100px
+
+    &__panel-container
+        font-size .75em
+
+    &__panel
+        &, &--dark
+            border-top-left-radius 10px
+            border-top-right-radius 10px
+            @media tablet-mq
+                text-align center
+
+        &--dark
+            background-color rgba(0,0,0,.5)
+            color white
+            text-shadow 1px 2px black
+
+        &__header
+            padding 20px
+            border-bottom 5px solid rgba(0,0,0,.5)
+
+        &__half
+            box-sizing border-box
+            vertical-align top
+            padding 10px
+            height 250px
+            @media tablet-mq
+                text-align left
+
+        &__half:nth-child(2)
+            width 900px
+
+        &__half:nth-child(3)
+            width 300px
+            border-left 5px solid rgba(0,0,0,.5)
+            @media tablet-mq
+                border-left none
+
+.app-chart
+    height 220px
+
+.popup
+    position absolute
+    width 100%
+    height 100%
+
+    &__foodControls
+        color black
+
+    &__image
+        &, &--br
+            padding 20px
+
+        &--br
+            height 100px
+
+
+    &__closeIcon
+        position absolute
+        right 0
+        top 0
+        padding inherit
+        cursor pointer
+
+    &__film
+        position absolute
+        width 100%
+        height 100%
+        z-index 99
+        opacity .8
+        z-index 99
+        background-color #3C3C3C
+    &__inner
+        padding 15px
+        z-index 1050
+        position fixed
+        width 500px
+        height 450px
+        margin 0 auto
+        top 20%
+        bottom 0
+        left 0
+        right 0
+        background-color white
+        border-radius 5px
+
+.legend
+    color white
+    background-color rgba(0,0,0,.5)
+    top 20px
+    right 70px
+    font-size .75em
