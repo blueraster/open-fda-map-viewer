@@ -3,6 +3,7 @@
 
 ####**Development**
 Requirements:
+
 1. [Node & npm](https://nodejs.org/)
 2. [Bower](http://bower.io/)
 
@@ -26,11 +27,14 @@ Developing client-side:
 
 ####**Deployment**
 Requirements:
- 1. [Docker](https://www.docker.com/)
+
+1. [Docker](https://www.docker.com/)
 
 
     git clone https://github.com/blueraster/open-fda-map-viewer.git
+
     docker build -t ofda .
+
     docker run -p 3000:3000 -d ofda
 
 App will run at: http://localhost:3000
