@@ -32,16 +32,16 @@ export class Map extends React.Component {
         <div id={config.id} className='fill'></div>
         {controls}
         <div className='absolute legend'>
-          <div className='inline-block padding--small__wide padding--small__long margin--small__bottom' style={{backgroundColor: '#6091b2'}}><h3 className='no-margin'>{messages.title}</h3></div>
-          <div className='margin--small__wide margin--small__bottom'>
+          <div className='inline-block padding__wide padding--small__long margin--small__bottom' style={{backgroundColor: '#6091b2'}}><h3 className='no-margin'>{messages.title}</h3></div>
+          <div className='margin__wide margin--small__bottom'>
             <div className='legend__symbol'><img className='fill' src={resources.legendSymbols.allRecalls} /></div>
             <span className='vertical-middle'>Recalls</span>
           </div>
-          <div className='margin--small__wide margin--small__bottom'>
+          <div className='margin__wide margin--small__bottom'>
             <div className='legend__symbol'><img className='fill' src={resources.legendSymbols.firmRecalls} /></div>
             <span className='vertical-middle'>Selected Firm</span>
           </div>
-          <div className='margin--small__wide margin--small__bottom'>
+          <div className='margin__wide margin__bottom'>
             <div className='legend__symbol'><img className='fill' src={resources.legendSymbols.distributionPatterns} /></div>
             <span className='vertical-middle'>Affected States</span>
           </div>
